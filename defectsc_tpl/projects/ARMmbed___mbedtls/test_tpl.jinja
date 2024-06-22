@@ -1,0 +1,35 @@
+build_dir=$1
+test_log=$2
+
+
+fn=$(realpath $build_dir)
+
+fix_log="${test_log/\.log/}"
+
+
+bash -c "cd $build_dir/tests &&   ./test_suite_x509parse -v "   2>&1 > "${fix_log}.log" 
+
+
+
+
+is_match=$(awk '/max intermediate CA/{flag=1;next}/PASS/{flag=0}flag'  "${fix_log}.log" )
+
+if [[ -z $is_match ]]; then 
+	    echo "success\n" > "${fix_log}.status" ; 
+else 
+	    echo "FAILED\n" > "${fix_log}.status" ;
+
+fi 
+
+
+awk '/max intermediate CA/{flag=1;next}/PASS/{flag=0}flag'  "${fix_log}.log" >  "${fix_log}.msg"
+	
+
+
+#return_status=$?
+#expect_status=0
+
+#if [ $return_status -ne $expect_status ]; then 
+#fi
+
+

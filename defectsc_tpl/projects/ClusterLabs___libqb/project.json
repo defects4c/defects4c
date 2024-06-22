@@ -1,0 +1,15 @@
+{
+    "homepage": "https://github.com/ClusterLabs/libqb",
+    "language": null,
+    "main_repo": "https://github.com/ClusterLabs/libqb",
+    "repo_name": "ClusterLabs___libqb",
+    "env": [],
+    "before_install": [],
+    "c_compile": {
+        "build": "build_tpl.jinja",
+        "build_flags": [],
+        "test": "test_tpl.jinja",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

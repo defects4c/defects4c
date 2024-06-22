@@ -1,0 +1,579 @@
+[
+    {
+        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/6a9be627c760cf1efa43d155d4e6ee5e801deba3",
+        "commit_before": "2a3cbe7c3f8254aad3fda82a69014f7cba19585e",
+        "commit_after": "6a9be627c760cf1efa43d155d4e6ee5e801deba3",
+        "commit_date": "2019-10-18T13:53:29Z",
+        "files": {
+            "src": [
+                "source/opt/optimizer.cpp"
+            ],
+            "test": [
+                "test/opt/optimizer_test.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 565,
+                "hunk_end": 572,
+                "func_is_single": true,
+                "func_start": 565,
+                "func_end": 572,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "spirv-tools-test_opt"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "spirv-tools-test_opt"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Logic Organization: Wrong Function Call Sequence",
+            "id": "D.2",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/948577c5df3a6f0d337ab417b26edcc344eb65e2",
+        "commit_before": "df859f77dab392dbc78c213d36ba19216b3d068e",
+        "commit_after": "948577c5df3a6f0d337ab417b26edcc344eb65e2",
+        "commit_date": "2020-08-13T13:09:57Z",
+        "files": {
+            "src": [
+                "source/opt/folding_rules.cpp"
+            ],
+            "test": [
+                "test/opt/fold_test.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 1470,
+                "hunk_is_single": true,
+                "hunk_start": 1467,
+                "hunk_end": 1473,
+                "func_is_single": true,
+                "func_start": 1467,
+                "func_end": 1473,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "spirv-tools-test_opt"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "spirv-tools-test_opt"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/54385458ca2f7a7b06699e441822753dbc2d018d",
+        "commit_before": "868ca3954c2ee1aad3b52c6eb8f45e09d1d35995",
+        "commit_after": "54385458ca2f7a7b06699e441822753dbc2d018d",
+        "commit_date": "2019-11-27T14:45:17Z",
+        "files": {
+            "src": [
+                "source/opt/register_pressure.cpp"
+            ],
+            "test": [
+                "test/opt/register_liveness.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 78,
+                "hunk_end": 86,
+                "func_is_single": true,
+                "func_start": 78,
+                "func_end": 86,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "spirv-tools-test_opt"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "spirv-tools-test_opt"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Logic Organization: Improper Condition Organization",
+            "id": "D.1",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/ab3cdcaef56e9311f299eebfd044f9646100c9dc",
+        "commit_before": "1a18d491f2a45b90faf911f50103392e2d5f32b5",
+        "commit_after": "ab3cdcaef56e9311f299eebfd044f9646100c9dc",
+        "commit_date": "2019-11-12T18:41:38Z",
+        "files": {
+            "src": [
+                "source/opt/upgrade_memory_model.cpp"
+            ],
+            "test": [
+                "test/opt/upgrade_memory_model_test.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 432,
+                "hunk_is_single": true,
+                "hunk_start": 429,
+                "hunk_end": 435,
+                "func_is_single": true,
+                "func_start": 429,
+                "func_end": 435,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "spirv-tools-test_opt"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "spirv-tools-test_opt"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Memory Error: Memory Overflow",
+            "id": "C.3",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/286b3095dd187da747f85baf9ce3120580565df0",
+        "commit_before": "726af6f78f80988271c8b558ae9cc84fa5a65016",
+        "commit_after": "286b3095dd187da747f85baf9ce3120580565df0",
+        "commit_date": "2020-09-14T13:00:38Z",
+        "files": {
+            "src": [
+                "source/opt/ccp_pass.cpp"
+            ],
+            "test": [
+                "test/opt/ccp_test.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 153,
+                "hunk_is_single": true,
+                "hunk_start": 150,
+                "hunk_end": 156,
+                "func_is_single": true,
+                "func_start": 150,
+                "func_end": 156,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "spirv-tools-test_opt"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "spirv-tools-test_opt"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/4fa1a6f9b497193e54a814112f17ab3c2cf58053",
+        "commit_before": "196f638d73ef0a55ce7d99b71f525a8baee3c57e",
+        "commit_after": "4fa1a6f9b497193e54a814112f17ab3c2cf58053",
+        "commit_date": "2022-03-07T19:33:10Z",
+        "files": {
+            "src": [
+                "source/opt/ccp_pass.cpp"
+            ],
+            "test": [
+                "test/opt/ccp_test.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 175,
+                "hunk_is_single": true,
+                "hunk_start": 172,
+                "hunk_end": 178,
+                "func_is_single": true,
+                "func_start": 172,
+                "func_end": 178,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "spirv-tools-test_opt"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "spirv-tools-test_opt"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Signature: Incorrect Function Usage",
+            "id": "A.1",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/0a43a84e02245cca40ce187d1e427a5d0b4f3d13",
+        "commit_before": "0ebcdc4d19de627023d538826672c816e3e90f32",
+        "commit_after": "0a43a84e02245cca40ce187d1e427a5d0b4f3d13",
+        "commit_date": "2022-08-10T13:04:35Z",
+        "files": {
+            "src": [
+                "source/opt/folding_rules.cpp"
+            ],
+            "test": [
+                "test/opt/fold_test.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 2751,
+                "hunk_is_single": true,
+                "hunk_start": 2748,
+                "hunk_end": 2754,
+                "func_is_single": true,
+                "func_start": 2748,
+                "func_end": 2754,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "spirv-tools-test_opt"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "spirv-tools-test_opt"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/0391d0823ebfd7c37c07a54b8726cc417183a95f",
+        "commit_before": "ca703c8877743001468f96eb01eeccb2a5dc2a20",
+        "commit_after": "0391d0823ebfd7c37c07a54b8726cc417183a95f",
+        "commit_date": "2019-11-19T14:45:39Z",
+        "files": {
+            "src": [
+                "source/opt/value_number_table.cpp"
+            ],
+            "test": [
+                "test/opt/value_table_test.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 96,
+                "hunk_is_single": true,
+                "hunk_start": 93,
+                "hunk_end": 99,
+                "func_is_single": true,
+                "func_start": 93,
+                "func_end": 99,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "spirv-tools-test_opt"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "spirv-tools-test_opt"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/0a5d99d02cb8c0edd41c7a9d4f309c0974d076d0",
+        "commit_before": "af7410597e3869ebba56dfe5067abc3bb2dc5dbc",
+        "commit_after": "0a5d99d02cb8c0edd41c7a9d4f309c0974d076d0",
+        "commit_date": "2019-12-03T16:21:26Z",
+        "files": {
+            "src": [
+                "source/opt/optimizer.cpp"
+            ],
+            "test": [
+                "test/opt/optimizer_test.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 230,
+                "hunk_end": 237,
+                "func_is_single": true,
+                "func_start": 230,
+                "func_end": 237,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "spirv-tools-test_opt"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "spirv-tools-test_opt"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Signature: Incorrect Function Return Value",
+            "id": "A.3",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/d5a3bfcf2ffd154a244e7ffae54dd1766d98efa4",
+        "commit_before": "6803cc51268a56ec6d6b622fb91fac012cb589ef",
+        "commit_after": "d5a3bfcf2ffd154a244e7ffae54dd1766d98efa4",
+        "commit_date": "2022-07-05T18:14:29Z",
+        "files": {
+            "src": [
+                "source/opt/instruction.cpp"
+            ],
+            "test": [
+                "test/opt/instruction_test.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 693,
+                "hunk_end": 700,
+                "func_is_single": true,
+                "func_start": 693,
+                "func_end": 700,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "spirv-tools-test_opt"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "spirv-tools-test_opt"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Logic Organization: Improper Condition Organization",
+            "id": "D.1",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/48a36c72e4d358ed9f0a5e53fe775a7ebb2f8f2b",
+        "commit_before": "4fa1a6f9b497193e54a814112f17ab3c2cf58053",
+        "commit_after": "48a36c72e4d358ed9f0a5e53fe775a7ebb2f8f2b",
+        "commit_date": "2022-03-07T19:35:57Z",
+        "files": {
+            "src": [
+                "source/opt/folding_rules.cpp"
+            ],
+            "test": [
+                "test/opt/fold_test.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": false,
+                "hunk_start": null,
+                "hunk_end": null,
+                "func_is_single": true,
+                "func_start": 2368,
+                "func_end": 2388,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+			"msg": "so slow", 
+            "name": [
+                "spirv-tools-test_opt"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "spirv-tools-test_opt"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/0ad83f9139daf70a791560f5c72f94b0be5b8390",
+        "commit_before": "940127a77d3ad795a4a1422fbeaad50c9f19f2ea",
+        "commit_after": "0ad83f9139daf70a791560f5c72f94b0be5b8390",
+        "commit_date": "2022-02-11T15:29:42Z",
+        "files": {
+            "src": [
+                "source/diff/diff.cpp"
+            ],
+            "test": [
+                "test/diff/diff_files/spec_constant_composite_autogen.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 2074,
+                "hunk_is_single": false,
+                "hunk_start": null,
+                "hunk_end": null,
+                "func_is_single": true,
+                "func_start": 2064,
+                "func_end": 2098,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "spirv-tools-test_diff"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "spirv-tools-test_diff"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 2,
+        "type": {
+            "name": "Logic Organization: Wrong Function Call Sequence",
+            "id": "D.2",
+            "type": "bug"
+        }
+    }
+]

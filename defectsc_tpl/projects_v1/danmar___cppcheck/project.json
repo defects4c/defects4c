@@ -1,0 +1,15 @@
+{
+    "homepage": "https://api.github.com/repos/danmar/cppcheck/commits/b044f9ba961524d998bf0af3bb5c5110b3c72add",
+    "language": null,
+    "main_repo": "https://github.com/danmar/cppcheck",
+    "repo_name": "danmar___cppcheck",
+    "env": [],
+    "before_install": [],
+    "c_compile": {
+        "build": "ninja",
+        "build_flags": ["-DBUILD_TESTS=on","-DCMAKE_C_COMPILER_LAUNCHER=ccache","-DCMAKE_CXX_COMPILER_LAUNCHER=ccache"],
+        "test": "ctest",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

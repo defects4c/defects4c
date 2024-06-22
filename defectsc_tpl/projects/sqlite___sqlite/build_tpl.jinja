@@ -1,0 +1,21 @@
+
+
+{% if not is_rebuild %}
+
+	{{apt_install_fn}}
+	apt_install_fn tclsh 
+	apt_install_fn tclx8.4-dev  
+	apt_install_fn gdb
+	
+	 
+	./configure {% for option in build_flags %}{{ option }} {% endfor %}  \
+	--prefix=`pwd`/{{build_dir}} \
+	CFLAGS="-Wno-error" \
+	CPPFLAGS="-Wno-error" 
+	
+
+{% endif %}
+
+
+
+make -j {{ cpu_count }}

@@ -1,0 +1,27 @@
+build_dir=$1
+test_log=$2
+
+fn=$(realpath $build_dir )
+
+
+export CXX=g++ 
+export CC=gcc 
+
+{% if not is_rebuild %}
+	{{apt_install_fn}}
+	apt_install_fn yasm 
+	
+	./configure  \
+	--enable-unit-tests       \
+	--prefix=$fn  
+	
+	
+{% endif %}
+
+
+
+  
+make -j {{cpu_count}} test_libvpx
+
+
+

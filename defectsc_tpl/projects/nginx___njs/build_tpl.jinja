@@ -1,0 +1,19 @@
+
+{% if not is_rebuild %}
+	{{apt_install_fn}}
+	#apt_install_fn gdb
+
+	set -e  
+	( ./configure {% for option in build_flags %}{{ option }} {% endfor %}  --build-dir={{build_dir}} )|| (  ./configure {% for option in build_flags %}{{ option }} {% endfor %}   )
+	set +e 
+	
+	
+{% endif %}
+
+#CFLAGS="-fsanitize=address -g -Wno-error "
+
+make -j {{ cpu_count }}  CFLAGS="-fsanitize=address -g -Wno-error " 
+# CFLAGS=" -g -O0 "
+
+#make -j {{ cpu_count }} install     CFLAGS=" -g -O0 "
+

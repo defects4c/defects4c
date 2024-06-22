@@ -1,0 +1,26 @@
+build_dir=$1
+test_log=$2
+fix_log="${test_log/\.log/}"
+
+
+#bash -c "cd tests && ./bad_dns_request_test valgrind --leak-check=full --error-exitcode=1" > "${fix_log}.msg"   2> "${fix_log}.msg"    
+
+
+$build_dir/tests/misc_tests 2>"${fix_log}.msg"   
+
+
+return_status=$?
+expect_status=0
+
+if [ $return_status -ne $expect_status ]; then 
+	    echo "FAILED\n" > "${fix_log}.status" ;
+else 
+	    echo "success\n" > "${fix_log}.status" ; 
+fi
+
+
+
+
+
+
+

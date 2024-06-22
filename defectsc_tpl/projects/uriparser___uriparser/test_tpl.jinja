@@ -1,0 +1,50 @@
+build_dir=$1
+test_log=$2
+fn=$(realpath $test_log)
+
+fix_log="${test_log/\.log/}"
+fix_log_msg="${fix_log}.msg"
+
+
+cat /dev/null > $fn 
+
+
+make -j {{cpu_count}} check 
+
+return_status=$?
+expect_status=0
+
+get_status() {
+	if [[ $expect_status == $return_status ]]; then 
+		    echo "success"
+	else
+		    echo "FAILED"
+	fi 
+	
+}
+
+get_err_msg() {
+
+	if [ -f "test-suite.log" ]; then 
+		cat test-suite.log > $1 
+	fi 
+	if [ -f "test/test-suite.log" ]; then 
+		cat test/test-suite.log > $1 
+	fi 
+	if [ -f "test/uriparser_test.log" ]; then 
+		cat test/uriparser_test.log > $1 
+	fi 
+
+}
+
+
+
+
+status_log=$( get_status)
+echo $status_log > "${fix_log}.status"
+
+get_err_msg  "${fix_log}.msg" 
+
+
+
+

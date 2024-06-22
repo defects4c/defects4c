@@ -1,0 +1,15 @@
+{
+    "homepage": "https://github.com/CLIUtils/CLI11",
+    "language": null,
+    "main_repo": "https://github.com/CLIUtils/CLI11",
+    "repo_name": "CLIUtils___CLI11",
+    "env": [],
+    "before_install": [],
+    "c_compile": {
+        "build": "ninja",
+        "build_flags": [],
+        "test": "ctest",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

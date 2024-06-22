@@ -1,0 +1,15 @@
+{
+    "homepage": "https://github.com/libevent/libevent",
+    "language": null,
+    "main_repo": "https://github.com/libevent/libevent",
+    "repo_name": "libevent___libevent",
+    "env": [],
+    "before_install": [],
+    "c_compile": {
+        "build": "ninja",
+        "build_flags": [],
+        "test": "ctest",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

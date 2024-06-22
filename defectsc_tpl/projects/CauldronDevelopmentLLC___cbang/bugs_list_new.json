@@ -1,0 +1,66 @@
+[
+    {
+        "commit_after": "1c1dba62bd3e6fa9d0d0c0aa21926043b75382c7",
+        "commit_date": "2020-07-19 12:43:49 -0700",
+        "commit_before": "71a999a1049dfb0cf745b8cd549b4fb6c5585cc3",
+        "files": {
+            "src": [
+                "src/cbang/tar/TarFileReader.cpp"
+            ],
+            "test": [
+                "tests/tarTests/.gitignore",
+                "tests/tarTests/BadExtractTest/data/args",
+                "tests/tarTests/BadExtractTest/data/test.tar",
+                "tests/tarTests/BadExtractTest/expect/return",
+                "tests/tarTests/BadExtractTest/expect/stderr",
+                "tests/tarTests/BadExtractTest/expect/stdout",
+                "tests/tarTests/CompressedExtractTest/data/args",
+                "tests/tarTests/CompressedExtractTest/data/test.tar.bz2",
+                "tests/tarTests/CompressedExtractTest/expect/return",
+                "tests/tarTests/CompressedExtractTest/expect/stderr",
+                "tests/tarTests/CompressedExtractTest/expect/stdout",
+                "tests/tarTests/ExtractTest/data/args",
+                "tests/tarTests/ExtractTest/data/test.tar",
+                "tests/tarTests/ExtractTest/expect/return",
+                "tests/tarTests/ExtractTest/expect/stderr",
+                "tests/tarTests/ExtractTest/expect/stdout",
+                "tests/tarTests/SConscript",
+                "tests/tarTests/tar",
+                "tests/tarTests/tar.cpp",
+                "tests/tarTests/test.json"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 101,
+                "hunk_end": 111,
+                "func_is_single": true,
+                "func_start": 101,
+                "func_end": 111,
+                "func_hunks": [],
+                "patch_md5": "f491b46b242a392b598f9ec1fcedfa94"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/CauldronDevelopmentLLC/cbang/commits/1c1dba62bd3e6fa9d0d0c0aa21926043b75382c7",
+        "type": {
+            "name": "CVE-2020-15908",
+            "id": "CVE-2020-15908",
+            "type": "cve"
+        }
+    }
+]

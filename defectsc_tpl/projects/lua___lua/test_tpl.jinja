@@ -1,0 +1,24 @@
+test_log=$2 
+
+
+fix_log="${test_log/\.log/}"
+f_status="${fix_log}.status"
+f_msg="${fix_log}.msg"
+
+cat /dev/null > $test_log 
+cat /dev/null > $f_status 
+cat /dev/null > $f_msg 
+
+
+cd testes; 
+
+ulimit -S -s 1000
+
+{% for one_test_file in test_files %}
+
+echo "success\n" > $f_status 
+
+../lua -W  {{ one_test_file.split('/') | last }}  >$f_msg 2>&1  || echo "FAILED" > $f_status 
+
+
+{% endfor %}

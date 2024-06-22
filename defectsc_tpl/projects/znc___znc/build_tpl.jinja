@@ -1,0 +1,31 @@
+
+git submodule update --init --recursive
+
+
+
+
+
+build_dir=$1
+test_log=$2
+
+build_dir=$(realpath $1)
+
+{% if not is_rebuild %}
+	if [ -f ./autogen.sh ]; then 
+		./autogen.sh
+	fi 
+	
+	./configure {% for option in build_flags %}{{ option }} {% endfor %}  \
+	--prefix=$build_dir \
+	--with-gtest=./third_party/googletest/googletest \
+	--with-gmock=./third_party/googletest/googlemock \
+	--disable-swig --enable-debug   
+
+{% endif %}
+
+
+
+
+make -j {{ cpu_count }}  && make install 
+
+

@@ -1,0 +1,30 @@
+build_dir=$1
+test_log=$2
+
+build_dir=$(realpath $1)
+
+{% if not is_rebuild %}
+
+	{{apt_install_fn}}
+	apt_install_fn tcl8.6 
+	apt_install_fn tclx
+        apt_install_fn  redis-server
+
+	if [[ -f  /etc/init.d/redis-server  ]]; then 
+		 /etc/init.d/redis-server  restart 
+	fi 
+
+{% endif %}
+
+
+
+{% if not is_rebuild %}
+
+	CXX=clang++ CC=clang CFLAGS="-fsanitize=address -g -Wno-error " \
+	 cmake -G Ninja -B $build_dir -DENABLE_SSL=on 
+	 
+{% endif %}
+ 
+ 
+ 
+ninja -C  $build_dir 

@@ -1,0 +1,47 @@
+[
+    {
+        "commit_after": "3fbd1dca6a4d2dad332a2110d646e4ffef36d590",
+        "commit_date": "2023-09-25 18:55:59 -0700",
+        "commit_before": "af6dedd715f4307669366944cca6e0417b290282",
+        "files": {
+            "src": [
+                "vp8/encoder/onyx_if.c"
+            ],
+            "test": [
+                "test/encode_api_test.cc"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 1448,
+                "hunk_is_single": true,
+                "hunk_start": 1447,
+                "hunk_end": 1452,
+                "func_is_single": true,
+                "func_start": 1447,
+                "func_end": 1452,
+                "func_hunks": [],
+                "patch_md5": "b42f05d290ac71e66928d9ea5aa5b995"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/webmproject/libvpx/commits/3fbd1dca6a4d2dad332a2110d646e4ffef36d590",
+        "type": {
+            "name": "CVE-2023-5217",
+            "id": "CVE-2023-5217",
+            "type": "cve"
+        }
+    }
+]

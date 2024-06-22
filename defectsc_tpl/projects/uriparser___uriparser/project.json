@@ -1,0 +1,15 @@
+{
+    "homepage": "https://github.com/uriparser/uriparser",
+    "language": null,
+    "main_repo": "https://github.com/uriparser/uriparser",
+    "repo_name": "uriparser___uriparser",
+    "env": [],
+    "before_install": [],
+    "c_compile": {
+        "build": "build_tpl.jinja",
+        "build_flags": [],
+        "test": "test_tpl.jinja",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

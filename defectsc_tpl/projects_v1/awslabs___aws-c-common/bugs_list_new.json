@@ -1,0 +1,50 @@
+[
+    {
+        "url": "https://api.github.com/repos/awslabs/aws-c-common/commits/3367d5d13173664bc5018f5405adfa4d395c87ce",
+        "commit_before": "cc67f311d124e90951f99133ce6eb2321dadf3ee",
+        "commit_after": "3367d5d13173664bc5018f5405adfa4d395c87ce",
+        "commit_date": "2018-09-14T17:43:44Z",
+        "files": {
+            "src": [
+                "source/encoding.c"
+            ],
+            "test": [
+                "tests/encoding_test.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 267,
+                "hunk_is_single": true,
+                "hunk_start": 264,
+                "hunk_end": 270,
+                "func_is_single": true,
+                "func_start": 264,
+                "func_end": 270,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "base64_encoding_highbyte_string_test"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "base64_encoding_highbyte_string_test"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Signature: Fault Input Type",
+            "id": "A.2",
+            "type": "bug"
+        }
+    }
+]

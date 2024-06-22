@@ -1,0 +1,47 @@
+[
+    {
+        "commit_after": "50a51cb7e67268e6ad417eb07c9de9bfea5cc55a",
+        "commit_date": "2022-03-23 07:53:25 +0000",
+        "commit_before": "f7a7341726f58f4660fc29bad58c7304a96c8318",
+        "files": {
+            "src": [
+                "src/pcre2_jit_compile.c"
+            ],
+            "test": [
+                "src/pcre2_jit_test.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 7489,
+                "hunk_end": 7495,
+                "func_is_single": true,
+                "func_start": 7489,
+                "func_end": 7495,
+                "func_hunks": [],
+                "patch_md5": "305c417cb4d91a1eaa74cc3980ed659e"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/PCRE2Project/pcre2/commits/50a51cb7e67268e6ad417eb07c9de9bfea5cc55a",
+        "type": {
+            "name": "CVE-2022-1586",
+            "id": "CVE-2022-1586",
+            "type": "cve"
+        }
+    }
+]

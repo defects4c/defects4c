@@ -1,0 +1,20 @@
+
+
+build_dir=$1
+mkdir -p  $build_dir 
+
+{% if not is_rebuild %}
+
+{% endif %}
+	
+
+
+make -j {{ cpu_count }} 
+
+cd testes/libs; 
+
+
+make -j {{ cpu_count }} 
+
+ 
+

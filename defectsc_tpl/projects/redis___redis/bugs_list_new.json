@@ -1,0 +1,49 @@
+[
+    {
+        "commit_after": "bc7fe41e5857a0854d524e2a63a028e9394d2a5c",
+        "commit_date": "2022-08-28 16:33:41 +0800",
+        "commit_before": "a7da7473cbd791589b943f38dcb855404a872928",
+        "files": {
+            "src": [
+                "src/t_hash.c"
+            ],
+            "test": [
+                "tests/unit/type/hash.tcl"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 667,
+                "hunk_is_single": true,
+                "hunk_start": 666,
+                "hunk_end": 671,
+                "func_is_single": true,
+                "func_start": 666,
+                "func_end": 671,
+                "func_hunks": [],
+                "patch_md5": "f1d21eb1f6f8a4d917001d6eb1bf30be"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "unit/type/hash"
+            ],
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/redis/redis/commits/bc7fe41e5857a0854d524e2a63a028e9394d2a5c",
+        "type": {
+            "name": "CVE-2023-28856",
+            "id": "CVE-2023-28856",
+            "type": "cve"
+        }
+    }
+]

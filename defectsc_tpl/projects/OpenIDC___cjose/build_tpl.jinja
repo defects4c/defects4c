@@ -1,0 +1,56 @@
+build_dir=$1
+
+build_flags=" {% for option in build_flags %}{{ option }} {% endfor %} ";
+
+
+
+cur_dir=$(pwd)
+## build_deps
+
+{% if not is_rebuild %}
+
+if [[ ! -d ../deps_dirs/automake_bin ]]; then 
+	mkdir -p ../deps_dirs/ 
+	cd ../deps_dirs/ 
+	wget https://ftp.gnu.org/gnu/automake/automake-1.16.5.tar.gz
+	tar -xf automake-1.16.5.tar.gz
+	cd automake-1.16.5
+	
+	echo `pwd`
+	
+	./configure --prefix=`pwd`/../automake_bin 
+	
+	make -j {{cpu_count}}
+	make install 
+	
+	echo "the installation is done"
+	cd $cur_dir 
+	
+fi 
+{% endif %}
+
+
+export PATH=$cur_dir/../deps_dirs/automake_bin/bin/:$PATH
+echo "the PATH is "$PATH
+automake_version=$(automake --version)
+echo "the version is "$automake_version
+
+{% if not is_rebuild %}
+
+	{{apt_install_fn}}
+	apt_install_fn check 
+	
+	
+    ./configure CFLAGS="-g -O0" LDFLAGS="-lrt" \
+	--prefix=`pwd`/$build_dir  \
+	CXX=g++ CC=gcc    
+
+  
+{% endif %}
+
+
+
+make  -j {{cpu_count}}  
+
+
+

@@ -1,0 +1,43 @@
+
+build_dir=$1
+test_log=$2
+fn=$(realpath $test_log)
+
+
+
+make -j {{cpu_count}} check 
+
+if [[ -f test/check_cjose ]]; then 
+
+	test/check_cjose  >$test_log 2>&1 
+	
+fi 
+
+
+
+get_status() {
+	string=$(cat $fn |grep "test_cjose_jwe_decrypt_aes_gcm" |grep -i  "Passed" )
+	
+	if [[ -z $string  ]]; then 
+	    echo "FAILED\n"
+	else
+	    echo "success\n"
+	fi	
+}
+
+get_err_msg() {
+	cat $fn |grep check_jwe |grep -v -i "Passed" >> $1 
+	
+}
+
+
+
+fix_log="${test_log/\.log/}"
+
+status_log=$( get_status)
+echo $status_log > "${fix_log}.status"
+
+get_err_msg  "${fix_log}.msg" 
+
+
+

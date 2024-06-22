@@ -1,0 +1,19 @@
+build_dir=$1
+test_log=$2
+
+
+
+
+{%if not is_rebuild %}
+	cmake_flags="{{build_flags|join(" ") }}"
+	
+	cmake \
+	$cmake_flags \
+	-G Ninja -B $build_dir 
+
+
+{%endif%}
+
+
+ninja -C $build_dir 
+

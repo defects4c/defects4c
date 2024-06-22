@@ -1,0 +1,722 @@
+[
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/ea0f96cf45deed39fb98b28f30d0acdc304db243",
+        "commit_before": "09abf888c0f33904f05d2c93c4465a92927fd500",
+        "commit_after": "ea0f96cf45deed39fb98b28f30d0acdc304db243",
+        "commit_date": "2022-12-20T07:48:33Z",
+        "files": {
+            "src": [
+                "src/printer_xml.c"
+            ],
+            "test": [
+                "tests/utests/data/test_new.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 287,
+                "hunk_end": 294,
+                "func_is_single": true,
+                "func_start": 287,
+                "func_end": 294,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "utest_new"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "utest_new"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Logic Organization: Improper Condition Organization",
+            "id": "D.1",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/509d721c2b61088c1e491c330c48b0cc01dc191e",
+        "commit_before": "39ed7a2d6756aba40eff2e2f6e2b7c96449aab1f",
+        "commit_after": "509d721c2b61088c1e491c330c48b0cc01dc191e",
+        "commit_date": "2022-02-21T09:00:03Z",
+        "files": {
+            "src": [
+                "src/tree_data.c"
+            ],
+            "test": [
+                "tests/utests/types/yang_types.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 87,
+                "hunk_is_single": true,
+                "hunk_start": 84,
+                "hunk_end": 90,
+                "func_is_single": true,
+                "func_start": 84,
+                "func_end": 90,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "utest_yang_types"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "utest_yang_types"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Memory Error: Null Pointer Dereference",
+            "id": "C.1",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/7c7783df75b9a5dfc6cc22c70b9467d47aa913d2",
+        "commit_before": "613bc03456b9716408ba87184c266b9850f979ac",
+        "commit_after": "7c7783df75b9a5dfc6cc22c70b9467d47aa913d2",
+        "commit_date": "2020-04-08T13:34:39Z",
+        "files": {
+            "src": [
+                "src/tree_schema_compile.c"
+            ],
+            "test": [
+                "tests/src/test_tree_schema_compile.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 4752,
+                "hunk_is_single": true,
+                "hunk_start": 4749,
+                "hunk_end": 4755,
+                "func_is_single": true,
+                "func_start": 4749,
+                "func_end": 4755,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "src_tree_schema_compile"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "src_tree_schema_compile"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Logic Organization: Improper Condition Organization",
+            "id": "D.1",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/cdcace7230352a25eb21a488e7f42d004b3de3e1",
+        "commit_before": "054aca293617ab1c7ee48a7dca6906ecad4130ff",
+        "commit_after": "cdcace7230352a25eb21a488e7f42d004b3de3e1",
+        "commit_date": "2017-09-06T13:14:45Z",
+        "files": {
+            "src": [
+                "src/log.c"
+            ],
+            "test": [
+                "tests/api/test_tree_schema.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 475,
+                "hunk_is_single": true,
+                "hunk_start": 472,
+                "hunk_end": 478,
+                "func_is_single": true,
+                "func_start": 472,
+                "func_end": 478,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "test_tree_schema"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "test_tree_schema"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/350a6bf69e03d19fe996cba992b49556ae2ce8ab",
+        "commit_before": "95485ea4036af9c93ac3bd756c8c20509a717d4e",
+        "commit_after": "350a6bf69e03d19fe996cba992b49556ae2ce8ab",
+        "commit_date": "2021-05-25T06:50:09Z",
+        "files": {
+            "src": [
+                "src/json.c"
+            ],
+            "test": [
+                "tests/utests/basic/test_json.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 431,
+                "hunk_is_single": true,
+                "hunk_start": 428,
+                "hunk_end": 434,
+                "func_is_single": true,
+                "func_start": 428,
+                "func_end": 434,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "utest_json"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "utest_json"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/b6ecaeaa0391745ec9054cc4351ac4049317576c",
+        "commit_before": "721b6f65ed98106ea3ce94fab7be9376cf64d200",
+        "commit_after": "b6ecaeaa0391745ec9054cc4351ac4049317576c",
+        "commit_date": "2021-02-08T08:01:22Z",
+        "files": {
+            "src": [
+                "src/xpath.c"
+            ],
+            "test": [
+                "tests/utests/data/test_validation.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 8435,
+                "hunk_is_single": true,
+                "hunk_start": 8432,
+                "hunk_end": 8438,
+                "func_is_single": true,
+                "func_start": 8432,
+                "func_end": 8438,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "utest_validation"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "utest_validation"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/a353cce850560bea761d67a2fbcaf9cb271f586f",
+        "commit_before": "cb798b15339388572ede29205112fe8d1bcf1be5",
+        "commit_after": "a353cce850560bea761d67a2fbcaf9cb271f586f",
+        "commit_date": "2022-11-14T09:09:55Z",
+        "files": {
+            "src": [
+                "src/xpath.c"
+            ],
+            "test": [
+                "tests/utests/basic/test_xpath.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 6587,
+                "hunk_is_single": true,
+                "hunk_start": 6584,
+                "hunk_end": 6590,
+                "func_is_single": true,
+                "func_start": 6584,
+                "func_end": 6590,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "utest_xpath"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "utest_xpath|utest_xpath_valgrind"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/fff4dca0da454cdff4c8fab70b4a62c0674fb862",
+        "commit_before": "320f34305dd9c7d14af5f13bec18e477b37f5db8",
+        "commit_after": "fff4dca0da454cdff4c8fab70b4a62c0674fb862",
+        "commit_date": "2021-10-11T12:26:01Z",
+        "files": {
+            "src": [
+                "src/xpath.c"
+            ],
+            "test": [
+                "tests/utests/basic/test_xpath.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 6784,
+                "hunk_is_single": true,
+                "hunk_start": 6781,
+                "hunk_end": 6787,
+                "func_is_single": true,
+                "func_start": 6781,
+                "func_end": 6787,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "utest_xpath"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "utest_xpath"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Memory Error: Null Pointer Dereference",
+            "id": "C.1",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/812a5bff4857a485db96fe7269af944d0bdb91b3",
+        "commit_before": "b5bc93ee6e0edfc3fb4e9ffbd972037bac42a13a",
+        "commit_after": "812a5bff4857a485db96fe7269af944d0bdb91b3",
+        "commit_date": "2019-09-09T07:18:05Z",
+        "files": {
+            "src": [
+                "src/tree_schema_compile.c"
+            ],
+            "test": [
+                "tests/src/test_tree_schema_compile.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 3670,
+                "hunk_end": 3677,
+                "func_is_single": true,
+                "func_start": 3670,
+                "func_end": 3677,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "src_tree_schema_compile"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "src_tree_schema_compile"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Memory Error: Null Pointer Dereference",
+            "id": "C.1",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/140ede9c075c604632a87ee3bf0e881fb485d0e7",
+        "commit_before": "3957b3370afc80ea33720dae9049a9a8d2df238b",
+        "commit_after": "140ede9c075c604632a87ee3bf0e881fb485d0e7",
+        "commit_date": "2022-05-10T07:27:30Z",
+        "files": {
+            "src": [
+                "src/tree_data.c"
+            ],
+            "test": [
+                "tests/utests/data/test_validation.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 561,
+                "hunk_is_single": true,
+                "hunk_start": 558,
+                "hunk_end": 564,
+                "func_is_single": true,
+                "func_start": 558,
+                "func_end": 564,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "utest_validation"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "utest_validation"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Signature: Incorrect Variable Usage",
+            "id": "A.4",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/9cdb9e6f60d6bae42675bc3b46f5741e50b62e68",
+        "commit_before": "5057c2e0181de68cd43ebcc9059121bab8602107",
+        "commit_after": "9cdb9e6f60d6bae42675bc3b46f5741e50b62e68",
+        "commit_date": "2021-05-18T08:51:54Z",
+        "files": {
+            "src": [
+                "src/parser_xml.c"
+            ],
+            "test": [
+                "tests/utests/data/test_parser_xml.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 303,
+                "hunk_is_single": false,
+                "hunk_start": null,
+                "hunk_end": null,
+                "func_is_single": true,
+                "func_start": 293,
+                "func_end": 307,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "utest_parser_xml"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "utest_parser_xml"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/92cc8517fcb85dcfbb93842758571f721c49c9cb",
+        "commit_before": "1b1e925e40396609cadfe4e780f2adef2896d37a",
+        "commit_after": "92cc8517fcb85dcfbb93842758571f721c49c9cb",
+        "commit_date": "2019-04-25T07:57:06Z",
+        "files": {
+            "src": [
+                "src/tree_schema_compile.c"
+            ],
+            "test": [
+                "tests/src/test_tree_schema_compile.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": false,
+                "hunk_start": null,
+                "hunk_end": null,
+                "func_is_single": true,
+                "func_start": 2017,
+                "func_end": 2148,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "src_tree_schema_compile"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "src_tree_schema_compile"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Logic Organization: Improper Condition Organization",
+            "id": "D.1",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/f128972045a5d4a36854ddc0a75d99803ff81f6d",
+        "commit_before": "ecdc2222aea827975871e45b153ab9aaf3f8590d",
+        "commit_after": "f128972045a5d4a36854ddc0a75d99803ff81f6d",
+        "commit_date": "2022-01-24T08:42:29Z",
+        "files": {
+            "src": [
+                "src/plugins_types.c"
+            ],
+            "test": [
+                "tests/utests/schema/test_tree_schema_compile.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 155,
+                "hunk_end": 163,
+                "func_is_single": true,
+                "func_start": 155,
+                "func_end": 163,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "utest_tree_schema_compile"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "utest_tree_schema_compile"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Signature: Incorrect Function Return Value",
+            "id": "A.3",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/24bd22f5e40f37fb6ae796bb8eebc9de58bae00e",
+        "commit_before": "fd86c5c742590679c4d0731e516fb6674363a003",
+        "commit_after": "24bd22f5e40f37fb6ae796bb8eebc9de58bae00e",
+        "commit_date": "2022-02-02T10:16:56Z",
+        "files": {
+            "src": [
+                "src/xpath.c"
+            ],
+            "test": [
+                "tests/utests/schema/test_tree_schema_compile.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 5475,
+                "hunk_is_single": true,
+                "hunk_start": 5472,
+                "hunk_end": 5478,
+                "func_is_single": true,
+                "func_start": 5472,
+                "func_end": 5478,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "utest_tree_schema_compile"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "utest_tree_schema_compile"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 2,
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/CESNET/libyang/commits/823fbe0f7a7b50b7c80cfd948eb3c189579126ab",
+        "commit_before": "ca6801feadf5efff84bd2786893af293c770741e",
+        "commit_after": "823fbe0f7a7b50b7c80cfd948eb3c189579126ab",
+        "commit_date": "2017-12-14T10:01:40Z",
+        "files": {
+            "src": [
+                "src/tree_schema.c"
+            ],
+            "test": [
+                "tests/schema/test_deviation.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 4079,
+                "hunk_end": 4091,
+                "func_is_single": true,
+                "func_start": 4079,
+                "func_end": 4091,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "test_deviation"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "test_deviation"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 2,
+        "type": {
+            "name": "Logic Organization: Improper Condition Organization",
+            "id": "D.1",
+            "type": "bug"
+        }
+    }
+]

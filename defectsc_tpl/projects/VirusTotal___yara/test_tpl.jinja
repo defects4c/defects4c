@@ -1,0 +1,49 @@
+build_dir=$1
+test_log=$2
+
+
+cat /dev/null > $test_log 
+
+
+make -j {{ cpu_count }}  check  >> $test_log 2>&1 
+
+
+get_status() {
+	string=$(awk '/^FAIL: {{test_flags[0]}}/, /(exit status:\d)/' ./test-suite.log )
+	
+	if [[ -z $string  ]]; then
+	    echo "success\n"
+	else
+	    echo "FAILED\n"
+	fi	
+}
+
+get_err_msg() {
+        save_log=$1
+        awk '/^FAIL: {{test_flags[0]}}/, /(exit status:\d)/' ./test-suite.log > $save_log
+}
+
+
+fix_log="${test_log/\.log/}"
+echo $fix_log"---->"
+
+status_log=$( get_status)
+echo $status_log > "${fix_log}.status"
+
+get_err_msg  "${fix_log}.msg" 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

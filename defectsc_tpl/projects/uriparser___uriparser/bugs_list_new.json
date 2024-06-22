@@ -1,0 +1,92 @@
+[
+    {
+        "commit_after": "864f5d4c127def386dd5cc926ad96934b297f04e",
+        "commit_date": "2018-09-23 20:07:25 +0200",
+        "commit_before": "f7230d6a0c1b12c9857cf8562a47e2f616713070",
+        "files": {
+            "src": [
+                "src/UriQuery.c"
+            ],
+            "test": [
+                "test/test.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 224,
+                "hunk_is_single": true,
+                "hunk_start": 223,
+                "hunk_end": 228,
+                "func_is_single": true,
+                "func_start": 223,
+                "func_end": 228,
+                "func_hunks": [],
+                "patch_md5": "df52d1df4593f59c75c4782325fec5b0"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/uriparser/uriparser/commits/864f5d4c127def386dd5cc926ad96934b297f04e",
+        "type": {
+            "name": "CVE-2018-19198",
+            "id": "CVE-2018-19198",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "cef25028de5ff872c2e1f0a6c562eb3ea9ecbce4",
+        "commit_date": "2018-12-08 18:44:11 +0100",
+        "commit_before": "499214c7f0b3935c6c14436e6aabb9e82990377d",
+        "files": {
+            "src": [
+                "src/UriParse.c"
+            ],
+            "test": [
+                "test/test.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 693,
+                "hunk_is_single": true,
+                "hunk_start": 692,
+                "hunk_end": 697,
+                "func_is_single": true,
+                "func_start": 692,
+                "func_end": 697,
+                "func_hunks": [],
+                "patch_md5": "5e8c2387ca9cd1aaa61c24940ab967d1"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/uriparser/uriparser/commits/cef25028de5ff872c2e1f0a6c562eb3ea9ecbce4",
+        "type": {
+            "name": "CVE-2018-20721",
+            "id": "CVE-2018-20721",
+            "type": "cve"
+        }
+    }
+]

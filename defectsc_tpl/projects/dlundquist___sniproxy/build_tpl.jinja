@@ -1,0 +1,32 @@
+build_dir=$1
+test_log=$2
+
+
+fn=$(realpath $build_dir)
+{% if not is_rebuild %}
+
+	{{apt_install_fn}}
+	export DEBIAN_FRONTEND=noninteractive 
+	apt_install_fn apache2-utils 
+	apt_install_fn cdbs 
+	apt_install_fn dh-autoreconf 
+	apt_install_fn devscripts 
+	apt_install_fn libev-dev 
+	apt_install_fn libpcre3-dev 
+	apt_install_fn libudns-dev 
+	apt_install_fn lintian   
+	apt_install_fn valgrind
+  
+  
+	if [ -f "autogen.sh" ] ; then 
+	
+		./autogen.sh 
+	fi 
+	
+	./configure   --prefix=$fn 
+
+{% endif %}
+
+
+make -j {{ cpu_count }}   
+

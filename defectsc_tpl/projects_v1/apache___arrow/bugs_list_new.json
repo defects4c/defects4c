@@ -1,0 +1,470 @@
+[
+    {
+        "url": "https://api.github.com/repos/apache/arrow/commits/68e0fa7499876fc0cf86b8be784a890226648645",
+        "commit_before": "69266721472725f37095880a9b87d88f395462b6",
+        "commit_after": "68e0fa7499876fc0cf86b8be784a890226648645",
+        "commit_date": "2022-09-16T12:58:41Z",
+        "files": {
+            "src": [
+                "cpp/src/arrow/array/concatenate.cc"
+            ],
+            "test": [
+                "cpp/src/arrow/array/concatenate_test.cc"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 311,
+                "hunk_end": 318,
+                "func_is_single": true,
+                "func_start": 311,
+                "func_end": 318,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "arrow-concatenate-test"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "arrow-concatenate-test"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Memory Error: Memory Overflow",
+            "id": "C.3",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/apache/arrow/commits/eea4a54f66a36137f4204876a68e6d5ed913cbc5",
+        "commit_before": "ff80b30ea6424f21d15ca9511107a869a2f956b0",
+        "commit_after": "eea4a54f66a36137f4204876a68e6d5ed913cbc5",
+        "commit_date": "2022-10-20T21:42:37Z",
+        "files": {
+            "src": [
+                "cpp/src/arrow/adapters/orc/adapter.cc"
+            ],
+            "test": [
+                "cpp/src/arrow/adapters/orc/adapter_test.cc"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 414,
+                "hunk_is_single": true,
+                "hunk_start": 411,
+                "hunk_end": 417,
+                "func_is_single": true,
+                "func_start": 411,
+                "func_end": 417,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "arrow-orc-adapter-test"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": [
+                "-DARROW_ORC=ON",
+                "-DARROW_COMPUTE=ON",
+                "-DORC_SOURCE=BUNDLED",
+                "-DARROW_DATASET=OFF",
+                "-DARROW_NO_DEPRECATED_API=OFF",
+                "-DARROW_PARQUET=OFF",
+                "-DARROW_IPC=OFF",
+                "-DARROW_JEMALLOC=OFF",
+                "-DARROW_SUBSTRAIT=OFF",
+                "-DARROW_USE_ASAN=OFF",
+                "-DARROW_USE_CCACHE=OFF",
+                "-DARROW_USE_UBSAN=OFF",
+                "-DARROW_WITH_BROTLI=OFF",
+                "-DARROW_WITH_BZ2=OFF",
+                "-DARROW_WITH_LZ4=OFF",
+                "-DARROW_WITH_OPENTELEMETRY=OFF",
+                "-DARROW_WITH_SNAPPY=OFF",
+                "-DARROW_WITH_ZLIB=OFF",
+                "-DARROW_WITH_ZSTD=OFF",
+                "-DAWSSDK_SOURCE=BUNDLED",
+                "-DPARQUET_BUILD_EXAMPLES=OFF",
+                "-DPARQUET_BUILD_EXECUTABLES=OFF",
+                "-DProtobuf_SOURCE=BUNDLED"
+            ],
+            "test": null,
+            "test_flags": [
+                "arrow-orc-adapter-test"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Logic Organization: Wrong Function Call Sequence",
+            "id": "D.2",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/apache/arrow/commits/0b4fa2a2bf80bf3a91f9f8f42fe313f78b8a1282",
+        "commit_before": "a17717fa528bb7d495cfba5c6b5fb67866934a63",
+        "commit_after": "0b4fa2a2bf80bf3a91f9f8f42fe313f78b8a1282",
+        "commit_date": "2020-09-21T13:00:22Z",
+        "files": {
+            "src": [
+                "cpp/src/arrow/table_builder.cc"
+            ],
+            "test": [
+                "cpp/src/arrow/table_builder_test.cc"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 65,
+                "hunk_is_single": true,
+                "hunk_start": 62,
+                "hunk_end": 68,
+                "func_is_single": true,
+                "func_start": 62,
+                "func_end": 68,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "arrow-table-test"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "arrow-table-test"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Logic Organization: Improper Condition Organization",
+            "id": "D.1",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/apache/arrow/commits/db004443e631fd72c0fd9a16a02294cd14b456e5",
+        "commit_before": "51213261982799e9bd4b191ab961137cca6299e9",
+        "commit_after": "db004443e631fd72c0fd9a16a02294cd14b456e5",
+        "commit_date": "2022-12-05T14:36:05Z",
+        "files": {
+            "src": [
+                "cpp/src/arrow/dataset/partition.cc"
+            ],
+            "test": [
+                "cpp/src/arrow/dataset/partition_test.cc"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 783,
+                "hunk_is_single": true,
+                "hunk_start": 780,
+                "hunk_end": 786,
+                "func_is_single": true,
+                "func_start": 780,
+                "func_end": 786,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "arrow-dataset-partition-test"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": [
+                "-DARROW_PARQUET=on",
+                "-DARROW_DATASET=on"
+            ],
+            "test": null,
+            "test_flags": [
+                "arrow-dataset-partition-test"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Signature: Fault Input Type",
+            "id": "A.2",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/apache/arrow/commits/171e8bfe5fe13467a1763227e495fae6bc5d011d",
+        "commit_before": "04eb733d9f38ad2fdf61352aa955aa6200f23a7f",
+        "commit_after": "171e8bfe5fe13467a1763227e495fae6bc5d011d",
+        "commit_date": "2020-09-24T09:48:20Z",
+        "files": {
+            "src": [
+                "cpp/src/arrow/compute/kernels/vector_selection.cc"
+            ],
+            "test": [
+                "cpp/src/arrow/compute/kernels/vector_selection_test.cc"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 1174,
+                "hunk_is_single": true,
+                "hunk_start": 1171,
+                "hunk_end": 1177,
+                "func_is_single": true,
+                "func_start": 1171,
+                "func_end": 1177,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "arrow-compute-vector-test"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": [
+                "-DARROW_PARQUET=on",
+                "-DARROW_DATASET=on"
+            ],
+            "test": null,
+            "test_flags": [
+                "arrow-compute-vector-test"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Signature: Fault Input Type",
+            "id": "A.2",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/apache/arrow/commits/4a7e19e118907d0b1c7e1505697a5b74a541c9f7",
+        "commit_before": "58d5bf5053ee26b2b7f7bb26f1252467cd6b2ee6",
+        "commit_after": "4a7e19e118907d0b1c7e1505697a5b74a541c9f7",
+        "commit_date": "2020-06-02T01:39:30Z",
+        "files": {
+            "src": [
+                "cpp/src/arrow/compute/function.h"
+            ],
+            "test": [
+                "cpp/src/arrow/compute/function_test.cc"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 63,
+                "hunk_is_single": true,
+                "hunk_start": 60,
+                "hunk_end": 66,
+                "func_is_single": true,
+                "func_start": 60,
+                "func_end": 66,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "arrow-compute-internals-test"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": [
+                "-DARROW_PARQUET=on",
+                "-DARROW_DATASET=on"
+            ],
+            "test": null,
+            "test_flags": [
+                "arrow-compute-internals-test"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Signature: Incorrect Function Usage",
+            "id": "A.1",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/apache/arrow/commits/3d0a9d58b6fe29dcb208c3fa244c789449517988",
+        "commit_before": "f40e2871919b577995a8e9e2419af2e494f574cb",
+        "commit_after": "3d0a9d58b6fe29dcb208c3fa244c789449517988",
+        "commit_date": "2020-08-08T02:56:01Z",
+        "files": {
+            "src": [
+                "cpp/src/arrow/util/basic_decimal.h"
+            ],
+            "test": [
+                "cpp/src/arrow/util/decimal_test.cc"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 51,
+                "hunk_end": 60,
+                "func_is_single": true,
+                "func_start": 51,
+                "func_end": 60,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "arrow-utility-test"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "arrow-utility-test"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Memory Error: Uncontrolled Resource Consumption",
+            "id": "C.2",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/apache/arrow/commits/c4f8436e2532524c2a2f9cc26f73c6b7dfababaa",
+        "commit_before": "18181fe3022d5142511f507fa3047796c627d88b",
+        "commit_after": "c4f8436e2532524c2a2f9cc26f73c6b7dfababaa",
+        "commit_date": "2020-08-17T14:27:46Z",
+        "files": {
+            "src": [
+                "cpp/src/arrow/compare.cc"
+            ],
+            "test": [
+                "cpp/src/arrow/array/array_test.cc"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 110,
+                "hunk_end": 120,
+                "func_is_single": true,
+                "func_start": 110,
+                "func_end": 120,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "arrow-array-test"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "arrow-array-test"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Signature: Incorrect Function Return Value",
+            "id": "A.3",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/apache/arrow/commits/912e2bb3345536c271580e3a9e88baaffb7f2836",
+        "commit_before": "16638a445201e7bf61358c96a6e70ab81df8a001",
+        "commit_after": "912e2bb3345536c271580e3a9e88baaffb7f2836",
+        "commit_date": "2022-04-22T16:11:51Z",
+        "files": {
+            "src": [
+                "cpp/src/arrow/dataset/dataset_writer.cc"
+            ],
+            "test": [
+                "cpp/src/arrow/dataset/dataset_writer_test.cc"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 426,
+                "hunk_is_single": true,
+                "hunk_start": 423,
+                "hunk_end": 429,
+                "func_is_single": true,
+                "func_start": 423,
+                "func_end": 429,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "arrow-dataset-dataset-writer-test"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": [
+                "-DARROW_PARQUET=on",
+                "-DARROW_DATASET=on"
+            ],
+            "test": null,
+            "test_flags": [
+                "arrow-dataset-dataset-writer-test"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    }
+]

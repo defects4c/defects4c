@@ -1,0 +1,29 @@
+build_dir=$1
+test_log=$2
+
+
+fn=$(realpath $build_dir)
+
+{% if not is_rebuild %}
+
+
+	if [ -f buildconf ]; then 
+		./buildconf 
+	fi 
+
+#	--without-ssl \
+
+CXX=g++ CC=gcc	./configure  --enable-debug --without-zlib \
+	--without-winssl --without-darwinssl \
+	--without-gnutls --without-polarssl --without-mbedtls --without-cyassl \
+	--without-nss --without-axtls --without-ca-bundle --without-ca-path \
+	--without-ca-fallback --without-libpsl --without-libmetalink --without-libssh2 \
+	--without-librtmp --without-winidn --without-libidn2 --without-nghttp2 
+	
+	
+		
+
+{% endif %}
+
+
+make -j {{cpu_count}}

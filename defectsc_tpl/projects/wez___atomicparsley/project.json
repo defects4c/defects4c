@@ -1,0 +1,15 @@
+{
+    "homepage": "https://github.com/wez/atomicparsley",
+    "language": null,
+    "main_repo": "https://github.com/wez/atomicparsley",
+    "repo_name": "wez___atomicparsley",
+    "env": [],
+    "before_install": [],
+    "c_compile": {
+        "build": "build_tpl.jinja",
+        "build_flags": [],
+        "test": "test_tpl.jinja",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

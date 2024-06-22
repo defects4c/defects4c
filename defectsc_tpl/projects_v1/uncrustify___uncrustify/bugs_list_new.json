@@ -1,0 +1,109 @@
+[
+    {
+        "commit_after": "dfe791684b24adc9eef81baef867f824866abdfa",
+        "commit_date": "2017-09-22 18:13:19 +0200",
+        "commit_before": "f4043299e5ee9b8607e6eed1b1bf0901b85fe747",
+        "files": {
+            "src": [
+                "src/width.cpp"
+            ],
+            "test": [
+                "tests/output/c/00451-enum_gallery.c",
+                "tests/output/c/00453-enum_gallery.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 339,
+                "hunk_is_single": true,
+                "hunk_start": 338,
+                "hunk_end": 343,
+                "func_is_single": true,
+                "func_start": 338,
+                "func_end": 343,
+                "func_hunks": [],
+                "patch_md5": "3778037f2c181771c2dae16c9be0a4c9"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "c_00451",
+                "c_00453"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "c_00451",
+                "c_00453"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "url": "https://api.github.com/repos/uncrustify/uncrustify/commits/dfe791684b24adc9eef81baef867f824866abdfa",
+        "type": {
+            "name": "Logic Organization: Wrong Function Call Sequence",
+            "id": "D.2",
+            "type": "bug"
+        }
+    },
+    {
+        "commit_after": "059898e80d55dbe8d5c5eca6e6c1b10668553f92",
+        "commit_date": "2017-10-12 17:09:34 +0200",
+        "commit_before": "a38a422316def5f5101ed6012cc94d78edf468a7",
+        "files": {
+            "src": [
+                "src/align.cpp"
+            ],
+            "test": [
+                "tests/config/bug_1340.cfg",
+                "tests/cpp.test",
+                "tests/input/cpp/bug_1340.cpp",
+                "tests/output/cpp/30023-templates.cpp",
+                "tests/output/cpp/30220-bug_1340.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 730,
+                "hunk_end": 736,
+                "func_is_single": true,
+                "func_start": 730,
+                "func_end": 736,
+                "func_hunks": [],
+                "patch_md5": "f198a33bd3587792caa593c2ab9a9c8b"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "cpp_30023",
+                "cpp_30220"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "cpp_30023",
+                "cpp_30220"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "url": "https://api.github.com/repos/uncrustify/uncrustify/commits/059898e80d55dbe8d5c5eca6e6c1b10668553f92",
+        "type": {
+            "name": "Sanitizer: Control Expression Error",
+            "id": "B",
+            "type": "bug"
+        }
+    }
+]

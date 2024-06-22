@@ -1,0 +1,52 @@
+[
+    {
+        "commit_after": "ecc63d0d3b0e1a62c90b58b1ccdb5ac16cb2400a",
+        "commit_date": "2023-06-20 16:17:26 +0200",
+        "commit_before": "7af09a0e3bca37d9da21a1bca2ab27e494b4e3d8",
+        "files": {
+            "src": [
+                "src/v3_1_encoder.cpp"
+            ],
+            "test": [
+                "tests/CMakeLists.txt",
+                "tests/test_xpub_topic.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": false,
+                "hunk_start": null,
+                "hunk_end": null,
+                "func_is_single": true,
+                "func_start": 29,
+                "func_end": 44,
+                "func_hunks": [],
+                "patch_md5": "d23d8ce451167e7cef6e1b52f4082c28"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "test_xpub_topic"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "test_xpub_topic"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "url": "https://api.github.com/repos/zeromq/libzmq/commits/ecc63d0d3b0e1a62c90b58b1ccdb5ac16cb2400a",
+        "type": {
+            "name": "Logic Organization: Improper Condition Organization",
+            "id": "D.1",
+            "type": "bug"
+        }
+    }
+]

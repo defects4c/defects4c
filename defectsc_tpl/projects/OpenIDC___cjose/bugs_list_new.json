@@ -1,0 +1,48 @@
+[
+    {
+        "commit_after": "7325e9a5e71e2fc0e350487ecac7d84acdf0ed5e",
+        "commit_date": "2023-07-12 10:52:45 +0200",
+        "commit_before": "96f8cb8d1630d76630010a535ba36aecfec8e9c6",
+        "files": {
+            "src": [
+                "src/jwe.c"
+            ],
+            "test": [
+                "test/check_jwe.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 1287,
+                "hunk_is_single": true,
+                "hunk_start": 1286,
+                "hunk_end": 1291,
+                "func_is_single": true,
+                "func_start": 1286,
+                "func_end": 1291,
+                "func_hunks": [],
+                "patch_md5": "ce18fd4ce8d9144c32704fc7933c669f"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "msg": "automake is too old",
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/OpenIDC/cjose/commits/7325e9a5e71e2fc0e350487ecac7d84acdf0ed5e",
+        "type": {
+            "name": "CVE-2023-37464",
+            "id": "CVE-2023-37464",
+            "type": "cve"
+        }
+    }
+]

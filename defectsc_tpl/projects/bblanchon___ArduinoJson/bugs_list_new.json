@@ -1,0 +1,47 @@
+[
+    {
+        "commit_after": "5e7b9ec688d79e7b16ec7064e1d37e8481a31e72",
+        "commit_date": "2015-06-10 21:31:22 +0200",
+        "commit_before": "08d05df00e3773ffecba9c5ec45e5344cc5f90de",
+        "files": {
+            "src": [
+                "src/Internals/QuotedString.cpp"
+            ],
+            "test": [
+                "test/QuotedString_ExtractFrom_Tests.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 58,
+                "hunk_end": 103,
+                "func_is_single": true,
+                "func_start": 58,
+                "func_end": 103,
+                "func_hunks": [],
+                "patch_md5": "374d5976517de434df55e22009628a91"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/bblanchon/ArduinoJson/commits/5e7b9ec688d79e7b16ec7064e1d37e8481a31e72",
+        "type": {
+            "name": "CVE-2015-4590",
+            "id": "CVE-2015-4590",
+            "type": "cve"
+        }
+    }
+]

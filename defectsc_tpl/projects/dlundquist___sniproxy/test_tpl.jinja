@@ -1,0 +1,23 @@
+
+test_log=$2
+fix_log="${test_log/\.log/}"
+
+
+bash -c "cd tests && ./bad_dns_request_test valgrind --leak-check=full --error-exitcode=1" > "${fix_log}.msg"   2> "${fix_log}.msg"    
+
+
+
+msg_expect=$(grep -E 'ERROR SUMMARY: ([1-9])' "${fix_log}.msg" )
+
+if [ -z $msg_expect ]; then
+	    echo "success\n" > "${fix_log}.status" ; 
+else 
+	    echo "FAILED\n" > "${fix_log}.status" ;
+fi
+
+
+
+
+
+
+

@@ -1,0 +1,53 @@
+[
+    {
+        "commit_after": "9ff3016c00108f21760d438bfbb451188886274c",
+        "commit_date": "2020-05-12 18:47:56 -0500",
+        "commit_before": "f8044b88e963409641aa1bfe8a92c31a03550cd8",
+        "files": {
+            "src": [
+                "include/soci/type-conversion.h"
+            ],
+            "test": [
+                "tests/common-tests.h"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 148,
+                "hunk_is_single": true,
+                "hunk_start": 147,
+                "hunk_end": 152,
+                "func_is_single": true,
+                "func_start": 147,
+                "func_end": 152,
+                "func_hunks": [],
+                "patch_md5": "293c90d7687f9471fb213520fb54e834"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "soci_sqlite3_test_static",
+                "soci_sqlite3_test"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "soci_sqlite3_test_static",
+                "soci_sqlite3_test"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "url": "https://api.github.com/repos/SOCI/soci/commits/9ff3016c00108f21760d438bfbb451188886274c",
+        "type": {
+            "name": "Logic Organization: Improper Condition Organization",
+            "id": "D.1",
+            "type": "bug"
+        }
+    }
+]

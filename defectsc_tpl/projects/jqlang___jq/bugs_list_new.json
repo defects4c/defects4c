@@ -1,0 +1,92 @@
+[
+    {
+        "commit_after": "c9a51565214eece8f1053089739aea73145bfd6b",
+        "commit_date": "2023-12-13 20:17:17 +0100",
+        "commit_before": "c5fd64ba975ee35df17bb0c335efb00bffce4d91",
+        "files": {
+            "src": [
+                "src/jv.c"
+            ],
+            "test": [
+                "tests/shtest"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 740,
+                "hunk_end": 754,
+                "func_is_single": true,
+                "func_start": 740,
+                "func_end": 754,
+                "func_hunks": [],
+                "patch_md5": "d4230ca46f7b9f711882034c23c1ccfc"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/jqlang/jq/commits/c9a51565214eece8f1053089739aea73145bfd6b",
+        "type": {
+            "name": "CVE-2023-50268",
+            "id": "CVE-2023-50268",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "71c2ab509a8628dbbad4bc7b3f98a64aa90d3297",
+        "commit_date": "2023-12-13 20:20:22 +0100",
+        "commit_before": "c9a51565214eece8f1053089739aea73145bfd6b",
+        "files": {
+            "src": [
+                "src/jv.c"
+            ],
+            "test": [
+                "tests/shtest"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 635,
+                "hunk_end": 641,
+                "func_is_single": true,
+                "func_start": 635,
+                "func_end": 641,
+                "func_hunks": [],
+                "patch_md5": "cbd040d2b2d075c9bad1e21589c24123"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/jqlang/jq/commits/71c2ab509a8628dbbad4bc7b3f98a64aa90d3297",
+        "type": {
+            "name": "CVE-2023-50246",
+            "id": "CVE-2023-50246",
+            "type": "cve"
+        }
+    }
+]

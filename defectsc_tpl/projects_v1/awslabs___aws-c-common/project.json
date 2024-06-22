@@ -1,0 +1,15 @@
+{
+    "homepage": "https://api.github.com/repos/awslabs/aws-c-common/commits/d8c7708b2cd8f105cc2440b22dc7b805078cb3d7",
+    "language": null,
+    "main_repo": "https://github.com/awslabs/aws-c-common",
+    "repo_name": "awslabs___aws-c-common",
+    "env": ["CXX=g++","CC=gcc"],
+    "before_install": [],
+    "c_compile": {
+        "build": "ninja",
+        "build_flags": [],
+        "test": "ctest",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

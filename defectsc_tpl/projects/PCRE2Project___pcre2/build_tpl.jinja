@@ -1,0 +1,31 @@
+build_dir=$1
+
+
+export CC=gcc
+export CXX=g++ 
+
+build_flags=" {% for option in build_flags %}{{ option }} {% endfor %} ";
+
+
+
+{% if not is_rebuild %}
+	./autogen.sh
+	
+	./configure \
+	--quiet \
+	--enable-shared=yes \
+	--prefix=`pwd`/$build_dir \
+	$build_flags \
+	--enable-jit  \
+	CFLAGS=" -Wno-error  -g -O2 "  CXX=g++ CC=gcc  
+
+	
+  
+{% endif %}
+
+
+
+make CFLAGS="-Wno-error  -g -O2 " -j {{cpu_count}} pcre2_jit_test 
+
+
+

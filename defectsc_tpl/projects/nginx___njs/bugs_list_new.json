@@ -1,0 +1,508 @@
+[
+    {
+        "commit_after": "d457c9545e7e71ebb5c0479eb16b9d33175855e2",
+        "commit_date": "2021-12-24 10:00:15 +0300",
+        "commit_before": "61c91f55b925083246157ded44d54583025d115e",
+        "files": {
+            "src": [
+                "src/njs_vmcode.c"
+            ],
+            "test": [
+                "src/test/njs_unit_test.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 1517,
+                "hunk_is_single": true,
+                "hunk_start": 1516,
+                "hunk_end": 1521,
+                "func_is_single": true,
+                "func_start": 1516,
+                "func_end": 1521,
+                "func_hunks": [],
+                "patch_md5": "fb1d9701f948a0075f14502cab589713"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/nginx/njs/commits/d457c9545e7e71ebb5c0479eb16b9d33175855e2",
+        "type": {
+            "name": "CVE-2021-46461",
+            "id": "CVE-2021-46461",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "39e8fa1b7db1680654527f8fa0e9ee93b334ecba",
+        "commit_date": "2022-01-19 14:03:49 +0000",
+        "commit_before": "6a40a85ff239497c6458c7dbef18f6a2736fe992",
+        "files": {
+            "src": [
+                "src/njs_function.c"
+            ],
+            "test": [
+                "src/test/njs_unit_test.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": false,
+                "hunk_start": null,
+                "hunk_end": null,
+                "func_is_single": true,
+                "func_start": 1385,
+                "func_end": 1411,
+                "func_hunks": [],
+                "patch_md5": "4c4c026786439b70ee4a240657609b8c"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "msg": "cannot reproduce dgx, all is success",
+            "status": -1
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/nginx/njs/commits/39e8fa1b7db1680654527f8fa0e9ee93b334ecba",
+        "type": {
+            "name": "CVE-2021-46462",
+            "id": "CVE-2021-46462",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "ad48705bf1f04b4221a5f5b07715ac48b3160d53",
+        "commit_date": "2022-02-21 16:52:59 +0000",
+        "commit_before": "e673ae41a998d1391bd562edb2ed6d49db7cc716",
+        "files": {
+            "src": [
+                "src/njs_function.c"
+            ],
+            "test": [
+                "test/js/async_recursive_large.t.js",
+                "test/js/async_recursive_mid.t.js"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 812,
+                "hunk_is_single": true,
+                "hunk_start": 811,
+                "hunk_end": 819,
+                "func_is_single": true,
+                "func_start": 811,
+                "func_end": 819,
+                "func_hunks": [],
+                "patch_md5": "6c76292920d5020cc638379f3dd4ef60"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": [
+                "--debug=YES",
+                "--debug-memory=YES",
+                "--test262=YES"
+            ],
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/nginx/njs/commits/ad48705bf1f04b4221a5f5b07715ac48b3160d53",
+        "type": {
+            "name": "CVE-2022-27007",
+            "id": "CVE-2022-27007",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "f65981b0b8fcf02d69a40bc934803c25c9f607ab",
+        "commit_date": "2022-02-21 16:53:16 +0000",
+        "commit_before": "ad48705bf1f04b4221a5f5b07715ac48b3160d53",
+        "files": {
+            "src": [
+                "src/njs_vmcode.c"
+            ],
+            "test": [
+                "src/test/njs_unit_test.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 1055,
+                "hunk_end": 1068,
+                "func_is_single": true,
+                "func_start": 1055,
+                "func_end": 1068,
+                "func_hunks": [],
+                "patch_md5": "637f14b3b653962e5846c438181eb347"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/nginx/njs/commits/f65981b0b8fcf02d69a40bc934803c25c9f607ab",
+        "type": {
+            "name": "CVE-2022-28049",
+            "id": "CVE-2022-28049",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "222d6fdcf0c6485ec8e175f3a7b70d650c234b4e",
+        "commit_date": "2022-03-28 16:22:17 +0000",
+        "commit_before": "7723f9dc520f08d3a75adf5dac6556503a00ec87",
+        "files": {
+            "src": [
+                "src/njs_vmcode.c"
+            ],
+            "test": [
+                "src/test/njs_unit_test.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": false,
+                "hunk_start": null,
+                "hunk_end": null,
+                "func_is_single": true,
+                "func_start": 700,
+                "func_end": 973,
+                "func_hunks": [],
+                "patch_md5": "08a47cd5bf3ba96e6990b1f6e1ea6d30"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/nginx/njs/commits/222d6fdcf0c6485ec8e175f3a7b70d650c234b4e",
+        "type": {
+            "name": "CVE-2022-29369",
+            "id": "CVE-2022-29369",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "ab1702c7af9959366a5ddc4a75b4357d4e9ebdc1",
+        "commit_date": "2022-04-11 15:55:14 -0700",
+        "commit_before": "222d6fdcf0c6485ec8e175f3a7b70d650c234b4e",
+        "files": {
+            "src": [
+                "src/njs_module.c"
+            ],
+            "test": [
+                "test/js/import_very_long_path.t.js"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 118,
+                "hunk_end": 124,
+                "func_is_single": true,
+                "func_start": 118,
+                "func_end": 124,
+                "func_hunks": [],
+                "patch_md5": "fba73081b7f29ad08e7ae0e74009cda5"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/nginx/njs/commits/ab1702c7af9959366a5ddc4a75b4357d4e9ebdc1",
+        "type": {
+            "name": "CVE-2022-29379",
+            "id": "CVE-2022-29379",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "8b39afdad9a0761e0a5d4af1a762bd9a6daef572",
+        "commit_date": "2022-04-22 17:02:28 -0700",
+        "commit_before": "675049dc2ce07a06d5e6d65ab8664e49c7659d3a",
+        "files": {
+            "src": [
+                "src/njs_array.c"
+            ],
+            "test": [
+                "src/test/njs_unit_test.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 2696,
+                "hunk_end": 2702,
+                "func_is_single": true,
+                "func_start": 2696,
+                "func_end": 2702,
+                "func_hunks": [],
+                "patch_md5": "b631a03af983d65b7178e63e447227c1"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/nginx/njs/commits/8b39afdad9a0761e0a5d4af1a762bd9a6daef572",
+        "type": {
+            "name": "CVE-2022-29780",
+            "id": "CVE-2022-29780",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "2e00e95473861846aa8538be87db07699d9f676d",
+        "commit_date": "2022-04-22 17:02:36 -0700",
+        "commit_before": "8b39afdad9a0761e0a5d4af1a762bd9a6daef572",
+        "files": {
+            "src": [
+                "src/njs_array.c"
+            ],
+            "test": [
+                "src/test/njs_unit_test.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 1285,
+                "hunk_is_single": true,
+                "hunk_start": 1284,
+                "hunk_end": 1289,
+                "func_is_single": true,
+                "func_start": 1284,
+                "func_end": 1289,
+                "func_hunks": [],
+                "patch_md5": "c1567ba3f2f19f96c676027a78529535"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/nginx/njs/commits/2e00e95473861846aa8538be87db07699d9f676d",
+        "type": {
+            "name": "CVE-2022-29779",
+            "id": "CVE-2022-29779",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "eafe4c7a326b163612f10861392622b5da5b1792",
+        "commit_date": "2022-04-27 16:31:00 -0700",
+        "commit_before": "982100ba56798dfc487ec9d792ce91916e14c5cc",
+        "files": {
+            "src": [
+                "src/njs_iterator.c"
+            ],
+            "test": [
+                "src/test/njs_unit_test.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 560,
+                "hunk_end": 570,
+                "func_is_single": true,
+                "func_start": 560,
+                "func_end": 570,
+                "func_hunks": [],
+                "patch_md5": "259858666e7bb6a37197f71f405a9748"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/nginx/njs/commits/eafe4c7a326b163612f10861392622b5da5b1792",
+        "type": {
+            "name": "CVE-2022-31307",
+            "id": "CVE-2022-31307",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "81af26364c21c196dd21fb5e14c7fa9ce7debd17",
+        "commit_date": "2022-05-06 18:55:07 -0700",
+        "commit_before": "99239ae377a71a4c79213f4be69d828c399e23da",
+        "files": {
+            "src": [
+                "src/njs_array.c"
+            ],
+            "test": [
+                "src/test/njs_unit_test.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 143,
+                "hunk_is_single": true,
+                "hunk_start": 142,
+                "hunk_end": 147,
+                "func_is_single": true,
+                "func_start": 142,
+                "func_end": 147,
+                "func_hunks": [],
+                "patch_md5": "634906689e3af41339e8e2e82b39b0ef"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/nginx/njs/commits/81af26364c21c196dd21fb5e14c7fa9ce7debd17",
+        "type": {
+            "name": "CVE-2022-31306",
+            "id": "CVE-2022-31306",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "5c6130a2a0b4c41ab415f6b8992aa323636338b9",
+        "commit_date": "2022-05-06 18:55:35 -0700",
+        "commit_before": "81af26364c21c196dd21fb5e14c7fa9ce7debd17",
+        "files": {
+            "src": [
+                "src/njs_typed_array.c"
+            ],
+            "test": [
+                "src/test/njs_unit_test.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 702,
+                "hunk_end": 709,
+                "func_is_single": true,
+                "func_start": 702,
+                "func_end": 709,
+                "func_hunks": [],
+                "patch_md5": "d8af3a7e257c289da864d3b4dac61f50"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "build_flags_backup": [
+                "--debug=YES",
+                "--debug-memory=YES",
+                "--test262=YES"
+            ],
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/nginx/njs/commits/5c6130a2a0b4c41ab415f6b8992aa323636338b9",
+        "type": {
+            "name": "CVE-2022-30503",
+            "id": "CVE-2022-30503",
+            "type": "cve"
+        }
+    }
+]

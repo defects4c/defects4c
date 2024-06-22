@@ -1,0 +1,66 @@
+build_dir=$1
+
+
+bison_path=$(realpath "../dep_dirs")
+mkdir -p $bison_path
+
+if [[ ! -d $bison_path"/bison-2.7/bison-2.7_bin" ]]; then 
+	cur_dir=$(pwd)	
+
+	wget https://ftp.gnu.org/gnu/bison/bison-2.7.tar.gz -P  $bison_path
+	cd $bison_path 
+
+	tar -xf bison-2.7.tar.gz 
+
+	cd "bison-2.7"
+
+	wget 'https://raw.githubusercontent.com/rdslw/openwrt/e5d47f32131849a69a9267de51a30d6be1f0d0ac/tools/bison/patches/110-glibc-change-work-around.patch' -O- \
+	 | git apply -
+
+
+	./configure --prefix=`pwd`/bison-2.7_bin
+
+	make -j $(nproc)
+
+	make install 
+
+	cd $cur_dir
+fi 
+
+
+export PATH=$bison_path"/bison-2.7/bison-2.7_bin/bin/":$PATH
+
+#TS="--enable-maintainer-zts";
+#DEBUG="--enable-debug";
+
+
+build_flags=" {% for option in build_flags %}{{ option }} {% endfor %} ";
+
+
+
+{% if not is_rebuild %}
+	./buildconf --force
+	
+	./configure \
+	--quiet \
+	$build_flags \
+	--enable-phpdbg \
+	--enable-fpm \
+	--without-pear \
+	--enable-sysvsem \
+	--enable-sysvshm \
+	--enable-shmop \
+	--enable-pcntl \
+	--enable-mbstring \
+	 --enable-shared=Yes \
+	  --enable-static=No \
+	CFLAGS="-Wno-error" CXX=g++ CC=gcc   
+
+{% endif %}
+
+
+
+make -j {{ cpu_count }} 
+
+
+

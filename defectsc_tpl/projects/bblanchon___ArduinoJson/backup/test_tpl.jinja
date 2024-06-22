@@ -1,0 +1,11 @@
+build_dir=$1
+test_log=$2
+
+
+fn=$(realpath $build_dir)
+
+fix_log="${test_log/\.log/}"
+
+
+bash -c " cd tests &&  scons -j  {{cpu_count}} && ./testHarness run tarTests  --json={{test_log}} "   2>&1 > "${fix_log}.msg" 
+

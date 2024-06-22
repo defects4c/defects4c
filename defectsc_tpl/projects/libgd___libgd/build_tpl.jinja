@@ -1,0 +1,40 @@
+build_dir=$1
+test_log=$2
+
+export	 CXX=g++ 
+export 	 CC=gcc 
+
+
+{% if not is_rebuild %}
+
+	{{apt_install_fn}}
+	apt_install_fn autoconf 
+	apt_install_fn libtool 
+	apt_install_fn automake
+	
+	if [[ -f bootstrap.sh ]]; then 
+		./bootstrap.sh 
+	fi 
+	
+	./configure    \
+	 --enable-static=no \
+	--enable-shared=yes \
+	--with-zlib \
+	 --with-png \
+	 --with-freetype \
+	  --with-fontconfig \
+	  --with-jpeg \
+	   --with-xpm \
+		 --with-tiff \
+		  --with-webp 
+
+{% endif %}
+
+
+if  [ ! -f "tests/gdimagefilltoborder/github_bug_215.c" ] && [[ $test_log =~ "77f619d48259383628c3ec4654b1ad578e9eb40e" ]] ; then 
+ 	## fix the 77f619d48259383628c3ec4654b1ad578e9eb40e
+	 wget https://raw.githubusercontent.com/libgd/libgd/b3190785bbe1d1cf768773474debcb58efcdba42/tests/gdimagefilltoborder/github_bug_215.c -O tests/gdimagefilltoborder/github_bug_215.c
+fi 
+
+
+make CFLAGS="-Wno-error" -j {{cpu_count}} 
