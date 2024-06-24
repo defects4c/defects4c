@@ -24,7 +24,7 @@ or
 ```
 
 ```
- docker run --name my_defects4c --rm -d \
+ docker run --name my_defects4c -d \
         --ipc=host \
          -v "`pwd`/defectsc_tpl:/src" \
          -v "`pwd`/out_tmp_dirs:/out" \
