@@ -59,7 +59,7 @@ find projects* -name '*bug*json'|xargs jq '.[]|select(.unittest.status=="success
 jq ".[]|.commit_after" projects_v1/[repo]/bugs_list_new.json
 
 #for example
-jq ".[]|.commit_after" projects_v1/llvm___llvm-project/bugs_list_new.json
+jq ".[]|.commit_after" projects_v1/danmar___cppcheck/bugs_list_new.json
 
 ```
 
@@ -68,11 +68,16 @@ jq ".[]|.commit_after" projects_v1/llvm___llvm-project/bugs_list_new.json
 ```
 jq '.[]|select(.commit_after=="[commit_after]")|.' projects_v1/[repo]/bugs_list_new.json
 #for example
-jq '.[]|select(.commit_after=="7b54a29c2e72e3e6bf7bb8cb5acfe254335584d7")|.' projects_v1/llvm___llvm-project/bugs_list_new.json
+jq '.[]|select(.commit_after=="d2284ddbcd2a70b4a39047ae32b1c5662060407f")|.' projects_v1/danmar___cppcheck/bugs_list_new.json
 ```
 
 - Checkout a buggy source code and reproduce the UnitTest pair (reproduce [bug_id]):
-
+```
+bash bulk_git_clone.sh [repo]
+# or git clone all projects 
+bash bulk_git_clone.sh 
+```
+Now, you can reproduce any bug
 ```
 python3 bug_helper_v1_out2.py  reproduce [bug_id]
 for example
