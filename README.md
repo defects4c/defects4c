@@ -102,7 +102,13 @@ for example
 python3 bug_helper_v1_out2.py  reproduce danmar___cppcheck@a0c37ceba27179496fa2f44072f85e2a5448216e 
 ```
 
-* then you can check out the status and error message from the path '/out/[project]', e.g. `ls /out/danmar___cppcheck `, there are two file types, the log for error message of compilation and XML for units report.
+* then you can check out the status and error message from the path '/out/[project]', e.g. `ls /out/danmar___cppcheck `, there are two file types, the `msg` for error message of compilation and `status` for units pass.
+```
+cat  /out/danmar___cppcheck/logs/test_a0c37ceba27179496fa2f44072f85e2a5448216e_fix.msg
+
+cat  /out/danmar___cppcheck/logs/test_a0c37ceba27179496fa2f44072f85e2a5448216e_fix.status
+
+```
 
 ## 5, Fix a bug by given patch path
 
