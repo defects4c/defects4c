@@ -18,7 +18,7 @@ To fill this critical gap, we introduces Defects4C, a high-quality executable be
 a. Initialize Defects4C :
 
 ```shell
-  docker image build -t base/defects4c -f docker_dirs/Dockerfile .
+  docker image build -t defects4c/defects4c -f docker_dirs/Dockerfile .
 or 
   docker pull defects4c/defects4c
 ```
@@ -29,7 +29,7 @@ or
          -v "`pwd`/defectsc_tpl:/src" \
          -v "`pwd`/out_tmp_dirs:/out" \
          -v "`pwd`/patche_dirs:/patches" \
-        base/defects4c:latest
+        defects4c/defects4c:latest
 ```
 
 b. Change working environment into the docker container
