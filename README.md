@@ -44,7 +44,20 @@ bash /src/install_deps.sh
 
 This is a onetime setup, it takes 10-15 minutes in 128 cores, all bugs' env initial time only in here.
 
-## 3, Reproduce a bug 
+## 3, download bug's repo.   
+
+<details>
+
+<summary>One command to download all projects
+
+```
+bash bulk_git_clone.sh
+```
+
+</summary>
+
+### You can checkout one by one like 
+
 there are two parts for defects4c, one is defects4c_bug which collect normal bug from real-worldby our human
 
 - List Projects
@@ -74,9 +87,14 @@ jq '.[]|select(.commit_after=="d2284ddbcd2a70b4a39047ae32b1c5662060407f")|.' pro
 - Checkout a buggy source code and reproduce the UnitTest pair (reproduce [bug_id]):
 ```
 bash bulk_git_clone.sh [repo]
-# or git clone all projects 
+# or git clone one project or all projects 
+bash bulk_git_clone.sh danmar___cppcheck
 bash bulk_git_clone.sh 
 ```
+
+</details>
+
+## 4, Reproduce one bug
 Now, you can reproduce any bug
 ```
 python3 bug_helper_v1_out2.py  reproduce [bug_id]
@@ -86,7 +104,7 @@ python3 bug_helper_v1_out2.py  reproduce danmar___cppcheck@a0c37ceba27179496fa2f
 
 * then you can check out the status and error message from the path '/out/[project]', e.g. `ls /out/danmar___cppcheck `, there are two file types, the log for error message of compilation and XML for units report.
 
-## 4, Fix a bug by given patch path
+## 5, Fix a bug by given patch path
 
 - Verify a patch whether can repair the error or not:
 
