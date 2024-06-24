@@ -9,7 +9,7 @@ import pprint
 
 
 # ROOT_DIR = "/data3/code_dst2/repo_dirs/" 
-ROOT_DIR = "/out2/" 
+ROOT_DIR = "/out/" 
 SRC_DIR = os.path.dirname( os.path.abspath(__file__) )
 # print ("SRC_DIR" , SRC_DIR )
 
