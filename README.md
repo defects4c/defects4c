@@ -95,7 +95,7 @@ Finally, it will show the patch verification result, if the status is a failure,
 
 # Benchmark in one 
 The scripts to 
-We offer the script to assess the C/C++ Faults for LLM-Based Program Repair, calculate the pass@k where k in greedy, 1, 10 and 100 repsectively, which depends on (VLLM)[https://github.com/vllm/vllm-project], 
+We offer the script to assess the C/C++ Faults for LLM-Based Program Repair, calculate the pass@k where k in greedy, 1, 10 and 100 repsectively, which depends on ([VLLM](https://github.com/vllm-project/vllm)) 
 
 ```
 updating
