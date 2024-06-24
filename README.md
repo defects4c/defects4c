@@ -50,23 +50,25 @@ there are two parts for defects4c, one is defects4c_bug which collect normal bug
 - List Projects
 
 ```shell
-python3 bug_helper_v1_out2.py  list 
+find projects* -name '*bug*json'|xargs jq '.[]|select(.unittest.status=="success2")|.url'|awk -F "/commits/" '{print $1}'|sort |uniq -c
 ```
 
 - List the buglist for a specific project (list -r [project] ):
 
 ```
-python3 bug_helper_v1_out2.py  list -r [project_name]
+jq ".[]|.commit_after" projects_v1/[repo]/bugs_list_new.json
+
 #for example
-python3 bug_helper_v1_out2.py  list -r danmar___cppcheck
+jq ".[]|.commit_after" projects_v1/llvm___llvm-project/bugs_list_new.json
+
 ```
 
 - Get information for a specific bug (info [bug_id]):
 
 ```
-python3 bug_helper_v1_out2.py  info [bug_id] 
-for example
-python3 bug_helper_v1_out2.py  info danmar___cppcheck@a0c37ceba27179496fa2f44072f85e2a5448216e 
+jq '.[]|select(.commit_after=="[commit_after]")|.' projects_v1/[repo]/bugs_list_new.json
+#for example
+jq '.[]|select(.commit_after=="7b54a29c2e72e3e6bf7bb8cb5acfe254335584d7")|.' projects_v1/llvm___llvm-project/bugs_list_new.json
 ```
 
 - Checkout a buggy source code and reproduce the UnitTest pair (reproduce [bug_id]):
