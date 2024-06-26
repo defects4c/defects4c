@@ -7,16 +7,17 @@ To fill this critical gap, we introduce Defects4C, a high-quality executable ben
 
 
 
-## 1. Overview
+## Scenario
 
-- To assess the effectiveness of existing state-of-the-art APR techniques in repairing C/C++ faults, we conduct a comprehensive empirical study using 24 state-of-the-art LLMs with Defects4C in two different scenarios:
+To assess the effectiveness of existing state-of-the-art APR techniques in repairing C/C++ faults, we conduct a comprehensive empirical study using 24 state-of-the-art LLMs with Defects4C in two different scenarios:
 
   - Single-round repair
   - Conversation-based repair for evaluation. 
 
 
+# How to start 
 
-## 2. Setup the docker. 
+## 1. Setup the docker. 
 
 a. Initialize Defects4C :
 
