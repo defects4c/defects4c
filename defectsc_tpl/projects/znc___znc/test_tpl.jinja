@@ -1,0 +1,69 @@
+build_dir=$1
+test_log=$2
+
+make -j {{ cpu_count }}   inttest > /dev/null   2>&1 
+
+username="defects4c_user"
+
+# Check if the user exists
+if id "$username" &>/dev/null; then
+    echo "User $username already exists."
+else
+    # Create the user with the root group
+    useradd -G root "$username"
+    echo "User $username created with root group."
+	# Add user to sudo group without password
+	echo "$username ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers >/dev/null
+	echo "User $username added to sudo group without password."
+fi
+
+
+
+
+
+
+cat /dev/null > $test_log
+chmod 777 $test_log
+
+cat /dev/null > "${test_log}.xml"
+chmod 777 "${test_log}.xml"
+
+##GTEST_OUTPUT=xml:"${test_log}.xml"   su - $username   -c "  ./inttest --gtest_filter='*StatusEchoMessage*:*AwayNotify*'  >>  $test_log 2>&1    "
+##GTEST_OUTPUT=xml:"${test_log}.xml" ./inttest --gtest_filter="{{ test_flags|join(', ') }}"   >>  $test_log 2>&1 
+
+
+
+#su - $username   -c "  GTEST_OUTPUT=xml:${test_log}.xml   ./inttest --gtest_filter='{{ test_flags|join(', ') }}'  >>  $test_log 2>&1   "
+
+su - $username   -c " ./inttest --gtest_filter='{{ test_flags|join(', ') }}'  --gtest_output=xml:$test_log.xml  >>  $test_log 2>&1   "
+
+
+
+
+get_status() {
+	string=$(cat $test_log )
+	
+    if [[ $string == *"==ERROR"* ]] || [[ $string == *"FAILED"* ]] || [[ $string == *"AddressSanitizer:"* ]] || [[ $string == *"SIGSEGV, Segmentation fault"* ]] ; then	    
+    	echo "FAILED\n"
+	else
+	    echo "success\n"
+	fi	
+}
+
+
+get_err_msg() {
+
+	awk '/<failure/,/<\/failure/' "${test_log}.xml" >  $1 
+
+}
+
+
+fix_log="${test_log/\.log/}"
+echo $fix_log"---->"
+
+status_log=$( get_status)
+echo $status_log > "${fix_log}.status"
+
+get_err_msg  "${fix_log}.msg" 
+
+

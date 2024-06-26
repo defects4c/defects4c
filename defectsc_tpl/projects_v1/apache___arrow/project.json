@@ -1,0 +1,31 @@
+{
+    "homepage": "https://api.github.com/repos/apache/arrow/commits/5a0ebb8aaa2dfabca072d18d9bea53fe813f519b",
+    "language": null,
+    "main_repo": "https://github.com/apache/arrow",
+    "repo_name": "apache___arrow",
+    "env": [],
+    "before_install": [],
+    "c_compile": {
+        "build": "ninja",
+        "build_flags": ["-S=cpp", 
+"-DARROW_BUILD_STATIC=OFF",
+"-DARROW_COMPUTE=ON",
+"-DARROW_BUILD_STATIC=OFF",
+"-DARROW_BUILD_SHARED=ON",
+"-DARROW_BUILD_TESTS=ON",
+"-DARROW_INSTALL_NAME_RPATH=OFF",
+"-DARROW_USE_ASAN=OFF",
+"-DAWSSDK_SOURCE=BUNDLED",
+"-Dgoogle_cloud_cpp_storage_SOURCE=BUNDLED",
+"-DgRPC_SOURCE=BUNDLED",
+"-DGTest_SOURCE=BUNDLED",
+"-DORC_SOURCE=BUNDLED",
+"-DPARQUET_BUILD_EXECUTABLES=ON",
+"-DProtobuf_SOURCE=BUNDLED",
+"-DPYTHON=python3",
+"-Dxsimd_SOURCE=BUNDLED" ],
+        "test": "ctest",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

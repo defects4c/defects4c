@@ -1,0 +1,48 @@
+[
+    {
+        "commit_after": "1bbaa929b77113532785c408dd1b41cd0521ffc8",
+        "commit_date": "2023-07-20 07:19:01 +0100",
+        "commit_before": "92ddd7c92961e321ef96a99066924a6a395b334d",
+        "files": {
+            "src": [
+                "lib/log_blackbox.c"
+            ],
+            "test": [
+                "tests/check_log.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 110,
+                "hunk_end": 117,
+                "func_is_single": true,
+                "func_start": 110,
+                "func_end": 117,
+                "func_hunks": [],
+                "patch_md5": "acdbb6c385fd17896ad324ee67bbf50e"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "msg": "cannot compile in dgx",
+            "status": -2
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/ClusterLabs/libqb/commits/1bbaa929b77113532785c408dd1b41cd0521ffc8",
+        "type": {
+            "name": "CVE-2023-39976",
+            "id": "CVE-2023-39976",
+            "type": "cve"
+        }
+    }
+]

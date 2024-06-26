@@ -1,0 +1,64 @@
+build_dir=$1
+test_log=$2
+
+
+if [ ! -f "./tests/TESTrun" ]; then 
+  cp "./tests/TESTrun.sh" "./tests/TESTrun"
+fi 
+
+
+fix_log="${test_log/\.log/}"
+fix_log_msg="${fix_log}.msg"
+
+
+cat /dev/null > $fix_log_msg
+cat /dev/null > "${fix_log}.status"
+
+
+if [[ -f "./tests/TESTLIST"  &&  -f "./tests/TESTonce" ]]; then
+
+	cd ./tests/
+	
+
+	run_test() {
+
+		cat TESTLIST|grep "$1" | while read name input output options
+		do 
+		    timeout 30 ./TESTonce $name $input $output "$options" 2>&1 >> $fix_log_msg
+		done 
+	}
+	
+	{% for one_file in test_files %}	
+		
+	    {% if  one_file.endswith('pcap') %}
+			test_case_name={{ one_file.split('/') | last }}
+			run_test $test_case_name
+			return_status=$?
+			expect_status=0
+			
+			if [ $return_status -ne $expect_status ]; then 
+				    echo "FAILED\n" >> "${fix_log}.status" ;
+			else 
+				    echo "success\n" >> "${fix_log}.status" ; 
+			fi
+			
+		{% endif %}
+		
+	{% endfor %}
+
+else 
+
+	echo "error\n" >> "${fix_log}.status" ;
+	if [ -f "./tests/TESTLIST" ] ; then 
+		echo "error1\n" >> "${fix_log}.status" ;
+	fi 
+	if [ -f "./tests/TESTonce" ] ; then 
+		echo "error2\n" >> "${fix_log}.status" ;
+	fi 
+
+
+fi 
+
+
+
+

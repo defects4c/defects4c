@@ -1,0 +1,67 @@
+# bash inplace_test.sh [op_name] [argv]
+# bash  inplace_test.sh "get_status" this_is_test_log 
+
+build_dir=$1
+test_log=$2
+fn=$(realpath $test_log )
+
+if [[ ! -d $build_dir ]]; then 
+	build_dir=build
+	
+fi 
+
+
+make -j {{ cpu_count }}   $build_dir/njs_unit_test > /dev/null   2>&1 
+
+
+rm -fr defect4c_asan 
+mkdir -p defect4c_asan 
+
+
+{% for test_file in test_files %}
+
+	{% if test_file.endswith(".c") %}
+	
+		ASAN_OPTIONS="log_path=defect4c_asan/asan.log"			$build_dir/njs_unit_test    >>  $test_log 2>&1 
+		cat defect4c_asan/asan.log* >> $test_log
+		
+		 
+		
+	{% else %}
+		$build_dir/njs {{test_file}}   >>  $test_log 2>&1 
+	{% endif %}
+
+{% endfor %}  
+
+
+
+
+
+get_status() {
+	string=$(cat $fn)
+	
+        if [[ $string == *"==ERROR"* ]] || [[ $string == *"AddressSanitizer:"* ]] || [[ $string == *"SIGSEGV, Segmentation fault"* ]] ; then	    echo "FAILED\n"
+	    
+	else
+	    echo "success\n"
+	fi	
+}
+
+get_err_msg() {
+	cat $test_log > $1 
+#	string=$(awk "/AddressSanitizer/,0" $fn)
+#	echo $string 
+	
+}
+
+
+fix_log="${test_log/\.log/}"
+echo $fix_log"---->"
+
+status_log=$( get_status)
+echo $status_log > "${fix_log}.status"
+#msg_log=$( get_err_msg)
+#echo $msg_log > "${fix_log}.msg"
+
+get_err_msg "${fix_log}.msg"
+

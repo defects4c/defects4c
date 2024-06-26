@@ -1,0 +1,27 @@
+build_dir=$1
+
+build_flags=" {% for option in build_flags %}{{ option }} {% endfor %} ";
+
+
+
+
+
+
+{% if not is_rebuild %}
+	
+ 
+ 
+	cmake -G Ninja -B $build_dir \
+		-DENABLE_TESTS=on  -DCMAKE_BUILD_TYPE=Debug  \
+		-DENABLE_MAINTAINER_FLAGS=ON  -DENABLE_BSON=ON   \
+		-DENABLE_MONGOC=ON 
+
+
+{% endif %}
+
+
+
+ninja  -C $build_dir 
+
+
+

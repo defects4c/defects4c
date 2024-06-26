@@ -1,0 +1,38 @@
+export CXX=clang++ 
+export CC=clang 
+
+{%for env_item in env %}
+	export {{env_item}}
+{%endfor%}
+
+
+cd {{repo_dir}}
+
+
+
+git checkout -f {{commit_after}}
+git checkout -f {{commit_after}} -- {{src_file}}
+
+
+test_log_dirname=$(dirname  {{test_log}} )
+mkdir -p $test_log_dirname
+
+
+bash  inplace_build.sh {{build_dir}} {{test_log}} || { echo "Command 1 failed"; exit 1; }
+
+
+bash inplace_test.sh  {{build_dir}}  {{test_log}} 
+
+
+
+
+git checkout -f {{commit_before}} -- {{src_file}}
+
+
+bash  inplace_rebuild.sh {{build_dir}} {{test_log| replace("_fix.log", "_buggy.log") }} || { echo "Command 2 failed"; exit 1; }
+
+bash inplace_test.sh  {{build_dir}}   {{test_log| replace("_fix.log", "_buggy.log") }} 
+
+
+
+

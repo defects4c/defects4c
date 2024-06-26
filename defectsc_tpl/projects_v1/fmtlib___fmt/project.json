@@ -1,0 +1,15 @@
+{
+    "homepage": "https://api.github.com/repos/fmtlib/fmt/commits/0bbc9708f9708db2fdca06227bed2587a3b1a344",
+    "language": null,
+    "main_repo": "https://github.com/fmtlib/fmt",
+    "repo_name": "fmtlib___fmt",
+    "env": [],
+    "before_install": [],
+    "c_compile": {
+        "build": "ninja",
+        "build_flags": ["-DFMT_TEST=on"],
+        "test": "ctest",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

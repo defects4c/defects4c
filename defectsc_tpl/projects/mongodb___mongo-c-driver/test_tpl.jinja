@@ -1,0 +1,42 @@
+
+build_dir=$1
+test_log=$2
+fn=$(realpath $test_log)
+
+
+
+fix_log="${test_log/\.log/}"
+
+fix_st="${fix_log}.status"
+fix_msg="${fix_log}.msg"
+
+
+sh -c "${build_dir}/src/libmongoc/test-libmongoc -l '/bson/validate' "   2> $fix_msg  > $test_log 
+
+
+#ctest --test-dir $build_dir/src/libmongoc -V 2>&1  >  $fn 
+
+
+
+get_status() {
+	string=$(cat $fn |grep "status\": \"FAIL")
+	
+	if [[ -z $string ]] ; then 
+	    echo "success\n"
+	else
+	    echo "FAILED\n"
+	fi	
+}
+
+#get_err_msg() {
+	#awk '/\},/,/{ "status": "FAIL", "test_file": "/\/bson\/validate/' $fn > $1 
+#}
+
+
+status_log=$(get_status)
+echo $status_log > $fix_st
+
+#get_err_msg  "${fix_log}.msg" 
+
+
+

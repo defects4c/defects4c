@@ -1,0 +1,20 @@
+build_dir=$1
+test_log=$2
+
+
+fn=$(realpath $build_dir)
+
+{% if not is_rebuild %}
+
+
+	cmake -G Ninja -B $build_dir
+
+	
+{% endif %}
+
+
+
+
+ninja -C $build_dir
+
+

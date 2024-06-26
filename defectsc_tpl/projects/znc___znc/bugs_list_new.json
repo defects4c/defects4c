@@ -1,0 +1,97 @@
+[
+    {
+        "commit_after": "d229761821da38d984a9e4098ad96842490dc001",
+        "commit_date": "2020-03-29 08:45:10 +0100",
+        "commit_before": "6d1ef8d09923388d4d5d390a4db898ca6194a2be",
+        "files": {
+            "src": [
+                "src/Client.cpp"
+            ],
+            "test": [
+                "test/integration/tests/core.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 1235,
+                "hunk_is_single": true,
+                "hunk_start": 1234,
+                "hunk_end": 1239,
+                "func_is_single": true,
+                "func_start": 1234,
+                "func_end": 1239,
+                "func_hunks": [],
+                "patch_md5": "bbe5825d4e23dc75357ba734ae29d9cf"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "*StatusEchoMessage*"
+            ],
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/znc/znc/commits/d229761821da38d984a9e4098ad96842490dc001",
+        "type": {
+            "name": "CVE-2020-13775",
+            "id": "CVE-2020-13775",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "2390ad111bde16a78c98ac44572090b33c3bd2d8",
+        "commit_date": "2020-05-31 11:32:04 +0100",
+        "commit_before": "c16c343da91c0cb8d4ff2dd94ecd07e5a3a640b4",
+        "files": {
+            "src": [
+                "src/Client.cpp"
+            ],
+            "test": [
+                "test/integration/tests/core.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 889,
+                "hunk_end": 895,
+                "func_is_single": true,
+                "func_start": 889,
+                "func_end": 895,
+                "func_hunks": [],
+                "patch_md5": "9bd2b7d1043803acaf245a1923f91cef"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "msg": "check why ",
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "*StatusEchoMessage*"
+            ],
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/znc/znc/commits/2390ad111bde16a78c98ac44572090b33c3bd2d8",
+        "type": {
+            "name": "CVE-2020-13775",
+            "id": "CVE-2020-13775",
+            "type": "cve"
+        }
+    }
+]

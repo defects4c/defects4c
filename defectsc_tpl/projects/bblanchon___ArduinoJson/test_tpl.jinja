@@ -1,0 +1,22 @@
+build_dir=$1
+test_log=$2
+
+
+fn=$(realpath $build_dir)
+
+fix_log="${test_log/\.log/}"
+
+
+bash -c "   bin/ArduinoJsonTests --gtest_filter="QuotedString_ExtractFrom_Tests.UnterminatedEscapeSequence" "   2>&1 > "${fix_log}.msg" 
+
+return_status=$?
+expect_status=0
+
+if [ $return_status -ne $expect_status ]; then 
+	    echo "FAILED\n" > "${fix_log}.status" ;
+else 
+	    echo "success\n" > "${fix_log}.status" ; 
+fi
+
+
+

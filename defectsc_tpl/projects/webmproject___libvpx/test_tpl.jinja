@@ -1,0 +1,44 @@
+build_dir=$1
+test_log=$2
+
+fn=$(realpath $test_log )
+
+cat /dev/null > $test_log
+
+
+if which "gdb" >/dev/null 2>&1; then
+        gdb --batch --ex run --args   ./test_libvpx  --gtest_filter="EncodeAPI.ConfigResizeChangeThreadCount"     >>  $test_log 2>&1
+else
+		./test_libvpx  --gtest_filter="EncodeAPI.ConfigResizeChangeThreadCount"     >>  $test_log 2>&1
+fi
+
+
+
+return_status=$?
+expect_status=0
+
+
+get_status() {
+	v1=$( cat $fn |grep -E "PASSED\s+\]\s[1-9]+\stest" )
+	
+	if [[ -z $v1 ]]; then 
+    	echo "FAILED\n"
+    else
+	    echo "success\n"
+	fi	
+}
+
+
+get_err_msg() {
+	cat $fn > $1 	
+}
+
+
+fix_log="${test_log/\.log/}"
+
+status_log=$( get_status)
+echo $status_log > "${fix_log}.status"
+
+get_err_msg  "${fix_log}.msg" 
+
+

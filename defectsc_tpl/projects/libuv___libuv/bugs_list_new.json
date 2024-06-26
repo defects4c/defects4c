@@ -1,0 +1,96 @@
+[
+    {
+        "commit_after": "0f2d7e784a256b54b2385043438848047bc2a629",
+        "commit_date": "2024-01-18 14:51:40 +0100",
+        "commit_before": "bb6fbcf6e75201cebac30220366d4aff620b8765",
+        "files": {
+            "src": [
+                "src/idna.c"
+            ],
+            "test": [
+                "test/test-idna.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 356,
+                "hunk_end": 364,
+                "func_is_single": true,
+                "func_start": 356,
+                "func_end": 364,
+                "func_hunks": [],
+                "patch_md5": "ac18d925ae5031a4d8bc245b42d8b33c"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "utf8_decode1_overrun"
+            ],
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/libuv/libuv/commits/0f2d7e784a256b54b2385043438848047bc2a629",
+        "type": {
+            "name": "CVE-2024-24806",
+            "id": "CVE-2024-24806",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "3530bcc30350d4a6ccf35d2f7b33e23292b9de70",
+        "commit_date": "2024-01-18 14:52:38 +0100",
+        "commit_before": "0f2d7e784a256b54b2385043438848047bc2a629",
+        "files": {
+            "src": [
+                "src/idna.c"
+            ],
+            "test": [
+                "test/test-idna.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 323,
+                "hunk_is_single": true,
+                "hunk_start": 322,
+                "hunk_end": 327,
+                "func_is_single": true,
+                "func_start": 322,
+                "func_end": 327,
+                "func_hunks": [],
+                "patch_md5": "6ed6ec14582bbd7ef4c1e083fc0ee388"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "utf8_decode1_overrun"
+            ],
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/libuv/libuv/commits/3530bcc30350d4a6ccf35d2f7b33e23292b9de70",
+        "type": {
+            "name": "CVE-2024-24806",
+            "id": "CVE-2024-24806",
+            "type": "cve"
+        }
+    }
+]

@@ -1,0 +1,49 @@
+[
+    {
+        "commit_after": "f8d9a433fe22ab2fa15c00179048ab02ae23d583",
+        "commit_date": "2023-03-16 20:42:20 -0700",
+        "commit_before": "822bb80df9b7b345cc9eba55df74a07b498819ba",
+        "files": {
+            "src": [
+                "src/address.c"
+            ],
+            "test": [
+                "tests/Makefile.am",
+                "tests/bad_dns_request_test",
+                "tests/slow_client_test"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 149,
+                "hunk_is_single": true,
+                "hunk_start": 148,
+                "hunk_end": 153,
+                "func_is_single": true,
+                "func_start": 148,
+                "func_end": 153,
+                "func_hunks": [],
+                "patch_md5": "63811ad6940da93cb1d60fff045f7058"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/dlundquist/sniproxy/commits/f8d9a433fe22ab2fa15c00179048ab02ae23d583",
+        "type": {
+            "name": "CVE-2023-25076",
+            "id": "CVE-2023-25076",
+            "type": "cve"
+        }
+    }
+]

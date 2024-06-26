@@ -1,0 +1,18 @@
+{
+  "homepage": "https://github.com/llvm/llvm-project",
+  "language": null,
+  "main_repo": "https://github.com/llvm/llvm-project",
+  "repo_name": "llvm___llvm-project",
+  "env": ["CCACHE_DIR=/out/ccache/"],
+  "env_back":["CXX=g++","CC=gcc"],
+  "before_install": [],
+  "c_compile": {
+    "build": "ninja",
+    "build_flags": [
+    "-DBUILD_SHARED_LIBS=on","-DLLVM_CCACHE_BUILD=on","-DLLVM_OPTIMIZED_TABLEGEN=on",
+    "-DCMAKE_BUILD_TYPE=Debug","-DLLVM_TARGETS_TO_BUILD=\"X86\"","-DLLVM_ENABLE_PROJECTS=\"clang\"","-DLLVM_INCLUDE_TESTS=on","-S=llvm"],
+    "test": "test_tpl.jinja",
+    "test_flags": [],
+    "clean": "git"
+  }
+}

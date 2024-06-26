@@ -1,0 +1,48 @@
+[
+    {
+        "commit_after": "0d9a4d98bfdf4acd2c0138d4aaeb4e2e0934bd84",
+        "commit_date": "2018-09-14 11:55:11 -0500",
+        "commit_before": "47d0f7eb3dfd16f37e21504a8ec36bc21eb28ed4",
+        "files": {
+            "src": [
+                "src/libbson/src/bson/bson-iter.c"
+            ],
+            "test": [
+                "src/libbson/tests/binary/test59.bson",
+                "src/libbson/tests/test-bson.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 618,
+                "hunk_end": 624,
+                "func_is_single": true,
+                "func_start": 618,
+                "func_end": 624,
+                "func_hunks": [],
+                "patch_md5": "2c967df3dd2ed9fe07b742468396e42d"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/mongodb/mongo-c-driver/commits/0d9a4d98bfdf4acd2c0138d4aaeb4e2e0934bd84",
+        "type": {
+            "name": "CVE-2018-16790",
+            "id": "CVE-2018-16790",
+            "type": "cve"
+        }
+    }
+]

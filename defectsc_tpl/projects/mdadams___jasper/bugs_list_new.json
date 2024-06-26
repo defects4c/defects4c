@@ -1,0 +1,47 @@
+[
+    {
+        "commit_after": "f25486c3d4aa472fec79150f2c41ed4333395d3d",
+        "commit_date": "2016-11-26 20:54:24 -0800",
+        "commit_before": "da11593fc485dd3c47af0f3118f11a102e1aa3d9",
+        "files": {
+            "src": [
+                "src/libjasper/jpc/jpc_t2cod.c"
+            ],
+            "test": [
+                "data/test/good/PoC2.jpc"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 249,
+                "hunk_end": 257,
+                "func_is_single": true,
+                "func_start": 249,
+                "func_end": 257,
+                "func_hunks": [],
+                "patch_md5": "93b28603cbd420cd461396f1414d75ab"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/mdadams/jasper/commits/f25486c3d4aa472fec79150f2c41ed4333395d3d",
+        "type": {
+            "name": "CVE-2016-9583",
+            "id": "CVE-2016-9583",
+            "type": "cve"
+        }
+    }
+]

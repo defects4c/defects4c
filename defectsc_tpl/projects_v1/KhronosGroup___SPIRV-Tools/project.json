@@ -1,0 +1,15 @@
+{
+    "homepage": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/0dd4ee27b164a079016abe6ce4d526bd1268b342",
+    "language": null,
+    "main_repo": "https://github.com/KhronosGroup/SPIRV-Tools",
+    "repo_name": "KhronosGroup___SPIRV-Tools",
+    "env": ["CXX=g++","CC=gcc"],
+    "before_install": [],
+    "c_compile": {
+        "build": "build_tpl.jinja",
+        "build_flags": ["-DSPIRV_WERROR=off","-DEFFCEE_BUILD_TESTING=off"],
+        "test": "ctest",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

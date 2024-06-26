@@ -1,0 +1,48 @@
+[
+    {
+        "commit_after": "3cb0f914d6427073f262e1b2b5fd973e3043cdf7",
+        "commit_date": "2017-02-24 16:08:02 -0500",
+        "commit_before": "19818f382cdfc301ea5ce0762eb50800e1d16528",
+        "files": {
+            "src": [
+                "lib/ytnef.c"
+            ],
+            "test": [
+                "test-data/test.sh",
+                "test-data/ytnef-oob-TNEFVersion-SwapWord"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 1148,
+                "hunk_is_single": true,
+                "hunk_start": 1147,
+                "hunk_end": 1152,
+                "func_is_single": true,
+                "func_start": 1147,
+                "func_end": 1152,
+                "func_hunks": [],
+                "patch_md5": "8ec03cdfe7c9e1c25a6150131f1a5659"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/Yeraze/ytnef/commits/3cb0f914d6427073f262e1b2b5fd973e3043cdf7",
+        "type": {
+            "name": "CVE-2017-6801",
+            "id": "CVE-2017-6801",
+            "type": "cve"
+        }
+    }
+]

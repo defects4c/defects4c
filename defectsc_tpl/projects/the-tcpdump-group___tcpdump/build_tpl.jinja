@@ -1,0 +1,21 @@
+
+build_dir=$1
+test_log=$2
+absolute_path=$(realpath "$build_dir")
+
+set -e 
+
+{% if not is_rebuild %}
+
+		{{apt_install_fn}}
+		apt_install_fn libpcap-dev 
+
+        CXX=g++ CC=gcc ./configure --prefix=$absolute_path
+
+{% endif %}
+
+        make -j $(nproc) || make all -j $(nproc) 
+
+
+
+set +e

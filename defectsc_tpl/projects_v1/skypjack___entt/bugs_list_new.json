@@ -1,0 +1,98 @@
+[
+    {
+        "url": "https://api.github.com/repos/skypjack/entt/commits/cf0da32fd0d0c9fe6ac322f18a8b6176407f7679",
+        "commit_before": "5a3085c42be70982414a32450c7055d3f22f0f0b",
+        "commit_after": "cf0da32fd0d0c9fe6ac322f18a8b6176407f7679",
+        "commit_date": "2021-01-25T14:12:59Z",
+        "files": {
+            "src": [
+                "src/entt/meta/meta.hpp"
+            ],
+            "test": [
+                "test/entt/meta/meta_container.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 2044,
+                "hunk_end": 2052,
+                "func_is_single": true,
+                "func_start": 2044,
+                "func_end": 2052,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "meta_container"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "meta_container"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Signature: Fault Input Type",
+            "id": "A.2",
+            "type": "bug"
+        }
+    },
+    {
+        "url": "https://api.github.com/repos/skypjack/entt/commits/ad5bb5198bae3e41beafc96a0a509725df0d3f79",
+        "commit_before": "d306bc4a9a008e15eb0179bf9000e1154c2d052c",
+        "commit_after": "ad5bb5198bae3e41beafc96a0a509725df0d3f79",
+        "commit_date": "2020-06-22T15:02:45Z",
+        "files": {
+            "src": [
+                "src/entt/meta/meta.hpp"
+            ],
+            "test": [
+                "test/entt/meta/meta_container.cpp"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 1975,
+                "hunk_is_single": true,
+                "hunk_start": 1972,
+                "hunk_end": 1978,
+                "func_is_single": true,
+                "func_start": 1972,
+                "func_end": 1978,
+                "func_hunks": []
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "meta_container"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "meta_container"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "type": {
+            "name": "Signature: Incorrect Function Return Value",
+            "id": "A.3",
+            "type": "bug"
+        }
+    }
+]

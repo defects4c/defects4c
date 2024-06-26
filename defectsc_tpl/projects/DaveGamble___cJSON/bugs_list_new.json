@@ -1,0 +1,47 @@
+[
+    {
+        "commit_after": "be749d7efa7c9021da746e685bd6dec79f9dd99b",
+        "commit_date": "2018-12-16 11:06:40 +0100",
+        "commit_before": "cb1df2f88c0d335e031ade0d52fd6a59528c622f",
+        "files": {
+            "src": [
+                "cJSON.c"
+            ],
+            "test": [
+                "tests/misc_tests.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": false,
+                "hunk_start": null,
+                "hunk_end": null,
+                "func_is_single": true,
+                "func_start": 1781,
+                "func_end": 1799,
+                "func_hunks": [],
+                "patch_md5": "1306f3c4e1ffbcfd1539e84d5d59ad87"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/DaveGamble/cJSON/commits/be749d7efa7c9021da746e685bd6dec79f9dd99b",
+        "type": {
+            "name": "CVE-2019-1010239",
+            "id": "CVE-2019-1010239",
+            "type": "cve"
+        }
+    }
+]

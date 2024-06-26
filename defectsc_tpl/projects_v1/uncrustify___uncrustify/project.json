@@ -1,0 +1,15 @@
+{
+    "homepage": "https://github.com/uncrustify/uncrustify",
+    "language": null,
+    "main_repo": "https://github.com/uncrustify/uncrustify",
+    "repo_name": "uncrustify___uncrustify",
+    "env": [],
+    "before_install": [],
+    "c_compile": {
+        "build": "ninja",
+        "build_flags": [],
+        "test": "ctest",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

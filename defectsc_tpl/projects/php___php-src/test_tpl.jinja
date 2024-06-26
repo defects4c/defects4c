@@ -1,0 +1,42 @@
+build_dir=$1
+test_log=$2
+
+fn=$(realpath $test_log )
+
+fix_log="${test_log/\.log/}"
+
+
+cat /dev/null > $test_log  
+
+{% for test_file in test_files %}
+	{% if test_file.endswith(".phpt") %}
+	
+		sapi/cli/php run-tests.php -p sapi/cli/php -g "FAIL,XFAIL,BORK,WARN,LEAK,SKIP" {{test_file}} >> $test_log  2>&1 
+	
+	{% endif %}
+
+{% endfor %}  
+
+
+get_status() {
+	string=$(cat $fn|grep "Tests passed"|grep "(100.0%)" )
+	
+	if [[ -z $string ]]; then 
+	    echo "FAILED\n"
+	else
+	    echo "success\n"
+	fi	
+}
+
+get_err_msg() {
+	string=$(cat $fn)
+	echo $string 
+	
+}
+
+
+get_status > "${fix_log}.status"
+ 
+get_err_msg > "${fix_log}.msg" 
+
+

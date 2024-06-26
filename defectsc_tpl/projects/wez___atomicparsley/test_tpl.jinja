@@ -1,0 +1,41 @@
+build_dir=$1
+test_log=$2
+
+
+
+
+		
+if which "gdb" >/dev/null 2>&1; then
+		gdb --batch --ex run --args $build_dir/AtomicParsley  ./tests/issue-32.mp4 -T 1 -t +    >>  $test_log 2>&1 
+else 
+		 $build_dir/AtomicParsley   ./tests/issue-32.mp4 -T 1 -t +    >>  $test_log 2>&1 
+fi 
+
+
+
+
+get_status() {
+	string=$(cat $test_log )
+	
+    if [[ $string == *"==ERROR"* ]] || [[ $string == *"FAILED"* ]] || [[ $string == *"AddressSanitizer:"* ]] || [[ $string == *"SIGSEGV, Segmentation fault"* ]] ; then	    
+    	echo "FAILED\n"
+	else
+	    echo "success\n"
+	fi	
+}
+
+
+get_err_msg() {
+	awk '/AddressSanitizer:/,0' $test_log >  $1 
+}
+
+
+fix_log="${test_log/\.log/}"
+echo $fix_log"---->"
+
+status_log=$( get_status)
+echo $status_log > "${fix_log}.status"
+
+get_err_msg  "${fix_log}.msg" 
+
+

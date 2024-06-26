@@ -1,0 +1,17 @@
+{
+    "homepage": "https://github.com/nginx/njs",
+    "language": null,
+    "main_repo": "https://github.com/nginx/njs",
+    "repo_name": "nginx___njs",
+    "env": ["CC=gcc","CXX=g++"],
+    "before_install": [],
+    "c_compile": {
+        "build": "build_tpl.jinja",
+        "build_flags": ["--address-sanitizer=YES"],
+        "rebuild": "build_tpl.jinja",
+        "rebuild_flags": ["--address-sanitizer=YES"],
+        "test": "test_tpl.jinja",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

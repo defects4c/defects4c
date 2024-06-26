@@ -1,0 +1,59 @@
+export CXX=clang++ 
+export CC=clang 
+
+
+patch_files=$1
+
+
+
+{%for env_item in env %}
+	export {{env_item}}
+{%endfor%}
+
+
+cd {{repo_dir}}
+
+
+
+
+
+test_log_dirname=$(dirname  "{{test_log}}" )
+mkdir -p $test_log_dirname
+
+
+src_file="{{src_file}}"
+
+
+#if [[ -e $patch_files ]] && [[ $patch_files == "/patch"* ]]; then
+if [[ -e $patch_files ]] ; then
+	echo "patch  find "
+	cp $patch_files $src_file
+	
+	patch_log="{{test_log| replace("_fix.log", "_buggy.log") }}"
+	tmp=$(basename "$patch_files")
+
+	OLD_IFS=$IFS
+	IFS="@"
+	read -ra parts <<< "$tmp"
+	IFS=$OLD_IFS
+	md5="${parts[0]}"
+	sha="${parts[1]}"
+
+
+    patch_log="${patch_log//_buggy/_$md5}"
+    	
+	echo "the patch log is "$patch_log
+
+	
+	bash  inplace_rebuild.sh {{build_dir}} $patch_log >$patch_log 2>&1  || { echo "Command 2 failed"; exit 1; }
+	
+	bash inplace_test.sh  {{build_dir}}  $patch_log >>$patch_log 2>&1  
+	
+
+fi 
+
+
+
+
+
+

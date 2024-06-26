@@ -1,0 +1,74 @@
+
+test_log=$2 
+
+cat /dev/null > $test_log 
+
+
+
+username="defects4c_user"
+
+# Check if the user exists
+if id "$username" &>/dev/null; then
+    echo "User $username already exists."
+else
+    # Create the user with the root group
+    useradd -G root "$username"
+    echo "User $username created with root group."
+	# Add user to sudo group without password
+	echo "$username ALL=(ALL) NOPASSWD: ALL" | sudo tee -a /etc/sudoers >/dev/null
+	echo "User $username added to sudo group without password."
+fi
+
+
+
+
+
+
+chmod 777 $test_log
+
+
+set +e 
+ ( make -j  {{ cpu_count }}   check  >> $test_log 2>&1 ) || (  su - $username   -c "  make -j  {{ cpu_count }}   check  >> $test_log 2>&1 " )
+
+set -e 
+#sudo -u example_user sh -c "sudo  make -j  {{ cpu_count }}   check  >> $test_log 2>&1"  
+
+#make -j {{ cpu_count }}  check  >> $test_log 2>&1 
+
+
+
+fn=$(realpath $test_log )
+
+
+get_status() {
+	string=$(awk '/^not ok/,/^ok/' $test_log )
+	
+	if [[ $string =~ "{{test_flags[0]}}" ]]; then
+	    echo "FAILED\n"
+	else
+	    echo "success\n"
+	fi	
+}
+
+get_err_msg() {
+        msg_log=$1
+        awk '/^not ok/,/^ok/'  $test_log  > $msg_log
+}
+
+
+
+
+fix_log="${test_log/\.log/}"
+echo $fix_log"---->"
+
+status_log=$( get_status)
+echo $status_log > "${fix_log}.status"
+
+
+get_err_msg "${fix_log}.msg" 
+
+
+
+#make distclean 
+
+## for reproduce 

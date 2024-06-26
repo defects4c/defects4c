@@ -1,0 +1,22 @@
+
+
+
+
+cmake -DCOVERAGE=true  -G Ninja -B build_fix 
+ninja -C build_fix 
+
+
+build_fix/tests/test_suite_x509parse |tee  build_fix/a1.log 
+
+                
+                
+git checkout  08d05df00e3773ffecba9c5ec45e5344cc5f90de  -- src/Internals/QuotedString.cpp 
+
+
+cmake -DCOVERAGE=true  -G Ninja -B bui -G Ninja -B build_bug 
+
+ninja -C build_bug 
+
+ctest --test-dir build_bug
+
+build_bug/tests/test_suite_x509parse |tee  build_bug/a2.log 

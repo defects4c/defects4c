@@ -1,0 +1,27 @@
+
+
+build_dir=$1
+test_log=$2
+
+
+fn=$(realpath $build_dir)
+
+{% if not is_rebuild %}
+	{{apt_install_fn}}
+	apt_install_fn scons
+
+	
+{% endif %}
+
+
+scons -j {{cpu_count}}
+
+
+
+
+
+
+#cd tests 
+#scons -j 64 
+#./testHarness run tarTests  --json={{test_log}}
+

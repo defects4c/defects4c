@@ -1,0 +1,49 @@
+[
+    {
+        "commit_after": "1890d59905414ab84a35892b2e45833654aa5c13",
+        "commit_date": "2017-03-11 10:59:34 +0100",
+        "commit_before": "d2bcf1e3e247d116dc96bd3ea32056e3f089449c",
+        "files": {
+            "src": [
+                "src/tool_writeout.c"
+            ],
+            "test": [
+                "tests/data/Makefile.inc",
+                "tests/data/test1440",
+                "tests/data/test1441"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 113,
+                "hunk_end": 119,
+                "func_is_single": true,
+                "func_start": 113,
+                "func_end": 119,
+                "func_hunks": [],
+                "patch_md5": "02192e81da24e31cad97df2c47ded7bb"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/curl/curl/commits/1890d59905414ab84a35892b2e45833654aa5c13",
+        "type": {
+            "name": "CVE-2017-7407",
+            "id": "CVE-2017-7407",
+            "type": "cve"
+        }
+    }
+]

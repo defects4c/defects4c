@@ -1,0 +1,48 @@
+
+build_dir=$1
+test_log=$2
+fn=$(realpath $test_log)
+
+
+
+cat /dev/null >$test_log
+rm -fr defect4c_asan 
+mkdir -p defect4c_asan 
+
+
+	
+ASAN_OPTIONS="log_path=defect4c_asan/asan.log"	./pcre2_jit_test    >>  $test_log 2>&1 
+cat defect4c_asan/asan.log* >> $test_log
+		
+		 
+		
+
+
+
+
+get_status() {
+	string=$(cat $fn)
+	
+	if [[ $string == *"Segmentation"* ]] || [[ $string == *"ERROR: AddressSanitizer:"* ]]; then
+	    echo "FAILED\n"
+	    
+	else
+	    echo "success\n"
+	fi	
+}
+
+get_err_msg() {
+	cat $test_log > $1 
+}
+
+
+
+fix_log="${test_log/\.log/}"
+
+status_log=$( get_status)
+echo $status_log > "${fix_log}.status"
+
+get_err_msg  "${fix_log}.msg" 
+
+
+

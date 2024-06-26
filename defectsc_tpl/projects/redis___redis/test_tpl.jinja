@@ -1,0 +1,40 @@
+build_dir=$1
+test_log=$2
+
+
+
+
+./runtest --single   {{test_flags|join(" ") }} > $test_log 2>&1 
+
+
+
+
+get_status() {
+	string=$(cat $test_log )
+	
+    if [[ $string == *"The following tests failed"* ]] || [[ $string == *"==ERROR"* ]] || [[ $string == *"FAILED"* ]] || [[ $string == *"AddressSanitizer:"* ]] || [[ $string == *"SIGSEGV, Segmentation fault"* ]] ; then	    
+    	echo "FAILED\n"
+	else
+	    echo "success\n"
+	fi	
+}
+
+
+get_err_msg() {
+
+	awk '/\[err\]/,/\[/' $test_log >  $1 
+
+ 	awk '/err/,/WARNING The following tests/'  $test_log >>  $1
+
+}
+
+
+fix_log="${test_log/\.log/}"
+echo $fix_log"---->"
+
+status_log=$( get_status)
+echo $status_log > "${fix_log}.status"
+
+get_err_msg  "${fix_log}.msg" 
+
+

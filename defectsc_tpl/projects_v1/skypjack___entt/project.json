@@ -1,0 +1,15 @@
+{
+    "homepage": "https://api.github.com/repos/skypjack/entt/commits/8e9a6a4f0603a7cda8b2bc4993d0f67777935fed",
+    "language": null,
+    "main_repo": "https://github.com/skypjack/entt",
+    "repo_name": "skypjack___entt",
+    "env": ["CXX=g++","CC=gcc"],
+    "before_install": [],
+    "c_compile": {
+        "build": "ninja",
+        "build_flags": ["-DBUILD_TESTING=on","-DFIND_GTEST_PACKAGE=on","-DENTT_BUILD_TESTING=on","-DENTT_FIND_GTEST_PACKAGE=on"],
+        "test": "ctest",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

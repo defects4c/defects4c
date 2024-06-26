@@ -1,0 +1,37 @@
+build_dir=$1
+test_log=$2
+
+
+{%for env_item in env %}
+	export {{env_item}}
+{%endfor%}
+
+{%if not is_rebuild %}
+	if [[ ! -d spirv-tools/external/spirv-headers ]]; then 
+		if [[ -f utils/git-sync-deps ]]; then 
+			python3 utils/git-sync-deps
+		else
+			git clone --depth 1  https://github.com/KhronosGroup/SPIRV-Headers.git spirv-tools/external/spirv-headers
+			git clone --depth 1  https://github.com/google/googletest.git          spirv-tools/external/googletest
+			git clone --depth 1  https://github.com/google/effcee.git              spirv-tools/external/effcee
+			git clone --depth 1  https://github.com/google/re2.git                 spirv-tools/external/re2
+			git clone --depth 1  https://github.com/abseil/abseil-cpp.git          spirv-tools/external/abseil_cpp		
+		fi 
+	fi 
+
+{%endif%}
+
+
+{%if not is_rebuild %}
+	cmake_flags="{{build_flags|join(" ") }}"
+	
+	cmake \
+	$cmake_flags \
+	-G Ninja -B $build_dir 
+
+
+{%endif%}
+
+
+ninja -C $build_dir 
+

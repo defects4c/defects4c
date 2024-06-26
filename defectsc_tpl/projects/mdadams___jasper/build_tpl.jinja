@@ -1,0 +1,27 @@
+build_dir=$1
+
+build_flags=" {% for option in build_flags %}{{ option }} {% endfor %} ";
+
+
+
+
+
+
+{% if not is_rebuild %}
+	
+ 
+ 
+	cmake -G Ninja -B $build_dir \
+	-DCMAKE_BUILD_TYPE=ASAN  \
+	-DCMAKE_C_FLAGS=" -fsanitize=address" \
+	-DCMAKE_C_COMPILER="clang" 
+
+
+{% endif %}
+
+
+
+ninja  -C $build_dir 
+
+
+

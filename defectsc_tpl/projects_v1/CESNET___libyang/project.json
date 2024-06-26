@@ -1,0 +1,15 @@
+{
+    "homepage": "https://api.github.com/repos/CESNET/libyang/commits/49e2a3a623d45e2e298caf041f1ac61b7461904f",
+    "language": null,
+    "main_repo": "https://github.com/CESNET/libyang",
+    "repo_name": "CESNET___libyang",
+    "env": [],
+    "before_install": [],
+    "c_compile": {
+        "build": "ninja",
+        "build_flags": [],
+        "test": "ctest",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

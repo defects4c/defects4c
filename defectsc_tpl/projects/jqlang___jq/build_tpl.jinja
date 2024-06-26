@@ -1,0 +1,33 @@
+build_dir=$1
+fn=$(realpath build_dir)
+
+
+build_flags=" {% for option in build_flags %}{{ option }} {% endfor %} ";
+
+
+{% if not is_rebuild %}
+	autoreconf -i 
+
+#	 --enable-asan    \
+#	 --enable-ubsan    \
+#	       CFLAGS="-O2 -pthread -fstack-protector-all" 	
+#	 --enable-error-injection             \
+
+
+	 ./configure   \
+	 --prefix=$fn \
+	 --disable-docs        \
+	      --disable-valgrind             \
+	      --with-oniguruma=builtin \
+	       CFLAGS="-O2 -pthread " 	
+ 
+ 
+
+{% endif %}
+
+
+
+make -j {{cpu_count}}
+
+
+

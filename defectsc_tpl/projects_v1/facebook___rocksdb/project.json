@@ -1,0 +1,23 @@
+{
+    "homepage": "https://api.github.com/repos/facebook/rocksdb/commits/7b1a12f1826c1034c5e57baebf852537e925c1d4",
+    "language": null,
+    "main_repo": "https://github.com/facebook/rocksdb",
+    "repo_name": "facebook___rocksdb",
+    "env": [
+"GTEST_THROW_ON_FAILURE=0",
+"SKIP_FORMAT_BUCK_CHECKS=1",
+"GTEST_COLOR=1",
+"CTEST_OUTPUT_ON_FAILURE=1",
+"CTEST_TEST_TIMEOUT=300",
+"CXX=g++",
+"CC=gcc"
+    ],
+    "before_install": [],
+    "c_compile": {
+        "build": "ninja",
+        "build_flags": ["-DWITH_TESTS=on","-DFAIL_ON_WARNINGS=off"],
+        "test": "ctest",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

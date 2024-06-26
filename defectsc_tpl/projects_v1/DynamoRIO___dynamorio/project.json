@@ -1,0 +1,15 @@
+{
+    "homepage": "https://api.github.com/repos/DynamoRIO/dynamorio/commits/5c7322c0b185eec344428d545370df776da28ffa",
+    "language": null,
+    "main_repo": "https://github.com/DynamoRIO/dynamorio",
+    "repo_name": "DynamoRIO___dynamorio",
+    "env": ["CC=gcc","CXX=g++"],
+    "before_install": [],
+    "c_compile": {
+        "build": "ninja",
+        "build_flags": ["-DBUILD_TESTS=on"],
+        "test": "ctest",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

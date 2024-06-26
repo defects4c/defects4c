@@ -1,0 +1,30 @@
+build_dir=$1
+test_log=$2
+
+fn=$(realpath $build_dir )
+
+{% if not is_rebuild %}
+	if [ -f "./bootstrap.sh" ]; then 
+		./bootstrap.sh 
+	fi 
+	
+#	  --enable-static=no \
+	./configure  \
+	--prefix=$fn  \
+	 --enable-debug \
+	  --enable-shared=yes \
+	  CFLAGS="-fsanitize=address -g"  
+	
+	
+{% endif %}
+
+
+
+if [ "$TRAVIS_OS_NAME" == "osx" ] || [ "$CC" == "clang" ]; then
+  make CFLAGS="-fsanitize=address -g" -j {{cpu_count}}
+else
+  make -j {{cpu_count}}
+fi
+
+
+

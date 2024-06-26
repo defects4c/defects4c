@@ -1,0 +1,25 @@
+
+fn={{test_log}}
+
+
+get_status() {
+	
+	string=$(jq  -rc '.tarTests | map(.status)|.[]'  $fn )
+
+	if [[ $string =* "failed" ]]; then
+	    echo "FAILED\n"
+	else
+	    echo "success\n"
+	fi	
+}
+
+get_err_msg() {
+	string=$(cat $fn| jq '.tarTests | to_entries | map(select(.value.status == "failed")) | from_entries')
+	echo $string 
+}
+
+
+get_status > {{test_log_status}}
+get_err_msg > {{test_log_msg}}
+
+

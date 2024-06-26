@@ -1,0 +1,92 @@
+[
+    {
+        "commit_after": "ae5b5ba529753c7a653901ffc29b5ea24c3fdf3a",
+        "commit_date": "2020-07-27 13:23:05 -0300",
+        "commit_before": "a585eae6e7ada1ca9271607a4f48dfb17868ab7b",
+        "files": {
+            "src": [
+                "ldebug.c"
+            ],
+            "test": [
+                "testes/db.lua"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 783,
+                "hunk_end": 793,
+                "func_is_single": true,
+                "func_start": 783,
+                "func_end": 793,
+                "func_hunks": [],
+                "patch_md5": "bf93d19f1ee08ff038c636ef3dc21a01"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/lua/lua/commits/ae5b5ba529753c7a653901ffc29b5ea24c3fdf3a",
+        "type": {
+            "name": "CVE-2020-24369",
+            "id": "CVE-2020-24369",
+            "type": "cve"
+        }
+    },
+    {
+        "commit_after": "1f3c6f4534c6411313361697d98d1145a1f030fa",
+        "commit_date": "2022-02-15 12:28:46 -0300",
+        "commit_before": "25b143dd34fb587d1e35290c4b25bc08954800e2",
+        "files": {
+            "src": [
+                "lparser.c"
+            ],
+            "test": [
+                "testes/attrib.lua"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 469,
+                "hunk_is_single": true,
+                "hunk_start": 468,
+                "hunk_end": 473,
+                "func_is_single": true,
+                "func_start": 468,
+                "func_end": 473,
+                "func_hunks": [],
+                "patch_md5": "a4cf5f64a9668ef47c99fac8ea160fc4"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/lua/lua/commits/1f3c6f4534c6411313361697d98d1145a1f030fa",
+        "type": {
+            "name": "CVE-2022-28805",
+            "id": "CVE-2022-28805",
+            "type": "cve"
+        }
+    }
+]

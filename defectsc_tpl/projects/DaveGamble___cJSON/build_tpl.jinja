@@ -1,0 +1,15 @@
+build_dir=$1
+test_log=$2
+
+
+fn=$(realpath $build_dir)
+{% if not is_rebuild %}
+
+
+	cmake -G Ninja -B $build_dir -DENABLE_CJSON_UTILS=On -DENABLE_VALGRIND=OFF -DENABLE_SAFE_STACK=OFF -DENABLE_SANITIZERS=ON
+
+{% endif %}
+
+
+ninja -C $build_dir
+

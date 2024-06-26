@@ -1,0 +1,22 @@
+build_dir=$1
+test_log=$2
+
+
+fn=$(realpath $build_dir)
+
+{% if not is_rebuild %}
+
+
+	if [ -f autogen.sh ]; then 
+		./autogen.sh 
+	fi 
+
+	./configure  --enable-debug   --enable-slow-tests  --enable-install-tests	
+	
+		
+	
+
+{% endif %}
+
+make -j {{cpu_count}} -s 
+

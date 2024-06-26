@@ -1,0 +1,50 @@
+[
+    {
+        "commit_after": "4a342f01e5439b9bb901aff1c6c23c536baeeb3f",
+        "commit_date": "2017-07-05 10:01:03 +0200",
+        "commit_before": "c57c6c1d86fddb7d343d9f6c2f8d9c390fd46f6a",
+        "files": {
+            "src": [
+                "libyara/object.c"
+            ],
+            "test": [
+                "libyara/modules/tests.c",
+                "tests/test-rules.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": false,
+                "hunk_start": null,
+                "hunk_end": null,
+                "func_is_single": true,
+                "func_start": 725,
+                "func_end": 745,
+                "func_hunks": [],
+                "patch_md5": "cd314d26ec6b015859515c81e16140f7"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "test-rules"
+            ],
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/VirusTotal/yara/commits/4a342f01e5439b9bb901aff1c6c23c536baeeb3f",
+        "type": {
+            "name": "CVE-2017-11328",
+            "id": "CVE-2017-11328",
+            "type": "cve"
+        }
+    }
+]

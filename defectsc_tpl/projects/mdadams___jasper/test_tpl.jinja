@@ -1,0 +1,30 @@
+
+build_dir=$1
+test_log=$2
+fn=$(realpath $test_log)
+
+
+
+fix_log="${test_log/\.log/}"
+
+fix_st="${fix_log}.status"
+fix_msg="${fix_log}.msg"
+
+
+
+"${build_dir}/src/appl/imginfo" < data/test/good/PoC2.jpc   2> $fix_msg  > $test_log 
+
+running_status=$?
+expected_status=0
+
+if [ "$running_status" -ne "$expected_status" ]; then
+	    echo "FAILED\n" > $fix_st ;
+else 
+	    echo "success\n" > $fix_st ; 
+fi
+
+
+
+
+
+

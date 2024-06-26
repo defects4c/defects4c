@@ -1,0 +1,24 @@
+
+
+build_dir=$1
+mkdir -p  $build_dir 
+
+{% if not is_rebuild %}
+
+	if [ -f "./autogen.sh" ]; then 
+		./autogen.sh 
+	fi 	
+		
+{% endif %}
+	
+./configure {% for option in build_flags %}{{ option }} {% endfor %} \
+	--enable-shared=yes   --enable-static=no \
+	 --prefix=`pwd`/{{build_dir}} \
+	 CFLAGS="-Wno-error "  \
+	 CXXFLAGS="-Wno-error " \
+	 CXX=g++ \
+	 CC=gcc 
+	
+
+make -j {{ cpu_count }}   
+

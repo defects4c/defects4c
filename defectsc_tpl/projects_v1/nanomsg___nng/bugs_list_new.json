@@ -1,0 +1,151 @@
+[
+    {
+        "commit_after": "e3b8f31b044e4fe7d47439467fc1622266b5335c",
+        "commit_date": "2018-04-14 15:09:27 -0700",
+        "commit_before": "0467702bf1e5b4777c254d4116d8f8972b5a44a2",
+        "files": {
+            "src": [
+                "src/compat/nanomsg/nn.c"
+            ],
+            "test": [
+                "tests/CMakeLists.txt",
+                "tests/compat_options.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 835,
+                "hunk_end": 841,
+                "func_is_single": true,
+                "func_start": 835,
+                "func_end": 841,
+                "func_hunks": [],
+                "patch_md5": "620f0d315fdc545b1b2ab586bcfe4d01"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "compat_options"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "httpserver",
+                "compat_options"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "url": "https://api.github.com/repos/nanomsg/nng/commits/e3b8f31b044e4fe7d47439467fc1622266b5335c",
+        "type": {
+            "name": "Logic Organization: Wrong Function Call Sequence",
+            "id": "D.2",
+            "type": "bug"
+        }
+    },
+    {
+        "commit_after": "6a59b15fba1085432c4c18952680e14d80dd134a",
+        "commit_date": "2020-02-25 21:04:19 -0800",
+        "commit_before": "57e315d7b3a2baf38ec3085faf59c4aef4a0ab9e",
+        "files": {
+            "src": [
+                "src/nng.c"
+            ],
+            "test": [
+                "tests/sock.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 105,
+                "hunk_end": 118,
+                "func_is_single": true,
+                "func_start": 105,
+                "func_end": 118,
+                "func_hunks": [],
+                "patch_md5": "6a93ab3c9432aa402afd5f6e1f11ecc5"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "sock"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "sock"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "url": "https://api.github.com/repos/nanomsg/nng/commits/6a59b15fba1085432c4c18952680e14d80dd134a",
+        "type": {
+            "name": "Logic Organization: Improper Condition Organization",
+            "id": "D.1",
+            "type": "bug"
+        }
+    },
+    {
+        "commit_after": "111b241473ceeecee1f1c232d3c9879fb850361d",
+        "commit_date": "2021-12-02 14:29:06 -0800",
+        "commit_before": "e792d31b4a3b04658108e59edeab78495ac6b5a8",
+        "files": {
+            "src": [
+                "src/core/message.c"
+            ],
+            "test": [
+                "src/core/message_test.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 273,
+                "hunk_end": 279,
+                "func_is_single": true,
+                "func_start": 273,
+                "func_end": 279,
+                "func_hunks": [],
+                "patch_md5": "74e26cb85e64ec9960005b1772bb9dc4"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": [
+                "nng.pipe"
+            ],
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": [
+                "nng.pipe"
+            ],
+            "clean": null
+        },
+        "status": 1,
+        "status_manual": 1,
+        "url": "https://api.github.com/repos/nanomsg/nng/commits/111b241473ceeecee1f1c232d3c9879fb850361d",
+        "type": {
+            "name": "Memory Error: Uncontrolled Resource Consumption",
+            "id": "C.2",
+            "type": "bug"
+        }
+    }
+]

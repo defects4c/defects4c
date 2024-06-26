@@ -1,0 +1,396 @@
+[
+    {
+        "commit_after": "2bb97f407c1145c850416a3bfbcc8cf124e68a19",
+        "commit_date": "2016-04-16 03:51:22 -0400",
+        "commit_before": "fc14a8c1bb22542db00858a04495413f0c290001",
+        "files": {
+            "src": [
+                "src/gd_gd2.c"
+            ],
+            "test": [
+                "tests/Makefile.am",
+                "tests/gd2/gd2_read_corrupt.c",
+                "tests/gd2/invalid_neg_size.gd2"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 166,
+                "hunk_is_single": true,
+                "hunk_start": 165,
+                "hunk_end": 170,
+                "func_is_single": true,
+                "func_start": 165,
+                "func_end": 170,
+                "func_hunks": [],
+                "patch_md5": "ee99699cc94dbaa883e88c7d390b3bd9"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": ["gd2/gd2_read_corrupt"],
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/libgd/libgd/commits/2bb97f407c1145c850416a3bfbcc8cf124e68a19"
+    },
+    {
+        "commit_after": "77f619d48259383628c3ec4654b1ad578e9eb40e",
+        "commit_date": "2016-06-04 23:09:01 +0700",
+        "commit_before": "73f4e0339abda6514600c0c6a633ad8c49005437",
+        "files": {
+            "src": [
+                "src/gd.c"
+            ],
+            "test": [
+                "tests/gdimagefilltoborder/.gitignore",
+                "tests/gdimagefilltoborder/CMakeLists.txt",
+                "tests/gdimagefilltoborder/Makemodule.am"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 1928,
+                "hunk_end": 1938,
+                "func_is_single": true,
+                "func_start": 1928,
+                "func_end": 1938,
+                "func_hunks": [],
+                "patch_md5": "d926e5e3598a3010ac0902ddf6c4048e"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": ["--enable-shared=yes","--enable-static=no"],
+            "test": null,
+            "test_flags": ["gdimagefilltoborder/github_bug_215"],
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/libgd/libgd/commits/77f619d48259383628c3ec4654b1ad578e9eb40e"
+    },
+    {
+        "commit_after": "fd623025505e87bba7ec8555eeb72dae4fb0afdc",
+        "commit_after_incorrected": "1ccfe21e14c4d18336f9da8515cd17db88c3de61",
+        "commit_date": "2016-06-27 11:17:39 +0700",
+        "commit_before": "3fe0a7128bac5000fdcfab888bd2a75ec0c9447d",
+        "files": {
+            "src": [
+                "src/gd_crop.c"
+            ],
+            "test": [
+                "tests/CMakeLists.txt",
+                "tests/Makefile.am"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 137,
+                "hunk_is_single": true,
+                "hunk_start": 136,
+                "hunk_end": 141,
+                "func_is_single": true,
+                "func_start": 136,
+                "func_end": 141,
+                "func_hunks": [],
+                "patch_md5": "cbeb2048c84618b692d3763d68ba73f9"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "msg": "not reproduce",
+            "status": -1
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": ["--enable-shared=yes","--enable-static=no"],
+            "test": null,
+            "test_flags": [""],
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/libgd/libgd/commits/1ccfe21e14c4d18336f9da8515cd17db88c3de61"
+    },
+    {
+        "commit_after": "58b6dde319c301b0eae27d12e2a659e067d80558",
+        "commit_date": "2016-08-16 16:26:19 +0200",
+        "commit_before": "fe9ed49dafa993e3af96b6a5a589efeea9bfb36f",
+        "files": {
+            "src": [
+                "src/gd_tga.c"
+            ],
+            "test": [
+                "tests/tga/Makemodule.am",
+                "tests/tga/heap_overflow.c",
+                "tests/tga/heap_overflow_1.tga",
+                "tests/tga/heap_overflow_2.tga"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 295,
+                "hunk_end": 301,
+                "func_is_single": true,
+                "func_start": 295,
+                "func_end": 301,
+                "func_hunks": [],
+                "patch_md5": "4e17494cdc947e21cf6a8f5541203dd7"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "msg": "can not reproduce stably",
+            "status": -1
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": ["--enable-shared=yes","--enable-static=no"],
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/libgd/libgd/commits/58b6dde319c301b0eae27d12e2a659e067d80558"
+    },
+    {
+        "commit_after": "fb0e0cce0b9f25389ab56604c3547351617e1415",
+        "commit_date": "2016-08-16 16:26:19 +0200",
+        "commit_before": "5ebbd50cffc013a7dd0f3b1eaaa83d199e8e47fd",
+        "files": {
+            "src": [
+                "src/gd_tga.c"
+            ],
+            "test": [
+                "tests/tga/.gitignore",
+                "tests/tga/CMakeLists.txt",
+                "tests/tga/Makemodule.am",
+                "tests/tga/heap_overflow.c",
+                "tests/tga/heap_overflow.tga"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": false,
+                "hunk_start": null,
+                "hunk_end": null,
+                "func_is_single": true,
+                "func_start": 300,
+                "func_end": 322,
+                "func_hunks": [],
+                "patch_md5": "37501633bd1ed0e85c0c1352f54ad75e"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": ["tga/heap_overflow"],
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/libgd/libgd/commits/fb0e0cce0b9f25389ab56604c3547351617e1415"
+    },
+    {
+        "commit_after": "fe9ed49dafa993e3af96b6a5a589efeea9bfb36f",
+        "commit_date": "2016-08-16 18:23:36 +0200",
+        "commit_before": "60bfb401ad5a4a8ae995dcd36372fe15c71e1a35",
+        "files": {
+            "src": [
+                "src/gd_gd2.c"
+            ],
+            "test": [
+                "tests/gd2/.gitignore",
+                "tests/gd2/CMakeLists.txt",
+                "tests/gd2/Makemodule.am",
+                "tests/gd2/too_few_image_data.c",
+                "tests/gd2/too_few_image_data.gd2"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": true,
+                "hunk_start": 503,
+                "hunk_end": 520,
+                "func_is_single": true,
+                "func_start": 503,
+                "func_end": 520,
+                "func_hunks": [],
+                "patch_md5": "2b4af880f3c2b6d1cf1a59c7beeea5ac"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": ["--enable-shared=yes","--enable-static=no"],
+            "test": null,
+            "test_flags": ["gd2/too_few_image_data"],
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/libgd/libgd/commits/fe9ed49dafa993e3af96b6a5a589efeea9bfb36f"
+    },
+    {
+        "commit_after": "1846f48e5fcdde996e7c27a4bbac5d0aef183e4b",
+        "commit_date": "2016-11-12 15:00:31 +0100",
+        "commit_before": "58b6dde319c301b0eae27d12e2a659e067d80558",
+        "files": {
+            "src": [
+                "src/gd.c"
+            ],
+            "test": [
+                "tests/CMakeLists.txt",
+                "tests/Makefile.am",
+                "tests/gdimagecreate/.gitignore",
+                "tests/gdimagecreate/CMakeLists.txt",
+                "tests/gdimagecreate/Makemodule.am",
+                "tests/gdimagecreate/bug00340.c"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 189,
+                "hunk_is_single": true,
+                "hunk_start": 188,
+                "hunk_end": 193,
+                "func_is_single": true,
+                "func_start": 188,
+                "func_end": 193,
+                "func_hunks": [],
+                "patch_md5": "d7d8e72f1e3c807c0bc4903ad2d81d1d"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "msg": "reproduce",
+            "status": -1
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/libgd/libgd/commits/1846f48e5fcdde996e7c27a4bbac5d0aef183e4b"
+    },
+    {
+        "commit_after": "69d2fd2c597ffc0c217de1238b9bf4d4bceba8e6",
+        "commit_date": "2016-12-17 17:06:58 +0100",
+        "commit_before": "1846f48e5fcdde996e7c27a4bbac5d0aef183e4b",
+        "files": {
+            "src": [
+                "src/gd_gd2.c"
+            ],
+            "test": [
+                "tests/gd2/.gitignore",
+                "tests/gd2/CMakeLists.txt",
+                "tests/gd2/Makemodule.am",
+                "tests/gd2/bug00354.c",
+                "tests/gd2/bug00354a.gd2",
+                "tests/gd2/bug00354b.gd2"
+            ],
+            "src0_location": {
+                "line_is_single": true,
+                "line_number": 210,
+                "hunk_is_single": true,
+                "hunk_start": 209,
+                "hunk_end": 214,
+                "func_is_single": true,
+                "func_start": 209,
+                "func_end": 214,
+                "func_hunks": [],
+                "patch_md5": "f4cb08536c55dfc2cf0129bef4da62f7"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "msg": "not reproduce",
+            "status": -1
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": ["--enable-shared=yes","--enable-static=no"],
+            "test": null,
+            "test_flags": null,
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/libgd/libgd/commits/69d2fd2c597ffc0c217de1238b9bf4d4bceba8e6"
+    },
+    {
+        "commit_after": "a93eac0e843148dc2d631c3ba80af17e9c8c860f",
+        "commit_date": "2019-12-20 12:03:33 -0300",
+        "commit_before": "2e886046f86d0d6bfc14aab94a881259a081e3f4",
+        "files": {
+            "src": [
+                "src/gd.c"
+            ],
+            "test": [
+                "tests/gdimageclone/.gitignore",
+                "tests/gdimageclone/CMakeLists.txt",
+                "tests/gdimageclone/Makemodule.am",
+                "tests/gdimageclone/style.c"
+            ],
+            "src0_location": {
+                "line_is_single": false,
+                "line_number": null,
+                "hunk_is_single": false,
+                "hunk_start": null,
+                "hunk_end": null,
+                "func_is_single": true,
+                "func_start": 2865,
+                "func_end": 2912,
+                "func_hunks": [],
+                "patch_md5": "e878d0e35c6e229c35371e8937773bf9"
+            }
+        },
+        "unittest": {
+            "id": null,
+            "name": null,
+            "status": "success2"
+        },
+        "c_compile": {
+            "build": null,
+            "build_flags": null,
+            "test": null,
+            "test_flags": ["gdimageclone/style"],
+            "clean": null
+        },
+        "status": 0,
+        "status_manual": 0,
+        "url": "https://api.github.com/repos/libgd/libgd/commits/a93eac0e843148dc2d631c3ba80af17e9c8c860f"
+    }
+]

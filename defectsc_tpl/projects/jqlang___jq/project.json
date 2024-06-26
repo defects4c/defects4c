@@ -1,0 +1,15 @@
+{
+    "homepage": "https://github.com/jqlang/jq",
+    "language": null,
+    "main_repo": "https://github.com/jqlang/jq",
+    "repo_name": "jqlang___jq",
+    "env": [],
+    "before_install": [],
+    "c_compile": {
+        "build": "build_tpl.jinja",
+        "build_flags": [],
+        "test": "test_tpl.jinja",
+        "test_flags": [],
+        "clean": "git"
+    }
+}

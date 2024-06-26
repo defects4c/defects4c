@@ -1,0 +1,51 @@
+build_dir=$1
+test_log=$2
+fn=$(realpath $test_log)
+
+
+
+fix_log="${test_log/\.log/}"
+
+
+
+cd tests
+
+if [[ -f "/src2/defectsc_tpl/projects/jqlang___jq/xtest.sh" ]]; then
+	cp /src2/defectsc_tpl/projects/jqlang___jq/*.sh  ./
+fi 
+if [[ -f "/src/projects/jqlang___jq/xtest.sh" ]]; then
+	cp /src/projects/jqlang___jq/*.sh  ./
+fi 
+
+
+
+{% if commit_after=="71c2ab509a8628dbbad4bc7b3f98a64aa90d3297" %} 
+	chmod +x xtest.sh 
+	./xtest.sh  > "${fix_log}.msg"      2>&1 
+{% else %}
+	chmod +x ytest.sh 
+	./ytest.sh  > "${fix_log}.msg"      2>&1 
+{% endif %}
+
+
+
+
+running_status=$?
+expected_status=0
+
+
+echo "--->running_status--->"$running_status
+
+if [ "$running_status" -ne "$expected_status" ]; then
+	    echo "FAILED\n" > "${fix_log}.status" ;
+else 
+	    echo "success\n" > "${fix_log}.status" ; 
+fi
+
+
+
+
+
+
+
+
