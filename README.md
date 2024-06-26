@@ -1,13 +1,16 @@
-## Defects4C, a Benchmarking C/C++ Faults to Assess LLM-Based Program Repair 👋
+## Defects4C: Benchmarking C/C++ Faults to Assess LLM-Based Program Repair 👋
 
-Most existing Automated program repair (APR) research focuses on Java programs, Defects4J. Despite the significant prevalence of C/C++ vulnerabilities, the field lacks extensive research on the automated repair of such vulnerabilities.
+Most existing Automated Program Repair (APR) research focuses on Java programs, primarily through Defects4J. Despite the significant prevalence of C/C++ vulnerabilities, extensive research on the automated repair of such vulnerabilities is lacking.
 
-To fill this critical gap, we introduces Defects4C, a high-quality executable benchmark for C/C++ defects. It consists of **248** buggy functions and  **102** vulnerable functions paired with the test cases for reproduction. 
+To fill this critical gap, we introduce Defects4C, a high-quality executable benchmark for C/C++ defects. It consists of **248** buggy functions and **102** vulnerable functions, paired with test cases for reproduction.
+
 
 
 
 ## 1. Overview
-- Assess the effectiveness of existing state-of-the-art APR techniques in repairing C/C++ faults, we conduct a comprehensive empirical study including 24 state-of-the-art LLMs using **Defects4C** in two different scenarios:
+
+- To assess the effectiveness of existing state-of-the-art APR techniques in repairing C/C++ faults, we conduct a comprehensive empirical study using 24 state-of-the-art LLMs with Defects4C in two different scenarios:
+
   - Single-round repair
   - Conversation-based repair for evaluation. 
 
@@ -22,6 +25,7 @@ a. Initialize Defects4C :
 or 
   docker pull defects4c/defects4c
 ```
+Run the Docker container:
 
 ```
  docker run --name my_defects4c -d \
@@ -32,23 +36,27 @@ or
         defects4c/defects4c:latest
 ```
 
-b. Change working environment into the docker container
+b. Change the working environment to the Docker container:
+
 ```
  docker exec -it my_defects4c bash
 ```
 
-c. Install the system level dependence from the container's inner side
+c. Install system-level dependencies from within the container:
+
 ```
 bash /src/install_deps.sh 
 ```
 
-This is a onetime setup, it takes 10-15 minutes in 128 cores, all bugs' env initial time only in here.
+This is a one-time setup, taking 10-15 minutes on a 128-core machine. All bugs' environments are initialized here.
 
-## 3, download bug's repo.   
+There are two parts to Defects4C: one collects normal bugs from the real world, Defects4C_bug and another is collect from CVE, named Defects4C_vul, we are only demostrated the Defects4C_bug, you can check [Defects4C_vul](Defects4C_vul.md) for Defects4C_vul
+
+## 3. Download Bug Repositories
 
 <details>
 
-<summary>One command to download all projects
+<summary>One command to download all projects:
 
 ```
 bash bulk_git_clone.sh
@@ -56,9 +64,8 @@ bash bulk_git_clone.sh
 
 </summary>
 
-### You can checkout one by one like 
+### You can also check out projects one by one
 
-there are two parts for defects4c, one is defects4c_bug which collect normal bug from real-worldby our human
 
 - List Projects
 
@@ -95,40 +102,51 @@ bash bulk_git_clone.sh
 </details>
 
 ## 4, Reproduce one bug
-Now, you can reproduce any bug
-```
-python3 bug_helper_v1_out2.py  reproduce [bug_id]
-for example
-python3 bug_helper_v1_out2.py  reproduce danmar___cppcheck@a0c37ceba27179496fa2f44072f85e2a5448216e 
-```
-
-* then you can check out the status and error message from the path '/out/[project]', e.g. `ls /out/danmar___cppcheck `, there are two file types, the `msg` for error message of compilation and `status` for units pass.
-```
-cat  /out/danmar___cppcheck/logs/test_a0c37ceba27179496fa2f44072f85e2a5448216e_fix.msg
-
-cat  /out/danmar___cppcheck/logs/test_a0c37ceba27179496fa2f44072f85e2a5448216e_fix.status
+Now, you can reproduce any bug:
 
 ```
-
-## 5, Fix a bug by given patch path
-
-- Verify a patch whether can repair the error or not:
-
-```
-python3 bug_helper_v1_out2.py  fix [bug_id] [patch_path] 
-#for example 
-
- python3 bug_helper_v1_out2.py  fix danmar___cppcheck@a0c37ceba27179496fa2f44072f85e2a5448216e /patch/gpt-3.5-turbo_temp_0@@danmar___cppcheck@@ea2916a3e49934d482cd9b30b520c7873db4de82___tokenlist.cpp@6@1
-```
-
-Finally, it will show the patch verification result, if the status is a failure, you can check the log file in "/out/[project]" again to build the prompt's query and ask the LLM to refine the patch making it correct.
-
-
-# Benchmark in one 
-The scripts to 
-We offer the script to assess the C/C++ Faults for LLM-Based Program Repair, calculate the pass@k where k in greedy, 1, 10 and 100 repsectively, which depends on ([VLLM](https://github.com/vllm-project/vllm)) 
+bash run_reproduce.sh  [repo] [bug_id]
+# for example
+bash run_reproduce.sh  danmar___cppcheck 099b4435c38dd52ddb38e6b1706d9c988699c082
 
 ```
-updating
+Then you can check the status and error messages from the path '/out/[project]'. For example: `ls /out/danmar___cppcheck `, there are two file types, the `msg` for error message of compilation and `status` for units pass.
+
 ```
+# Check error message
+
+# cat  /out/danmar___cppcheck/logs/test_099b4435c38dd52ddb38e6b1706d9c988699c082_fix.msg
+
+# Check status
+
+cat  /out/danmar___cppcheck/logs/test_099b4435c38dd52ddb38e6b1706d9c988699c082_fix.status
+cat  /out/danmar___cppcheck/logs/test_099b4435c38dd52ddb38e6b1706d9c988699c082_buggy.status
+```
+
+## 5. Fix a Bug Using a Given Patch
+
+- Verify whether a patch can repair the error:
+
+```
+bash run_patch.sh  099b4435c38dd52ddb38e6b1706d9c988699c082
+
+```
+
+Check the patch verification result:
+
+
+
+```
+cat  /out/danmar___cppcheck/logs/patch_099b4435c38dd52ddb38e6b1706d9c988699c082_01d594477413b345316d0c0e2acbe8e9.msg
+
+cat  /out/danmar___cppcheck/logs/patch_099b4435c38dd52ddb38e6b1706d9c988699c082_01d594477413b345316d0c0e2acbe8e9.status
+
+```
+
+
+</details>
+Finally, it will show the patch verification result. If the status is a failure, you can check the log file in "/out/[project]" again to build the prompt's query and ask the LLM to refine the patch, making it correct.
+
+
+
 

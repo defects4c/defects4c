@@ -26,8 +26,7 @@
         "unittest": {
             "id": null,
             "name": null,
-            "msg": "cannot compile in dgx",
-            "status": -2
+            "status": "success2"
         },
         "c_compile": {
             "build": null,

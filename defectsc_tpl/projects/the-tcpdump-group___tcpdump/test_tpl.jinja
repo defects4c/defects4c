@@ -24,7 +24,11 @@ if [[ -f "./tests/TESTLIST"  &&  -f "./tests/TESTonce" ]]; then
 
 		cat TESTLIST|grep "$1" | while read name input output options
 		do 
-		    timeout 30 ./TESTonce $name $input $output "$options" 2>&1 >> $fix_log_msg
+			if [[ $options == *"-v"* ]]; then ;
+			    timeout 30 ./TESTonce $name $input $output "$options -vvv " 2>&1 >> $fix_log_msg
+			else
+			    timeout 30 ./TESTonce $name $input $output "$options" 2>&1 >> $fix_log_msg
+			fi 
 		done 
 	}
 	
