@@ -1,8 +1,10 @@
-The third level categories in rebuttal phase.
+We present the  third level categories(minor category) about Defects4C during rebuttal phase.
+
+1. The minor category of Signature 
 
 |Category         |Incorrect Function Usage         |Incorrect method name             |
 |------------------|---------------------------------|----------------------------------|
-|                  |                                 |Missing method invocation         |
+|      Signature            |                                 |Missing method invocation         |
 |                  |                                 |Incorrect number of arguments     |
 |                  |                                 |Improper argument order           |
 |                  |Fault Input Type                 |                                  |
@@ -10,7 +12,7 @@ The third level categories in rebuttal phase.
 |                  |                                 |Data structure mismatch           |
 |                  |                                 |Incorrectly formatted data        |
 |                  |                                 |Empty or null inputs              |
-|  Signature    |Incorrect Function Return Value  |                                  |
+|      |Incorrect Function Return Value  |                                  |
 |                  |                                 |Unexpected return type            |
 |                  |                                 |Undefined return value            |
 |                  |                                 |Incorrectly formatted return value|
@@ -21,12 +23,16 @@ The third level categories in rebuttal phase.
 |                  |                                 |Incorrect variable type           |
 |                  |                                 |Unused variables                  |
 
+2. The minor category of Sanitize 
+
 |Category         |Incorrect Function Usage         |Incorrect method name             |
 |------------------|---------------------------------|----------------------------------|
 |      Sanitize    |Control Expression Error         |Faulty logical conditions         |
 |                  |                                 |Incomplete checks                 |
 |                  |                                 |Incorrect exception handling      |
 |                  |                                 |Overly permissive conditions      |
+
+3. The minor category of Memory Error  
 
 |Category         |Incorrect Function Usage         |Incorrect method name             |
 |------------------|---------------------------------|----------------------------------|
@@ -42,6 +48,8 @@ The third level categories in rebuttal phase.
 |                  |                                 |Buffer overflow:                  |
 |                  |                                 |Stack overflow:                   |
 |                  |                                 |Integer overflow                  |
+
+4. The minor category of Logic error
 
 |Category         |Incorrect Function Usage         |Incorrect method name             |
 |------------------|---------------------------------|----------------------------------|
