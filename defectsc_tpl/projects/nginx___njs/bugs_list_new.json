@@ -77,7 +77,7 @@
         "c_compile": {
             "build": null,
             "build_flags": null,
-            "test": null,
+            "test": "test_tpl_cve_2021_46462.jinja",
             "test_flags": null,
             "clean": null
         },
@@ -127,7 +127,7 @@
                 "--debug-memory=YES",
                 "--test262=YES"
             ],
-            "test": null,
+            "test": "test_tpl_cve_2022_27007.jinja",
             "test_flags": null,
             "clean": null
         },

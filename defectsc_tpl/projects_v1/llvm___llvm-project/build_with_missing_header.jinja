@@ -1,0 +1,25 @@
+build_dir=$1
+test_log=$2
+
+
+
+if [ ! -f "./fix_llvm_missing_header.sh"  ]; then 
+ cp /src/build_tools/fix_llvm_missing_header.sh ./
+fi 
+
+bash fix_llvm_missing_header.sh  --fix-headers
+
+
+{%if not is_rebuild %}
+        cmake_flags="{{build_flags|join(" ") }}"
+
+        cmake \
+        $cmake_flags \
+        -G Ninja -B $build_dir 
+
+
+{%endif%}
+
+
+ninja -C $build_dir 
+

@@ -140,7 +140,7 @@
                 "--enable-static=no"
             ],
             "test": null,
-            "test_flags": null,
+            "test_flags": ["tga/heap_overflow_1","tga/heap_overflow_2"],
             "clean": null
         },
         "status": 0,
@@ -296,7 +296,7 @@
             "build": null,
             "build_flags": null,
             "test": null,
-            "test_flags": null,
+            "test_flags": ["gdimagecreate/bug00340"],
             "clean": null
         },
         "status": 0,
@@ -350,7 +350,7 @@
                 "--enable-static=no"
             ],
             "test": null,
-            "test_flags": null,
+            "test_flags": ["gd2/bug00354a","gd2/bug00354b"],
             "clean": null
         },
         "status": 0,

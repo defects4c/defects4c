@@ -1533,7 +1533,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -1582,7 +1582,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -1631,7 +1631,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -1680,7 +1680,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -1729,7 +1729,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -1784,7 +1784,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -1840,7 +1840,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -1889,7 +1889,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -1938,7 +1938,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -1989,7 +1989,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -2039,7 +2039,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -2090,7 +2090,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -2140,7 +2140,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -2189,7 +2189,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -2242,7 +2242,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -2293,7 +2293,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -2346,7 +2346,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -2397,7 +2397,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [
@@ -2474,7 +2474,7 @@
             "status": "success2"
         },
         "c_compile": {
-            "build": null,
+            "build": "build_with_missing_header.jinja",
             "build_flags": null,
             "test": null,
             "test_flags": [

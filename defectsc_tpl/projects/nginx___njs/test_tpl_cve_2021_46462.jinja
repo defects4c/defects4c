@@ -1,0 +1,42 @@
+# bash inplace_test.sh [op_name] [argv]
+# bash  inplace_test.sh "get_status" this_is_test_log 
+build_dir=$1
+test_log=$2
+fn=$(realpath $test_log )
+if [[ ! -d $build_dir ]]; then 
+        build_dir=build
+fi 
+make -j {{ cpu_count }}   $build_dir/njs_unit_test > /dev/null   2>&1 
+rm -fr defect4c_asan 
+mkdir -p defect4c_asan 
+
+if [ ! -f cve_2021_46462_poc.js ]; then 
+ cp /src/projects/nginx___njs/cve_2021_46462_poc.js  ./cve_2021_46462_poc.js 
+fi 
+# Test CVE-2021-46461 POC
+$build_dir/njs cve_2021_46462_poc.js >>  $test_log 2>&1 
+
+get_status() {
+        string=$(cat $fn)
+        if [[ $string == *"==ERROR"* ]] || [[ $string == *"AddressSanitizer"* ]] || [[ $string == *"SIGSEGV, Segmentation fault"* ]] ; then        
+            echo "FAILED"
+        else
+            echo "success"
+        fi
+}
+get_err_msg() {
+        # Check if AddressSanitizer error detected
+        string=$(cat $test_log)
+        if [[ $string == *"AddressSanitizer"* ]]; then
+            echo "FAIL: AddressSanitizer detected - CVE-2021-46461 vulnerability reproduced" > $1
+            cat $test_log >> $1
+        else
+            echo "PASS: No AddressSanitizer error - CVE-2021-46461 likely patched" > $1
+            cat $test_log >> $1
+        fi
+}
+fix_log="${test_log/\.log/}"
+echo $fix_log"---->"
+status_log=$( get_status)
+echo $status_log > "${fix_log}.status"
+get_err_msg "${fix_log}.msg"

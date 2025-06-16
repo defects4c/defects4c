@@ -1,68 +1,102 @@
-build_dir=$1
+
+{% for one_file in test_files %}
+{%   if one_file.endswith(".pcap") %}
+  test_case_name="$(basename "{{ one_file }}")"
+  run_test "$test_case_name"
+  if [[ $? -eq 0 ]]; then
+    echo "success" >> "$fix_log_status"
+  else
+    echo "FAILED"  >> "$fix_log_status"
+  fi
+
+{%   endif %}
+{% endfor %}
+
+
+
+
+#!/usr/bin/env bash
+set -uo pipefail             # strict-ish mode; omit -e so we can inspect results ourselves
+
+build_dir=$1                 # (not used by the test script itself, but retained for CLI parity)
 test_log=$2
 
+if [[ -z "${build_dir:-}" || -z "${test_log:-}" ]]; then
+  echo "Usage: $0 <build_dir> <test_log>" >&2
+  exit 1
+fi
 
-if [ ! -f "./tests/TESTrun" ]; then 
-  cp "./tests/TESTrun.sh" "./tests/TESTrun"
-fi 
+# Ensure the test runner wrapper exists
+#[[ -f tests/TESTrun ]] || cp tests/TESTrun.sh tests/TESTrun
 
-
-fix_log="${test_log/\.log/}"
+fix_log="${test_log%.log}"
 fix_log_msg="${fix_log}.msg"
+fix_log_status="${fix_log}.status"
+
+: > "$fix_log_msg"           # truncate / create the log files
+: > "$fix_log_status"
+
+if [[ -f tests/TESTLIST && -f tests/TESTonce ]]; then
+  pushd tests >/dev/null
+
+  ###########################################################################
+  # Run any entries in TESTLIST whose first field matches $pattern
+  ###########################################################################
+  run_test() {
+    local pattern=$1
+    grep -F -- "$pattern" TESTLIST | \
+    while read -r name input output options; do
+      local opts="$options"
+      [[ $opts == *"-v"* ]] && opts="$opts -vvv"
+      timeout 30 ./TESTonce "$name" "$input" "$output" "$opts" \
+        >> "$fix_log_msg" 2>&1
+    done
+  }
+
+  ###########################################################################
+  # Make a temporary TESTLIST that contains only $pattern, run entire suite,
+  # then restore the original TESTLIST.
+  ###########################################################################
+  run_test_testfilter() {
+    local pattern=$1
+    cp TESTLIST TESTLIST.bak
+    trap 'mv -f TESTLIST.bak TESTLIST' RETURN
+
+    grep -F -- "$pattern" TESTLIST.bak > TESTLIST
+    timeout 30 ./TESTrun.sh >> "$fix_log_msg" 2>&1
+  }
 
 
-cat /dev/null > $fix_log_msg
-cat /dev/null > "${fix_log}.status"
+
+{% for one_file in test_files %}
+{%   if one_file.endswith(".pcap") %}
+  test_case_name="$(basename "{{ one_file }}")"
+  if [[ -f TESTrun.sh ]]; then
+    run_test_testfilter "$test_case_name"
+  else
+    run_test "$test_case_name"
+  fi
+
+{%   endif %}
+{% endfor %}
 
 
-if [[ -f "./tests/TESTLIST"  &&  -f "./tests/TESTonce" ]]; then
-
-	cd ./tests/
-	
-
-	run_test() {
-
-		cat TESTLIST|grep "$1" | while read name input output options
-		do 
-			if [[ $options == *"-v"* ]]; then ;
-			    timeout 30 ./TESTonce $name $input $output "$options -vvv " 2>&1 >> $fix_log_msg
-			else
-			    timeout 30 ./TESTonce $name $input $output "$options" 2>&1 >> $fix_log_msg
-			fi 
-		done 
-	}
-	
-	{% for one_file in test_files %}	
-		
-	    {% if  one_file.endswith('pcap') %}
-			test_case_name={{ one_file.split('/') | last }}
-			run_test $test_case_name
-			return_status=$?
-			expect_status=0
-			
-			if [ $return_status -ne $expect_status ]; then 
-				    echo "FAILED\n" >> "${fix_log}.status" ;
-			else 
-				    echo "success\n" >> "${fix_log}.status" ; 
-			fi
-			
-		{% endif %}
-		
-	{% endfor %}
-
-else 
-
-	echo "error\n" >> "${fix_log}.status" ;
-	if [ -f "./tests/TESTLIST" ] ; then 
-		echo "error1\n" >> "${fix_log}.status" ;
-	fi 
-	if [ -f "./tests/TESTonce" ] ; then 
-		echo "error2\n" >> "${fix_log}.status" ;
-	fi 
 
 
-fi 
 
 
+  # Decide PASS/FAIL based on log contents rather than exit code
+  if grep -q "TEST FAILED" "$fix_log_msg"; then
+    echo "FAILED"  >> "$fix_log_status"
+  else
+    echo "success" >> "$fix_log_status"
+  fi
+
+  popd >/dev/null
+else
+  echo "error"  >> "$fix_log_status"
+  [[ -f tests/TESTLIST ]] || echo "error1" >> "$fix_log_status"
+  [[ -f tests/TESTonce  ]] || echo "error2" >> "$fix_log_status"
+fi
 
 
