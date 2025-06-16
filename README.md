@@ -1,4 +1,4 @@
-## Defects4C: Benchmarking C/C++ Faults to Assess LLM-Based Program Repair 👋
+## Defects4C: Benchmarking Large Language Model Repair Capability with C/C++ Bugs 👋
 
 Most existing Automated Program Repair (APR) research focuses on Java programs, primarily through Defects4J. Despite the significant prevalence of C/C++ vulnerabilities, extensive research on the automated repair of such vulnerabilities is lacking.
 
