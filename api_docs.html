@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Helper Service API Documentation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #34495e;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 2rem;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin-top: 1.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .endpoint {
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+        
+        .get { background: #27ae60; }
+        .post { background: #e74c3c; }
+        .delete { background: #e67e22; }
+        
+        .path {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        .description {
+            margin: 15px 0;
+            color: #555;
+            font-size: 1.1rem;
+        }
+        
+        .input-section, .output-section, .example-section {
+            margin: 15px 0;
+        }
+        
+        .input-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-table th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .input-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .input-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .input-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border: 1px solid #34495e;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+        
+        .note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 5px solid #f39c12;
+        }
+        
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 5px solid #e74c3c;
+        }
+        
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 5px solid #27ae60;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            margin: 8px 0;
+        }
+        
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .required {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .optional {
+            color: #95a5a6;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐛 Bug Helper Service API Documentation</h1>
+        
+        <div class="toc">
+            <h3>📋 Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#projects">GET /projects</a></li>
+                <li><a href="#reproduce">POST /reproduce</a></li>
+                <li><a href="#fix">POST /fix</a></li>
+                <li><a href="#status">GET /status/{handle}</a></li>
+                <li><a href="#cache-status">GET /cache/status</a></li>
+                <li><a href="#clear-cache">DELETE /cache/{redis_key}</a></li>
+                <li><a href="#all-tasks">GET /all_tasks</a></li>
+            </ul>
+        </div>
+
+        <div id="overview">
+            <h2>📖 Overview</h2>
+            <p>The Bug Helper Service is a FastAPI-based service for reproducing and fixing software bugs. It provides endpoints to manage bug reproduction, apply patches, and monitor task status with Redis-based caching.</p>
+            
+            <div class="note">
+                <strong>🔧 Service Info:</strong><br>
+                • Title: Bug Helper Service<br>
+                • Version: 1.0.0<br>
+                • Default Port: 8000<br>
+                • Cache: Redis-based with TTL support
+            </div>
+        </div>
+
+        <div id="projects" class="endpoint">
+            <h2><span class="method get">GET</span> <span class="path">/projects</span></h2>
+            
+            <div class="description">
+                <strong>📝 Description:</strong> Retrieves a list of all available projects that can be used for bug reproduction and fixing.
+            </div>
+            
+            <div class="input-section">
+                <h3>📥 Input Parameters</h3>
+                <p><em>No input parameters required.</em></p>
+            </div>
+            
+            <div class="output-section">
+                <h3>📤 Response</h3>
+                <table class="input-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>projects</td>
+                        <td>List[string]</td>
+                        <td>Array of available project names</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="example-section">
+                <h3>🚀 Example Usage</h3>
+                <strong>Request:</strong>
+                <pre><code>GET http://localhost:8000/projects</code></pre>
+                
+                <strong>Response:</strong>
+                <pre><code>{
+  "projects": [
+    "libxml2",
+    "openssl",
+    "curl",
+    "nginx",
+    "apache"
+  ]
+}</code></pre>
+            </div>
+        </div>
+
+        <div id="reproduce" class="endpoint">
+            <h2><span class="method post">POST</span> <span class="path">/reproduce</span></h2>
+            
+            <div class="description">
+                <strong>📝 Description:</strong> Initiates bug reproduction for a specific bug ID. This endpoint queues a background task to reproduce the bug environment and run tests.
+            </div>
+            
+            <div class="input-section">
+                <h3>📥 Input Parameters</h3>
+                <table class="input-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>bug_id</td>
+                        <td>string</td>
+                        <td class="required">Yes</td>
+                        <td>-</td>
+                        <td>Bug identifier in format "project@sha"</td>
+                    </tr>
+                    <tr>
+                        <td>is_force_cleanup</td>
+                        <td>boolean</td>
+                        <td class="optional">No</td>
+                        <td>true</td>
+                        <td>Whether to force cleanup before reproduction</td>
+                    </tr>
+                </table>
+                
+                <div class="note">
+                    <strong>🔍 Bug ID Format:</strong> The bug_id must follow the pattern "project@commit_sha" where project is a valid project name from /projects and commit_sha is a valid git commit hash.
+                </div>
+            </div>
+            
+            <div class="output-section">
+                <h3>📤 Response</h3>
+                <table class="input-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>handle</td>
+                        <td>string</td>
+                        <td>Unique task handle for status tracking</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="example-section">
+                <h3>🚀 Example Usage</h3>
+                <strong>Request:</strong>
+                <pre><code>POST http://localhost:8000/reproduce
+Content-Type: application/json
+
+{
+  "bug_id": "libxml2@a1b2c3d4e5f6",
+  "is_force_cleanup": true
+}</code></pre>
+                
+                <strong>Response:</strong>
+                <pre><code>{
+  "handle": "abc123def456789"
+}</code></pre>
+            </div>
+        </div>
+
+        <div id="fix" class="endpoint">
+            <h2><span class="method post">POST</span> <span class="path">/fix</span></h2>
+            
+            <div class="description">
+                <strong>📝 Description:</strong> Applies a patch to fix a bug and tests the fix. This endpoint uses Redis caching to avoid redundant processing of the same patch.
+            </div>
+            
+            <div class="input-section">
+                <h3>📥 Input Parameters</h3>
+                <table class="input-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>bug_id</td>
+                        <td>string</td>
+                        <td class="required">Yes</td>
+                        <td>Bug identifier in format "project@sha"</td>
+                    </tr>
+                    <tr>
+                        <td>patch_path</td>
+                        <td>string</td>
+                        <td class="required">Yes</td>
+                        <td>File path to the patch file</td>
+                    </tr>
+                </table>
+                
+                <div class="note">
+                    <strong>💾 Caching:</strong> Results are cached in Redis based on the combination of bug_id and patch_path. Subsequent requests with the same parameters will return cached results.
+                </div>
+            </div>
+            
+            <div class="output-section">
+                <h3>📤 Response</h3>
+                <table class="input-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>handle</td>
+                        <td>string</td>
+                        <td>Base64-encoded handle for status tracking</td>
+                    </tr>
+                    <tr>
+                        <td>redis_key</td>
+                        <td>string</td>
+                        <td>Redis key used for caching this operation</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="example-section">
+                <h3>🚀 Example Usage</h3>
+                <strong>Request:</strong>
+                <pre><code>POST http://localhost:8000/fix
+Content-Type: application/json
+
+{
+  "bug_id": "openssl@f1e2d3c4b5a6",
+  "patch_path": "/patches/openssl_fix_12345678.patch"
+}</code></pre>
+                
+                <strong>Response:</strong>
+                <pre><code>{
+  "handle": "cGF0Y2hfZjFlMmQzYzRiNWE2XzEyMzQ1Njc4LmxvZw==",
+  "redis_key": "patch_f1e2d3c4b5a6_12345678.log"
+}</code></pre>
+            </div>
+        </div>
+
+        <div id="status" class="endpoint">
+            <h2><span class="method get">GET</span> <span class="path">/status/{handle}</span></h2>
+            
+            <div class="description">
+                <strong>📝 Description:</strong> Retrieves the current status and results of a task identified by its handle. Works for both reproduce and fix operations.
+            </div>
+            
+            <div class="input-section">
+                <h3>📥 Input Parameters</h3>
+                <table class="input-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>handle</td>
+                        <td>string (path)</td>
+                        <td class="required">Yes</td>
+                        <td>Task handle from /reproduce or /fix response</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="output-section">
+                <h3>📤 Response</h3>
+                <p>Response varies based on operation type and status:</p>
+                
+                <strong>For Reproduce Operations:</strong>
+                <table class="input-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>bug_id</td>
+                        <td>string</td>
+                        <td>Original bug identifier</td>
+                    </tr>
+                    <tr>
+                        <td>sha</td>
+                        <td>string</td>
+                        <td>Git commit SHA</td>
+                    </tr>
+                    <tr>
+                        <td>status</td>
+                        <td>string</td>
+                        <td>"queued", "running", "completed", or "failed"</td>
+                    </tr>
+                    <tr>
+                        <td>log_file</td>
+                        <td>string</td>
+                        <td>Path to log file</td>
+                    </tr>
+                    <tr>
+                        <td>result</td>
+                        <td>object</td>
+                        <td>Contains log_file and return_code (when completed)</td>
+                    </tr>
+                </table>
+                
+                <strong>For Fix Operations:</strong>
+                <table class="input-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>bug_id</td>
+                        <td>string</td>
+                        <td>Original bug identifier</td>
+                    </tr>
+                    <tr>
+                        <td>status</td>
+                        <td>string</td>
+                        <td>"queued", "running", "completed", or "failed"</td>
+                    </tr>
+                    <tr>
+                        <td>return_code</td>
+                        <td>integer</td>
+                        <td>Exit code of the patch operation</td>
+                    </tr>
+                    <tr>
+                        <td>fix_log</td>
+                        <td>string</td>
+                        <td>Truncated log output</td>
+                    </tr>
+                    <tr>
+                        <td>fix_msg</td>
+                        <td>string</td>
+                        <td>Truncated message output</td>
+                    </tr>
+                    <tr>
+                        <td>fix_status</td>
+                        <td>string</td>
+                        <td>Truncated status output</td>
+                    </tr>
+                    <tr>
+                        <td>cached</td>
+                        <td>boolean</td>
+                        <td>Whether result came from cache</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="example-section">
+                <h3>🚀 Example Usage</h3>
+                <strong>Request:</strong>
+                <pre><code>GET http://localhost:8000/status/abc123def456789</code></pre>
+                
+                <strong>Response (Completed Fix):</strong>
+                <pre><code>{
+  "bug_id": "openssl@f1e2d3c4b5a6",
+  "sha": "f1e2d3c4b5a6",
+  "status": "completed",
+  "return_code": 0,
+  "fix_log": "Building project... Applying patch... Tests passed.",
+  "fix_msg": "Patch applied successfully",
+  "fix_status": "All tests passed",
+  "cached": false,
+  "patch": "/patches/openssl_fix_12345678.patch",
+  "redis_key": "patch_f1e2d3c4b5a6_12345678.log"
+}</code></pre>
+                
+                <strong>Response (Failed):</strong>
+                <pre><code>{
+  "bug_id": "openssl@f1e2d3c4b5a6",
+  "status": "failed",
+  "error": "run_patch.sh exited 1",
+  "return_code": 1
+}</code></pre>
+            </div>
+        </div>
+
+        <div id="cache-status" class="endpoint">
+            <h2><span class="method get">GET</span> <span class="path">/cache/status</span></h2>
+            
+            <div class="description">
+                <strong>📝 Description:</strong> Provides information about the Redis cache connection and status. Useful for monitoring and debugging cache-related issues.
+            </div>
+            
+            <div class="input-section">
+                <h3>📥 Input Parameters</h3>
+                <p><em>No input parameters required.</em></p>
+            </div>
+            
+            <div class="output-section">
+                <h3>📤 Response</h3>
+                <table class="input-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>redis_connected</td>
+                        <td>boolean</td>
+                        <td>Whether Redis connection is active</td>
+                    </tr>
+                    <tr>
+                        <td>redis_info</td>
+                        <td>object/null</td>
+                        <td>Redis server information (null if not connected)</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="example-section">
+                <h3>🚀 Example Usage</h3>
+                <strong>Request:</strong>
+                <pre><code>GET http://localhost:8000/cache/status</code></pre>
+                
+                <strong>Response (Connected):</strong>
+                <pre><code>{
+  "redis_connected": true,
+  "redis_info": {
+    "redis_version": "6.2.6",
+    "used_memory": "1048576",
+    "connected_clients": "1",
+    "uptime_in_seconds": "3600"
+  }
+}</code></pre>
+                
+                <strong>Response (Disconnected):</strong>
+                <pre><code>{
+  "redis_connected": false,
+  "redis_info": null
+}</code></pre>
+            </div>
+        </div>
+
+        <div id="clear-cache" class="endpoint">
+            <h2><span class="method delete">DELETE</span> <span class="path">/cache/{redis_key}</span></h2>
+            
+            <div class="description">
+                <strong>📝 Description:</strong> Removes a specific cache entry from Redis. This forces the next request with the same parameters to recalculate the result.
+            </div>
+            
+            <div class="input-section">
+                <h3>📥 Input Parameters</h3>
+                <table class="input-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>redis_key</td>
+                        <td>string (path)</td>
+                        <td class="required">Yes</td>
+                        <td>Redis key to delete (from /fix response)</td>
+                    </tr>
+                </table>
+                
+                <div class="warning">
+                    <strong>⚠️ Warning:</strong> Deleting cache entries will force recalculation on next request, which may take significant time for complex operations.
+                </div>
+            </div>
+            
+            <div class="output-section">
+                <h3>📤 Response</h3>
+                <table class="input-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>deleted</td>
+                        <td>boolean</td>
+                        <td>Whether the key was successfully deleted</td>
+                    </tr>
+                    <tr>
+                        <td>key</td>
+                        <td>string</td>
+                        <td>The Redis key that was targeted</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="example-section">
+                <h3>🚀 Example Usage</h3>
+                <strong>Request:</strong>
+                <pre><code>DELETE http://localhost:8000/cache/patch_f1e2d3c4b5a6_12345678.log</code></pre>
+                
+                <strong>Response:</strong>
+                <pre><code>{
+  "deleted": true,
+  "key": "patch_f1e2d3c4b5a6_12345678.log"
+}</code></pre>
+                
+                <strong>Error Response (Redis not connected):</strong>
+                <pre><code>{
+  "detail": "Redis not connected"
+}</code></pre>
+            </div>
+        </div>
+
+        <div id="all-tasks" class="endpoint">
+            <h2><span class="method get">GET</span> <span class="path">/all_tasks</span></h2>
+            
+            <div class="description">
+                <strong>📝 Description:</strong> Retrieves all active tasks from both in-memory storage (reproduce operations) and Redis (fix operations). Useful for monitoring and debugging.
+            </div>
+            
+            <div class="input-section">
+                <h3>📥 Input Parameters</h3>
+                <p><em>No input parameters required.</em></p>
+            </div>
+            
+            <div class="output-section">
+                <h3>📤 Response</h3>
+                <table class="input-table">
+                    <tr>
+                        <th>Field</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>{handle}</td>
+                        <td>object</td>
+                        <td>Task data keyed by handle</td>
+                    </tr>
+                </table>
+                <p>Each task object contains the same fields as returned by <code>/status/{handle}</code></p>
+            </div>
+            
+            <div class="example-section">
+                <h3>🚀 Example Usage</h3>
+                <strong>Request:</strong>
+                <pre><code>GET http://localhost:8000/all_tasks</code></pre>
+                
+                <strong>Response:</strong>
+                <pre><code>{
+  "abc123def456": {
+    "bug_id": "libxml2@a1b2c3d4e5f6",
+    "sha": "a1b2c3d4e5f6",
+    "status": "completed",
+    "log_file": "/logs/a1b2c3d4e5f6_reproduce_abc123def456.log"
+  },
+  "xyz789uvw012": {
+    "bug_id": "openssl@f1e2d3c4b5a6",
+    "status": "running",
+    "patch": "/patches/openssl_fix_12345678.patch",
+    "cached": false
+  }
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="success">
+            <h3>🎯 API Usage Tips</h3>
+            <ul>
+                <li><strong>Polling:</strong> Use <code>/status/{handle}</code> to poll task progress</li>
+                <li><strong>Caching:</strong> Fix operations are automatically cached - identical requests return immediately</li>
+                <li><strong>Monitoring:</strong> Use <code>/all_tasks</code> and <code>/cache/status</code> for system monitoring</li>
+                <li><strong>Error Handling:</strong> Check the <code>status</code> field and <code>return_code</code> for operation success</li>
+                <li><strong>Cleanup:</strong> Use <code>/cache/{redis_key}</code> to clear stale cache entries when needed</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
