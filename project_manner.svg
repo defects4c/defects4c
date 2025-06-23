@@ -1,0 +1,148 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f0f8ff"/>
+  
+  <!-- Floor -->
+  <rect x="0" y="480" width="800" height="120" fill="#8b4513"/>
+  
+  <!-- Chalkboard -->
+  <rect x="150" y="80" width="500" height="280" fill="#2f4f2f" stroke="#8b4513" stroke-width="8" rx="10"/>
+  
+  <!-- Chalkboard frame -->
+  <rect x="140" y="70" width="520" height="300" fill="#d2691e" rx="15"/>
+  <rect x="150" y="80" width="500" height="280" fill="#2f4f2f" rx="10"/>
+  
+  <!-- Chalkboard content -->
+  <text x="400" y="120" font-family="monospace" font-size="24" fill="white" text-anchor="middle" font-weight="bold">Defects4C</text>
+  <text x="200" y="160" font-family="monospace" font-size="16" fill="white">C/C++ Program Repair</text>
+  <text x="200" y="190" font-family="monospace" font-size="14" fill="white">• 248 buggy functions</text>
+  <text x="200" y="215" font-family="monospace" font-size="14" fill="white">• 102 vulnerable functions</text>
+  <text x="200" y="240" font-family="monospace" font-size="14" fill="white">• 9M bug-relevant commits</text>
+  
+  <!-- Code snippet on board -->
+  <text x="450" y="180" font-family="monospace" font-size="12" fill="#90ee90">int* fix_bug(int* arr) {</text>
+  <text x="470" y="200" font-family="monospace" font-size="12" fill="#90ee90">if (arr == NULL)</text>
+  <text x="490" y="220" font-family="monospace" font-size="12" fill="#90ee90">return NULL;</text>
+  <text x="470" y="240" font-family="monospace" font-size="12" fill="#90ee90">// APR magic here</text>
+  <text x="450" y="260" font-family="monospace" font-size="12" fill="#90ee90">}</text>
+  
+  <!-- LLM evaluation results -->
+  <text x="200" y="290" font-family="monospace" font-size="14" fill="#ffff99">24 LLMs Evaluated</text>
+  <text x="200" y="315" font-family="monospace" font-size="14" fill="#ffff99">Repair Success: Variable</text>
+  
+  <!-- Teacher character (orange, representing the researcher/instructor) -->
+  <!-- Body -->
+  <ellipse cx="400" cy="420" rx="35" ry="45" fill="#ff6347"/>
+  <!-- Head -->
+  <circle cx="400" cy="350" r="25" fill="#ff6347"/>
+  <!-- Eyes -->
+  <circle cx="392" cy="345" r="4" fill="white"/>
+  <circle cx="408" cy="345" r="4" fill="white"/>
+  <circle cx="392" cy="345" r="2" fill="black"/>
+  <circle cx="408" cy="345" r="2" fill="black"/>
+  <!-- Glasses -->
+  <circle cx="392" cy="345" r="8" fill="none" stroke="black" stroke-width="2"/>
+  <circle cx="408" cy="345" r="8" fill="none" stroke="black" stroke-width="2"/>
+  <line x1="400" y1="345" x2="400" y2="345" stroke="black" stroke-width="2"/>
+  <!-- Smile -->
+  <path d="M 390 355 Q 400 365 410 355" stroke="black" stroke-width="2" fill="none"/>
+  <!-- Arms -->
+  <ellipse cx="370" cy="400" rx="8" ry="25" fill="#ff6347"/>
+  <ellipse cx="430" cy="400" rx="8" ry="25" fill="#ff6347"/>
+  <!-- Legs -->
+  <ellipse cx="385" cy="470" rx="8" ry="25" fill="#ff6347"/>
+  <ellipse cx="415" cy="470" rx="8" ry="25" fill="#ff6347"/>
+  <!-- Pointer -->
+  <line x1="435" y1="390" x2="480" y2="200" stroke="#8b4513" stroke-width="3"/>
+  
+  <!-- Student 1 (yellow, happy - representing successful repair) -->
+  <!-- Desk 1 -->
+  <rect x="120" y="440" width="80" height="40" fill="#8b4513"/>
+  <!-- Body -->
+  <ellipse cx="160" cy="420" rx="25" ry="35" fill="#ffd700"/>
+  <!-- Head -->
+  <circle cx="160" cy="380" r="20" fill="#ffd700"/>
+  <!-- Eyes -->
+  <circle cx="155" cy="375" r="3" fill="white"/>
+  <circle cx="165" cy="375" r="3" fill="white"/>
+  <circle cx="155" cy="375" r="1.5" fill="black"/>
+  <circle cx="165" cy="375" r="1.5" fill="black"/>
+  <!-- Happy smile -->
+  <path d="M 150 385 Q 160 395 170 385" stroke="black" stroke-width="2" fill="none"/>
+  <!-- Arms -->
+  <ellipse cx="140" cy="405" rx="6" ry="20" fill="#ffd700"/>
+  <ellipse cx="180" cy="405" rx="6" ry="20" fill="#ffd700"/>
+  <!-- Book -->
+  <rect x="140" y="450" width="40" height="25" fill="#deb887" stroke="black"/>
+  <line x1="160" y1="450" x2="160" y2="475" stroke="black"/>
+  
+  <!-- Student 2 (teal, confused - representing challenging bugs) -->
+  <!-- Desk 2 -->
+  <rect x="250" y="440" width="80" height="40" fill="#8b4513"/>
+  <!-- Body -->
+  <ellipse cx="290" cy="420" rx="25" ry="35" fill="#20b2aa"/>
+  <!-- Head -->
+  <circle cx="290" cy="380" r="20" fill="#20b2aa"/>
+  <!-- Eyes -->
+  <circle cx="285" cy="375" r="3" fill="white"/>
+  <circle cx="295" cy="375" r="3" fill="white"/>
+  <circle cx="285" cy="375" r="1.5" fill="black"/>
+  <circle cx="295" cy="375" r="1.5" fill="black"/>
+  <!-- Confused frown -->
+  <path d="M 280 390 Q 290 385 300 390" stroke="black" stroke-width="2" fill="none"/>
+  <!-- Question marks -->
+  <text x="270" y="360" font-size="16" fill="red">?</text>
+  <text x="305" y="365" font-size="14" fill="red">?</text>
+  <!-- Arms -->
+  <ellipse cx="270" cy="405" rx="6" ry="20" fill="#20b2aa"/>
+  <ellipse cx="310" cy="405" rx="6" ry="20" fill="#20b2aa"/>
+  <!-- Book with bug symbols -->
+  <rect x="270" y="450" width="40" height="25" fill="#deb887" stroke="black"/>
+  <text x="290" y="465" font-size="12" fill="red" text-anchor="middle">BUG</text>
+  
+  <!-- Student 3 (purple, working - representing LLM processing) -->
+  <!-- Desk 3 -->
+  <rect x="520" y="440" width="80" height="40" fill="#8b4513"/>
+  <!-- Body -->
+  <ellipse cx="560" cy="420" rx="25" ry="35" fill="#9370db"/>
+  <!-- Head -->
+  <circle cx="560" cy="380" r="20" fill="#9370db"/>
+  <!-- Eyes -->
+  <circle cx="555" cy="375" r="3" fill="white"/>
+  <circle cx="565" cy="375" r="3" fill="white"/>
+  <circle cx="555" cy="375" r="1.5" fill="black"/>
+  <circle cx="565" cy="375" r="1.5" fill="black"/>
+  <!-- Concentrated expression -->
+  <path d="M 552 385 Q 560 383 568 385" stroke="black" stroke-width="2" fill="none"/>
+  <!-- Arms -->
+  <ellipse cx="540" cy="405" rx="6" ry="20" fill="#9370db"/>
+  <ellipse cx="580" cy="405" rx="6" ry="20" fill="#9370db"/>
+  <!-- Laptop/computer -->
+  <rect x="540" y="445" width="40" height="30" fill="#2f2f2f" stroke="black"/>
+  <rect x="542" y="447" width="36" height="20" fill="#90ee90"/>
+  <text x="560" y="458" font-size="8" fill="black" text-anchor="middle">LLM</text>
+  <text x="560" y="468" font-size="6" fill="black" text-anchor="middle">REPAIR</text>
+  
+  <!-- Floating elements representing research concepts -->
+  <!-- Benchmark icon -->
+  <circle cx="100" cy="150" r="30" fill="#ffeb3b" opacity="0.8"/>
+  <text x="100" y="160" font-size="12" fill="black" text-anchor="middle" font-weight="bold">Defects4C</text>
+  <text x="100" y="175" font-size="8" fill="black" text-anchor="middle">Benchmark</text>
+  
+  <!-- C++ logo representation -->
+  <rect x="680" y="120" width="60" height="60" fill="#00599c" opacity="0.8" rx="10"/>
+  <text x="710" y="145" font-size="16" fill="white" text-anchor="middle" font-weight="bold">C++</text>
+  <text x="710" y="165" font-size="10" fill="white" text-anchor="middle">Program</text>
+  <text x="710" y="175" font-size="10" fill="white" text-anchor="middle">Repair</text>
+  
+  <!-- Bug icons floating around -->
+  <circle cx="150" cy="250" r="8" fill="#ff4444"/>
+  <text x="150" y="255" font-size="10" fill="white" text-anchor="middle">🐛</text>
+  
+  <circle cx="650" cy="280" r="8" fill="#ff4444"/>
+  <text x="650" y="285" font-size="10" fill="white" text-anchor="middle">🐛</text>
+  
+  <!-- Title at top -->
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="24" fill="#2f4f2f" text-anchor="middle" font-weight="bold">Automated Program Repair for C/C++</text>
+  <text x="400" y="60" font-family="Arial, sans-serif" font-size="14" fill="#666" text-anchor="middle">Defects4C: Advancing LLM-based Bug Fixing</text>
+</svg>
