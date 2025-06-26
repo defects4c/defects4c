@@ -9,6 +9,9 @@
   Your browser does not support the video tag.
 </video>
 
+![preview](assets/videos/record-video.gif")
+
+
 Most existing Automated Program Repair (APR) research focuses on Java programs, primarily through Defects4J. Despite the significant prevalence of C/C++ vulnerabilities, extensive research on the automated repair of such vulnerabilities is lacking.
 
 To fill this critical gap, we introduce Defects4C, a high-quality executable benchmark for C/C++ defects. It consists of **248** buggy functions and **102** vulnerable functions, paired with test cases for reproduction.
