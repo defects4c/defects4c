@@ -2,7 +2,12 @@
 
 ![Project Illustration](project_manner.svg)
 
-### ⚠️⚠️⚠️ We are updating the online platform within this week (by July 1, 2025). You do not need to install and deploy docker-container locally—just call the API(like https://e2b.dev/) to test your LLM results. So far, it supports pass@1 for each defect. If you prefer pass@k>1, you will have to deploy locally as our computation budget is limited. ⚠️⚠️⚠️
+### ⚠️⚠️⚠️ We are updating the online platform. You do not need to install and deploy docker-container locally—just call the API(like https://e2b.dev/) to test your LLM results. So far, it supports pass@1 for each defect. If you prefer pass@k>1, you will have to deploy locally as our computation budget is limited. ⚠️⚠️⚠️
+
+<video width="640" height="360" controls>
+  <source src="assets/videos/record-video.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
 Most existing Automated Program Repair (APR) research focuses on Java programs, primarily through Defects4J. Despite the significant prevalence of C/C++ vulnerabilities, extensive research on the automated repair of such vulnerabilities is lacking.
 
