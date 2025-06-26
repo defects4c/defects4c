@@ -1,0 +1,145 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="apiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cacheGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dockerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="800" fill="#f8fafc"/>
+  
+  <!-- Title -->
+  <rect x="0" y="0" width="1200" height="60" fill="url(#headerGrad)"/>
+  <text x="600" y="35" text-anchor="middle" fill="white" font-size="24" font-weight="bold">Program Repair API Interface Architecture</text>
+  
+  <!-- LLM Input -->
+  <rect x="50" y="100" width="180" height="80" rx="10" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="140" y="130" text-anchor="middle" font-size="14" font-weight="bold">LLM Output</text>
+  <text x="140" y="150" text-anchor="middle" font-size="12">Raw Patches</text>
+  <text x="140" y="165" text-anchor="middle" font-size="12">& Code</text>
+  
+  <!-- Primary API Endpoints -->
+  <g id="extract-api">
+    <rect x="300" y="80" width="200" height="120" rx="15" fill="url(#apiGrad)" stroke="#1e40af" stroke-width="2"/>
+    <text x="400" y="110" text-anchor="middle" fill="white" font-size="16" font-weight="bold">/extract_anchor_patch</text>
+    <text x="400" y="130" text-anchor="middle" fill="white" font-size="11">• Extract patches from LLM</text>
+    <text x="400" y="145" text-anchor="middle" fill="white" font-size="11">• Identify anchor points</text>
+    <text x="400" y="160" text-anchor="middle" fill="white" font-size="11">• Integrate into source code</text>
+    <text x="400" y="180" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Patch Extraction</text>
+  </g>
+  
+  <g id="fix-api">
+    <rect x="300" y="240" width="200" height="120" rx="15" fill="url(#apiGrad)" stroke="#1e40af" stroke-width="2"/>
+    <text x="400" y="270" text-anchor="middle" fill="white" font-size="16" font-weight="bold">/fix_with_patch</text>
+    <text x="400" y="290" text-anchor="middle" fill="white" font-size="11">• Isolated patch verification</text>
+    <text x="400" y="305" text-anchor="middle" fill="white" font-size="11">• Apply in Docker container</text>
+    <text x="400" y="320" text-anchor="middle" fill="white" font-size="11">• Return Boolean + feedback</text>
+    <text x="400" y="340" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Patch Verification</text>
+  </g>
+  
+  <!-- Docker Environment -->
+  <rect x="580" y="160" width="180" height="120" rx="15" fill="url(#dockerGrad)" stroke="#d97706" stroke-width="2"/>
+  <text x="670" y="190" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Docker Container</text>
+  <text x="670" y="210" text-anchor="middle" fill="white" font-size="12">Isolated Environment</text>
+  <text x="670" y="230" text-anchor="middle" fill="white" font-size="11">All bugs co-exist</text>
+  <text x="670" y="250" text-anchor="middle" fill="white" font-size="11">Patch verification</text>
+  <text x="670" y="265" text-anchor="middle" fill="white" font-size="11">Build & test execution</text>
+  
+  <!-- Caching Layer -->
+  <g id="cache-layer">
+    <rect x="820" y="120" width="160" height="80" rx="10" fill="url(#cacheGrad)" stroke="#059669" stroke-width="2"/>
+    <text x="900" y="145" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Redis Web Cache</text>
+    <text x="900" y="165" text-anchor="middle" fill="white" font-size="11">High-throughput</text>
+    <text x="900" y="180" text-anchor="middle" fill="white" font-size="11">request management</text>
+    
+    <rect x="820" y="220" width="160" height="80" rx="10" fill="url(#cacheGrad)" stroke="#059669" stroke-width="2"/>
+    <text x="900" y="245" text-anchor="middle" fill="white" font-size="14" font-weight="bold">C/C++ Builder Cache</text>
+    <text x="900" y="265" text-anchor="middle" fill="white" font-size="11">Efficient build</text>
+    <text x="900" y="280" text-anchor="middle" fill="white" font-size="11">optimization</text>
+  </g>
+  
+  <!-- Additional Tools -->
+  <g id="additional-tools">
+    <rect x="50" y="420" width="180" height="80" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="140" y="445" text-anchor="middle" font-size="14" font-weight="bold">/reproduce</text>
+    <text x="140" y="465" text-anchor="middle" font-size="11">Reset & reinitialize</text>
+    <text x="140" y="480" text-anchor="middle" font-size="11">verification environment</text>
+    
+    <rect x="280" y="420" width="180" height="120" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="370" y="445" text-anchor="middle" font-size="14" font-weight="bold">/error_dig</text>
+    <text x="370" y="465" text-anchor="middle" font-size="11">Structured error analysis</text>
+    <text x="370" y="480" text-anchor="middle" font-size="11">• Classify failures</text>
+    <text x="370" y="495" text-anchor="middle" font-size="11">• Identify root causes</text>
+    <text x="370" y="510" text-anchor="middle" font-size="11">• Stack trace parsing</text>
+    <text x="370" y="525" text-anchor="middle" font-size="11">• LLM-friendly output</text>
+  </g>
+  
+  <!-- Output -->
+  <rect x="950" y="400" width="180" height="100" rx="10" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+  <text x="1040" y="425" text-anchor="middle" font-size="14" font-weight="bold">Results</text>
+  <text x="1040" y="445" text-anchor="middle" font-size="11">• Boolean success status</text>
+  <text x="1040" y="460" text-anchor="middle" font-size="11">• Categorized feedback</text>
+  <text x="1040" y="475" text-anchor="middle" font-size="11">• Error classification</text>
+  <text x="1040" y="490" text-anchor="middle" font-size="11">• Debug information</text>
+  
+  <!-- Arrows and Flow -->
+  <!-- LLM to extract -->
+  <path d="M 230 140 L 290 140" stroke="#4f46e5" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Extract to fix -->
+  <path d="M 400 200 L 400 230" stroke="#1e40af" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Fix to Docker -->
+  <path d="M 500 300 L 570 220" stroke="#1e40af" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Docker to Cache -->
+  <path d="M 760 220 L 810 180" stroke="#d97706" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 760 220 L 810 250" stroke="#d97706" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- To additional tools -->
+  <path d="M 300 360 L 140 410" stroke="#1e40af" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 400 360 L 370 410" stroke="#1e40af" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- To results -->
+  <path d="M 760 220 L 940 450" stroke="#d97706" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 460 480 L 940 450" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+    </marker>
+  </defs>
+  
+  <!-- Key Features Box -->
+  <rect x="50" y="600" width="1100" height="150" rx="15" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+  <text x="600" y="630" text-anchor="middle" font-size="18" font-weight="bold">Key System Features</text>
+  
+  <text x="80" y="660" font-size="14" font-weight="bold">Scalability:</text>
+  <text x="80" y="680" font-size="12">• Dual caching strategies for millions of concurrent requests</text>
+  <text x="80" y="695" font-size="12">• Stateless HTTP and CLI interface</text>
+  
+  <text x="450" y="660" font-size="14" font-weight="bold">Isolation:</text>
+  <text x="450" y="680" font-size="12">• Docker-based verification environments</text>
+  <text x="450" y="695" font-size="12">• All bugs co-exist in single container</text>
+  
+  <text x="750" y="660" font-size="14" font-weight="bold">LLM Integration:</text>
+  <text x="750" y="680" font-size="12">• Compatible with LLM-generated responses</text>
+  <text x="750" y="695" font-size="12">• Context-length optimized output</text>
+  
+  <text x="80" y="720" font-size="14" font-weight="bold">Research Support:</text>
+  <text x="80" y="740" font-size="12">• Program repair and vulnerability detection • Large-scale automated evaluation • Comprehensive debugging tools</text>
+</svg>
