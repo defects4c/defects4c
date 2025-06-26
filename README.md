@@ -9,7 +9,7 @@
   Your browser does not support the video tag.
 </video>
 
-![preview](assets/videos/record-video.gif")
+![preview](assets/videos/record-video.gif)
 
 
 Most existing Automated Program Repair (APR) research focuses on Java programs, primarily through Defects4J. Despite the significant prevalence of C/C++ vulnerabilities, extensive research on the automated repair of such vulnerabilities is lacking.
