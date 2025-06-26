@@ -29,7 +29,7 @@
   <rect x="50" y="100" width="180" height="80" rx="10" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
   <text x="140" y="130" text-anchor="middle" font-size="14" font-weight="bold">LLM Output</text>
   <text x="140" y="150" text-anchor="middle" font-size="12">Raw Patches</text>
-  <text x="140" y="165" text-anchor="middle" font-size="12">& Code</text>
+  <text x="140" y="165" text-anchor="middle" font-size="12"> Code</text>
   
   <!-- Primary API Endpoints -->
   <g id="extract-api">
