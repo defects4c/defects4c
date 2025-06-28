@@ -46,7 +46,7 @@ To assess the effectiveness of existing state-of-the-art APR techniques in repai
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/health` | Service health check |
-| `POST` | `/build_patch` | Generate and apply patches |
+| `POST` | `/extract_anchor_patch` | Generate and apply patches |
 
 ---
 
@@ -496,7 +496,7 @@ GET /health
 </details>
 
 <details>
-<summary><h3>POST /build_patch</h3></summary>
+<summary><h3>POST /extract_anchor_patch</h3></summary>
 
 ```python
 def write_patch(bug_id: str, llm_response: str, method: str = "prefix", generate_diff: bool = True, persist_flag: bool = False):
@@ -563,7 +563,7 @@ Core endpoint for processing LLM responses and generating patches. Supports mult
 
 ```bash
 # Request
-POST /build_patch
+POST /extract_anchor_patch
 Content-Type: application/json
 ```
 
