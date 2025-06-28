@@ -36,7 +36,7 @@ To assess the effectiveness of existing state-of-the-art APR techniques in repai
 |--------|----------|-------------|
 | `GET` | `/projects` | Retrieve all available projects |
 | `POST` | `/reproduce` | Initiate bug reproduction |
-| `POST` | `/fix` | Apply patch and test fix |
+| `POST` | `/fix_with_patch(deperated /fix)` | Apply patch and test fix |
 | `GET` | `/status/{handle}` | Get task status and results |
 | `GET` | `/cache/status` | Check Redis cache status |
 | `DELETE` | `/cache/{redis_key}` | Clear specific cache entry |
@@ -46,7 +46,7 @@ To assess the effectiveness of existing state-of-the-art APR techniques in repai
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/health` | Service health check |
-| `POST` | `/extract_anchor_patch` | Generate and apply patches |
+| `POST` | `/extract_anchor_patch(deperated /build_patch)` | Generate and apply patches |
 
 ---
 
@@ -178,7 +178,7 @@ Content-Type: application/json
 </details>
 
 <details>
-<summary><h3>POST /fix</h3></summary>
+<summary><h3>POST /fix_with_patch or /fix</h3></summary>
 
 ```python
 def fix_bug(bug_id: str, patch_path: str):
