@@ -31,7 +31,10 @@ To assess the effectiveness of existing state-of-the-art APR techniques in repai
 
 ## API Overview
 
-### Bug Helper Service API (`http://localhost:8000`, assume the api is localhost as paper undering Anonymous peer review, will public real api when review done.)
+### Bug Helper Service API (`http://localhost:8000`)
+
+*assume the the host of API is localhost as paper undering Anonymous Peer Review, we will public real API host soon when review done.*
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/projects` | Retrieve all available projects |
