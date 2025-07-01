@@ -74,7 +74,7 @@
   <ellipse cx="180" cy="405" rx="6" ry="20" fill="#ffd700"/>
   <!-- Book -->
   <rect x="140" y="450" width="40" height="25" fill="#deb887" stroke="black"/>
-  <line x1="160" y1="450" x2="160" y2="475" stroke="black"/>
+<text x="160" y="465" font-size="12" fill="black" text-anchor="middle">CVE</text>
   
   <!-- Student 2 (teal, confused - representing challenging bugs) -->
   <!-- Desk 2 -->
@@ -120,9 +120,9 @@
   <!-- Laptop/computer -->
   <rect x="540" y="445" width="40" height="30" fill="#2f2f2f" stroke="black"/>
   <rect x="542" y="447" width="36" height="20" fill="#90ee90"/>
-  <text x="560" y="458" font-size="8" fill="black" text-anchor="middle">LLM</text>
-  <text x="560" y="468" font-size="6" fill="black" text-anchor="middle">REPAIR</text>
   
+<text x="560" y="456" font-size="6" fill="black" text-anchor="middle">LLM</text>
+<text x="560" y="464" font-size="6" fill="black" text-anchor="middle">REPAIR</text>
   <!-- Floating elements representing research concepts -->
   <!-- Benchmark icon -->
   <circle cx="100" cy="150" r="30" fill="#ffeb3b" opacity="0.8"/>
