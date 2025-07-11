@@ -20,7 +20,7 @@ def main():
         print(f"Error getting defects list: {defects_data}")
         return
     
-    # Filter out llvm defects
+    # recommend: Filter out llvm defects, it is cpu shark for our online service. 
     filtered_defects = [defect for defect in defects_data["defects"] if "llvm___llvm" not in defect]
     bug_id = random.choice(filtered_defects)
     print(f"Selected bug_id: {bug_id}")
