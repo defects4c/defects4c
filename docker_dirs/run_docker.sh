@@ -1,8 +1,16 @@
 
+# ls -a 
+
+# Dockerfile 
+
+
 ##step1 
 docker image build -t base/defect4c . 
 
 
+## go to root dir 
+
+cd ..
 ## step2 run instance
 
 
