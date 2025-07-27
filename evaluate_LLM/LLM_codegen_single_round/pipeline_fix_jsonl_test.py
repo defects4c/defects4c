@@ -435,7 +435,8 @@ if __name__ == "__main__":
     
     # Example configuration
     # exit()
-    BASE_URL = "http://10.96.177.54:43210"
+    #BASE_URL = "http://10.96.177.54:43210"
+    BASE_URL = "https://defects4c.wj2ai.com"
 
     scan_dir="./outputs"
     #INPUT_FILE_list = glob(os.path.join(scan_dir,"*.jsonl"))
