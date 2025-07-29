@@ -1839,6 +1839,7 @@
         "unittest": {
             "id": null,
             "name": null,
+            "msg": "should delete, it is too time cost and space cost, always 670GB in disk",
             "status": "success2"
         },
         "c_compile": {
