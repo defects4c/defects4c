@@ -816,55 +816,6 @@
         }
     },
     {
-        "url": "https://api.github.com/repos/danmar/cppcheck/commits/43e4364675d4d47125b0d919039ba73dd4f6376e",
-        "commit_before": "6c1096bf715e624e788a7989fe936d0bdc403cec",
-        "commit_after": "43e4364675d4d47125b0d919039ba73dd4f6376e",
-        "commit_date": "2017-03-05T15:46:43Z",
-        "files": {
-            "src": [
-                "lib/preprocessor.cpp"
-            ],
-            "test": [
-                "test/testpreprocessor.cpp"
-            ],
-            "src0_location": {
-                "line_is_single": true,
-                "line_number": 618,
-                "hunk_is_single": true,
-                "hunk_start": 615,
-                "hunk_end": 621,
-                "func_is_single": true,
-                "func_start": 615,
-                "func_end": 621,
-                "func_hunks": []
-            }
-        },
-        "unittest": {
-            "id": null,
-            "msg": "so slow",
-            "name": [
-                "testrunner"
-            ],
-            "status": "success2"
-        },
-        "c_compile": {
-            "build": null,
-            "build_flags": null,
-            "test": null,
-            "test_flags": [
-                "testrunner"
-            ],
-            "clean": null
-        },
-        "status": 1,
-        "status_manual": 1,
-        "type": {
-            "name": "Sanitizer: Control Expression Error",
-            "id": "B",
-            "type": "bug"
-        }
-    },
-    {
         "url": "https://api.github.com/repos/danmar/cppcheck/commits/6a81b4c17c87241c6f205e9d47ebc9b5af7f0f38",
         "commit_before": "9d51b4450b676264ddba49935fc4f58f429a291a",
         "commit_after": "6a81b4c17c87241c6f205e9d47ebc9b5af7f0f38",

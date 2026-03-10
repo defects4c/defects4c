@@ -1811,54 +1811,6 @@
         }
     },
     {
-        "commit_after": "d515b4b4a300479cdf1a6e0d1bb95bc1f9fee514",
-        "commit_date": "2017-08-04 00:08:23 +0100",
-        "commit_before": "d10a0f980fe8f9407ab1ffbd612641433ebe175e",
-        "files": {
-            "src": [
-                "print-bgp.c"
-            ],
-            "test": [
-                "tests/TESTLIST",
-                "tests/bgp_mvpn_6_and_7.out",
-                "tests/bgp_mvpn_6_and_7.pcap"
-            ],
-            "src0_location": {
-                "line_is_single": false,
-                "line_number": null,
-                "hunk_is_single": true,
-                "hunk_start": 965,
-                "hunk_end": 977,
-                "func_is_single": true,
-                "func_start": 965,
-                "func_end": 977,
-                "func_hunks": [],
-                "patch_md5": "c11c90eeca28be33268eef3ea912a0ff"
-            }
-        },
-        "unittest": {
-            "id": null,
-            "name": null,
-            "msg": "should delete, it is too time cost and space cost, always 670GB in disk",
-            "status": "success2"
-        },
-        "c_compile": {
-            "build": null,
-            "build_flags": null,
-            "test": null,
-            "test_flags": null,
-            "clean": null
-        },
-        "status": 0,
-        "status_manual": 0,
-        "url": "https://api.github.com/repos/the-tcpdump-group/tcpdump/commits/d515b4b4a300479cdf1a6e0d1bb95bc1f9fee514",
-        "type": {
-            "name": "CVE-2017-13043",
-            "id": "CVE-2017-13043",
-            "type": "cve"
-        }
-    },
-    {
         "commit_after": "aa0858100096a3490edf93034a80e66a4d61aad5",
         "commit_date": "2017-08-04 17:15:07 +0100",
         "commit_before": "d515b4b4a300479cdf1a6e0d1bb95bc1f9fee514",

@@ -480,55 +480,6 @@
         }
     },
     {
-        "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/48a36c72e4d358ed9f0a5e53fe775a7ebb2f8f2b",
-        "commit_before": "4fa1a6f9b497193e54a814112f17ab3c2cf58053",
-        "commit_after": "48a36c72e4d358ed9f0a5e53fe775a7ebb2f8f2b",
-        "commit_date": "2022-03-07T19:35:57Z",
-        "files": {
-            "src": [
-                "source/opt/folding_rules.cpp"
-            ],
-            "test": [
-                "test/opt/fold_test.cpp"
-            ],
-            "src0_location": {
-                "line_is_single": false,
-                "line_number": null,
-                "hunk_is_single": false,
-                "hunk_start": null,
-                "hunk_end": null,
-                "func_is_single": true,
-                "func_start": 2368,
-                "func_end": 2388,
-                "func_hunks": []
-            }
-        },
-        "unittest": {
-            "id": null,
-			"msg": "so slow", 
-            "name": [
-                "spirv-tools-test_opt"
-            ],
-            "status": "success2"
-        },
-        "c_compile": {
-            "build": null,
-            "build_flags": null,
-            "test": null,
-            "test_flags": [
-                "spirv-tools-test_opt"
-            ],
-            "clean": null
-        },
-        "status": 1,
-        "status_manual": 1,
-        "type": {
-            "name": "Sanitizer: Control Expression Error",
-            "id": "B",
-            "type": "bug"
-        }
-    },
-    {
         "url": "https://api.github.com/repos/KhronosGroup/SPIRV-Tools/commits/0ad83f9139daf70a791560f5c72f94b0be5b8390",
         "commit_before": "940127a77d3ad795a4a1422fbeaad50c9f19f2ea",
         "commit_after": "0ad83f9139daf70a791560f5c72f94b0be5b8390",
