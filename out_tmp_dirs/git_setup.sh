@@ -1,5 +1,14 @@
 #!/bin/bash
 
+set -u
+set -o pipefail
+
+error() {
+    echo "[ERROR] $*" >&2
+}
+
+trap 'error "git_setup.sh failed for project=${project_name:-unknown} at line $LINENO: $BASH_COMMAND"' ERR
+
 # Simplified git repository setup with selective commit fetching
 # Usage: ./git_setup.sh <project_name> <commit1> <commit2> [commit3] ...
 
@@ -12,6 +21,14 @@ fi
 project_name="$1"
 shift
 commits=("$@")
+
+for sha in "${commits[@]}"; do
+    if [[ -z "$sha" || "$sha" == "null" ]]; then
+        echo "ERROR: Invalid commit sha: '$sha'"
+        echo "Project: $project_name"
+        exit 1
+    fi
+done
 
 # Convert project name to GitHub URL format
 raw_repo="${project_name/___/\/}"
@@ -39,10 +56,16 @@ cd "$target_dir" || {
 }
 
 echo "Initializing git repository..."
-git init
+if [[ ! -d .git ]]; then
+    git init
+fi
 
 echo "Adding remote origin: $github_url"
-git remote add origin "$github_url"
+if git remote get-url origin >/dev/null 2>&1; then
+    git remote set-url origin "$github_url"
+else
+    git remote add origin "$github_url"
+fi
 
 echo "Fetching commits..."
 for sha in "${commits[@]}"; do
@@ -73,5 +96,13 @@ else
     exit 1
 fi
 
-git submodule update --init --recursive
+echo "Updating submodules..."
+if ! timeout 1200 git submodule update --init --recursive --jobs 1; then
+    echo "ERROR: Submodule update failed"
+    echo "Project: $project_name"
+    echo "Target directory: $target_dir"
+    exit 1
+fi
+
+echo "Submodule update finished successfully"
 

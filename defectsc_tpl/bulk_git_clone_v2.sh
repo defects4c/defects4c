@@ -14,18 +14,18 @@
 #   ./bulk_git_clone_v2.sh mini
 #       Run in mini mode for all discovered projects.
 #       Mini mode excludes:
-#         - llvm___llvm
+#         - llvm___llvm*
 #
 #   ./bulk_git_clone_v2.sh full <project>
 #       Run in full mode for one specific project.
 #
 #   ./bulk_git_clone_v2.sh mini <project>
 #       Run in mini mode for one specific project.
-#       Note: if <project> is llvm___llvm, it will be excluded in mini mode.
+#       Note: if <project> matches llvm___llvm*, it will be excluded in mini mode.
 #
 #   ./bulk_git_clone_v2.sh <project>
 #       Backward-compatible form.
-#       Treated as: ./bulk_git_clone_v2.sh full <project>
+#       Treated as: ./bulk_git_clone_v2.sh mini <project>
 #
 # Examples:
 #   ./bulk_git_clone_v2.sh
@@ -40,23 +40,13 @@
 #
 # Notes:
 #   - full mode includes all discovered projects
-#   - mini mode excludes llvm___llvm
+#   - mini mode excludes llvm___llvm*
 #   - commands are written to /tmp/checklist.txt before execution
+#   - failed commands are written to /tmp/checklist_failed.txt
+#   - per-command logs are written to /tmp/bulk_git_clone_logs/
 
 set -u
 set -o pipefail
-
-DEBUG="${DEBUG:-1}"
-
-mode="${1:-mini}"
-project="${2:-}"
-
-if [[ "$mode" != "mini" && "$mode" != "full" ]]; then
-    # backward-compatible fallback:
-    # if first arg is not mini/full, treat it as project and use full mode
-    project="$mode"
-    mode="full"
-fi
 
 DEBUG="${DEBUG:-1}"
 
@@ -76,6 +66,26 @@ error() {
 
 trap 'error "Command failed at line $LINENO: $BASH_COMMAND"' ERR
 
+mode="${1:-mini}"
+project="${2:-}"
+
+if [[ "$mode" != "mini" && "$mode" != "full" ]]; then
+    # backward-compatible fallback:
+    # if first arg is not mini/full, treat it as project and use mini mode
+    project="$mode"
+    mode="mini"
+fi
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+git_setup_script="${script_dir}/../out_tmp_dirs/git_setup.sh"
+
+debug "script_dir: ${script_dir}"
+debug "git_setup_script: ${git_setup_script}"
+
+if [[ ! -f "${git_setup_script}" ]]; then
+    error "git_setup.sh not found: ${git_setup_script}"
+    exit 1
+fi
 
 debug "Mode: '${mode}'"
 debug "Project: '${project}'"
@@ -89,10 +99,10 @@ else
 fi
 
 if [[ "$mode" == "mini" ]]; then
-    debug "Applying mini mode filter: exclude llvm___llvm"
+    debug "Applying mini mode filter: exclude llvm___llvm*"
     filtered_list=()
     for p in "${project_list[@]}"; do
-        if [[ "$p" == "llvm___llvm" ]]; then
+        if [[ "$p" == *"llvm___llvm"* ]]; then
             debug "Excluded project: $p"
             continue
         fi
@@ -121,34 +131,27 @@ for one_project in "${project_list[@]}"; do
         continue
     fi
 
-    commit_after_list=$(printf '%s\n' "${bug_files[@]}" | xargs jq -r '.[].commit_after' 2>/dev/null)
-    commit_before_list=$(printf '%s\n' "${bug_files[@]}" | xargs jq -r '.[].commit_before' 2>/dev/null)
-    size=$(printf '%s\n' "${bug_files[@]}" | xargs jq '.[].commit_after' 2>/dev/null | wc -l)
+    mapfile -t commit_pairs < <(
+        printf '%s\n' "${bug_files[@]}" |
+        xargs jq -r '.[] | select(.commit_after != null and .commit_before != null) | "\(.commit_after) \(.commit_before)"' 2>/dev/null
+    )
 
-    debug "size == $size"
+    debug "valid commit pair count: ${#commit_pairs[@]}"
 
-    if [[ "$size" -eq 0 ]]; then
-        error "empty queue for project: $one_project"
-        exit 1
+    if [[ ${#commit_pairs[@]} -eq 0 ]]; then
+        error "No valid commit pairs found for project: $one_project"
+        continue
     fi
 
-    commit_after_array=($commit_after_list)
-    commit_before_array=($commit_before_list)
+    for pair in "${commit_pairs[@]}"; do
+        read -r commit_after commit_before <<< "$pair"
 
-    debug "commit_after_array count: ${#commit_after_array[@]}"
-    debug "commit_before_array count: ${#commit_before_array[@]}"
+        if [[ -z "$commit_after" || -z "$commit_before" || "$commit_after" == "null" || "$commit_before" == "null" ]]; then
+            error "Skipping invalid commit pair for $one_project: after='${commit_after}' before='${commit_before}'"
+            continue
+        fi
 
-    if [[ ${#commit_after_array[@]} -ne ${#commit_before_array[@]} ]]; then
-        error "Mismatched commit array sizes for $one_project: after=${#commit_after_array[@]}, before=${#commit_before_array[@]}"
-        exit 1
-    fi
-
-    for i in "${!commit_after_array[@]}"; do
-        commit_after="${commit_after_array[i]}"
-        commit_before="${commit_before_array[i]}"
-
-        #repo="bash /out/git_setup.sh ${one_project} ${commit_after} ${commit_before}"
-	repo="bash $(pwd)/../out_tmp_dirs/git_setup.sh ${one_project} ${commit_after} ${commit_before}"
+        repo="bash ${git_setup_script} ${one_project} ${commit_after} ${commit_before}"
         check_list+=("$repo")
         debug "Added command: $repo"
     done
@@ -167,9 +170,37 @@ run_checkout() {
     printf "%s\n" "${check_list[@]}" > /tmp/checklist.txt
 
     info "Checklist written to /tmp/checklist.txt"
-    cat /tmp/checklist.txt >&2
 
-    cat /tmp/checklist.txt | xargs -I {} -P "$cpu_count" sh -c "{}"
+    local log_dir="/tmp/bulk_git_clone_logs"
+    mkdir -p "$log_dir"
+    : > /tmp/checklist_failed.txt
+
+    xargs -I {} -P "$cpu_count" bash -c '
+        cmd="$1"
+        log_dir="$2"
+
+        safe_name="$(echo "$cmd" | sed "s#[ /]#_#g")"
+        log_file="${log_dir}/${safe_name}.log"
+
+        echo "[RUN] $cmd" >&2
+        echo "[RUN] $cmd" > "$log_file"
+
+        if ! eval "$cmd" >> "$log_file" 2>&1; then
+            echo "[FAILED] $cmd" >&2
+            echo "[FAILED LOG] $log_file" >&2
+            printf "%s\n" "$cmd :: $log_file" >> /tmp/checklist_failed.txt
+            exit 1
+        fi
+
+        echo "[OK] $cmd" >&2
+    ' _ {} "$log_dir" < /tmp/checklist.txt
+
+    if [[ -s /tmp/checklist_failed.txt ]]; then
+        error "One or more git setup commands failed"
+        error "Failed commands:"
+        cat /tmp/checklist_failed.txt >&2
+        exit 1
+    fi
 }
 
 run_checkout
