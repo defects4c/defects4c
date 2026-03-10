@@ -70,8 +70,6 @@ mode="${1:-mini}"
 project="${2:-}"
 
 if [[ "$mode" != "mini" && "$mode" != "full" ]]; then
-    # backward-compatible fallback:
-    # if first arg is not mini/full, treat it as project and use mini mode
     project="$mode"
     mode="mini"
 fi
@@ -115,6 +113,7 @@ info "scan project_list... ${project_list[*]}"
 debug "project_list count: ${#project_list[@]}"
 
 check_list=()
+declare -A seen_jobs
 
 for one_project in "${project_list[@]}"; do
     info "Processing project: $one_project"
@@ -151,6 +150,13 @@ for one_project in "${project_list[@]}"; do
             continue
         fi
 
+        job_key="${one_project}|${commit_after}|${commit_before}"
+        if [[ -n "${seen_jobs[$job_key]:-}" ]]; then
+            debug "Skipping duplicate job: $job_key"
+            continue
+        fi
+        seen_jobs[$job_key]=1
+
         repo="bash ${git_setup_script} ${one_project} ${commit_after} ${commit_before}"
         check_list+=("$repo")
         debug "Added command: $repo"
@@ -170,6 +176,10 @@ run_checkout() {
     printf "%s\n" "${check_list[@]}" > /tmp/checklist.txt
 
     info "Checklist written to /tmp/checklist.txt"
+
+    local dedup_file="/tmp/checklist_dedup.txt"
+    awk '!seen[$0]++' /tmp/checklist.txt > "$dedup_file"
+    mv "$dedup_file" /tmp/checklist.txt
 
     local log_dir="/tmp/bulk_git_clone_logs"
     mkdir -p "$log_dir"
