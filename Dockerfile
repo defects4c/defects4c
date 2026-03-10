@@ -4,7 +4,7 @@ FROM gcr.io/oss-fuzz-base/base-image
 ARG arch=x86_64
 
 
-RUN unset   CXX CC CXXFLAGS CFLAGS 
+RUN unset   CXX CC CXXFLAGS CFLAGS
 
 # Install newer cmake.
 ENV CMAKE_VERSION 3.26.4
@@ -61,7 +61,7 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python2 2 &&  
 
 #RUN ln -s /usr/bin/python3 /usr/bin/python
 ## change python3
-RUN wget https://bootstrap.pypa.io/pip/2.7/get-pip.py -O /tmp/get-pip2.py &&  wget https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py && python3 /tmp/get-pip.py  &&   python3 -m pip install prettytable jmespath backoff && python3 -m pip  install -v --no-cache-dir \
+RUN wget https://bootstrap.pypa.io/pip/2.7/get-pip.py -O /tmp/get-pip2.py &&  wget https://bootstrap.pypa.io/pip/3.8/get-pip.py -O /tmp/get-pip.py && python3 /tmp/get-pip.py  &&   python3 -m pip install prettytable jmespath backoff && python3 -m pip  install -v --no-cache-dir \
     six==1.15.0 && python2 /tmp/get-pip2.py  && python2 -m pip install prettytable jmespath backoff && python2 -m pip  install -v six==1.15.0  && rm -rf /tmp/*
 
 #============================================================
@@ -85,7 +85,7 @@ RUN   cmake -G Ninja \
  -DLLVM_INCLUDE_TESTS=off \
     -DCOMPILER_RT_INCLUDE_TESTS=OFF \
       $SRC/llvm-project/llvm && \
-  ninja  &&  ninja  install && rm -fr $SRC/llvm-project 
+  ninja  &&  ninja  install && rm -fr $SRC/llvm-project
 
 
 
@@ -105,10 +105,15 @@ EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
 
 
-RUN    git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /work/depot_tools.git && ln -s /work/depot_tools.git /work/depot_tools 
+RUN    git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /work/depot_tools.git && ln -s /work/depot_tools.git /work/depot_tools
 
 
 RUN apt-get install -y libgtest-dev && cd /usr/src/gtest && cmake CMakeLists.txt && make  && cp lib/*.a /usr/lib
+
+
+# Copy and run install_deps.sh
+COPY defectsc_tpl/install_deps.sh /tmp/install_deps.sh
+RUN chmod +x /tmp/install_deps.sh && /tmp/install_deps.sh
 
 
 RUN apt-get update && \
