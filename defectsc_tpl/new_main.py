@@ -85,6 +85,13 @@ META_DICT_PREFIX_SUFFIX: Dict[str, Any] = {}
 guidance_df: Optional[pd.DataFrame] = None
 SRC_CONTENT: Dict[str, str] = {}            # abs-path str -> file text
 PROMPT_CONTENT: Dict[str, Any] = {}         # sha -> prompt record
+SHA_META_DICT: Dict[str, str] = {}          # sha -> project name
+
+# Regex for parsing GitHub commit URLs → (owner___repo, sha)
+_SHA_URL_RE = re.compile(
+    r"repos/(?P<owner>[^/]+)/(?P<repo>[^/]+)/commits/(?P<sha>[0-9a-f]{7,40})",
+    re.I,
+)
 
 # ─────────────────────────── Redis ───────────────────────────────────
 
@@ -946,6 +953,46 @@ def load_prefix_suffix_meta(prefix_dirs=None) -> int:
     return len(META_DICT_PREFIX_SUFFIX)
 
 
+def load_meta_sha_with_project(csv_path: Optional[str] = None) -> int:
+    """
+    Build SHA → project mapping from the raw_info CSV and populate SHA_META_DICT.
+
+    Mirrors the SHA_META_DICT logic that was in prompt_api.py's startup event.
+    Called by init_data() so the mapping is available to prompt/defect endpoints.
+
+    Returns the number of entries loaded (0 if file is missing or on error).
+    """
+    global SHA_META_DICT
+
+    if csv_path is None or not Path(csv_path).is_file():
+        return 0
+
+    def _parse_url(url: str):
+        m = _SHA_URL_RE.search(url or "")
+        if not m:
+            return None, None
+        return f"{m.group('owner')}___{m.group('repo')}", m.group("sha")
+
+    try:
+        df = pd.read_csv(csv_path)
+        url_col = (
+            df["api_url"].fillna(df["github"])
+            if "api_url" in df.columns
+            else df["github"]
+        )
+        parsed       = url_col.apply(lambda u: pd.Series(_parse_url(u)))
+        df["_proj"]  = parsed[0]
+        df["_sha"]   = parsed[1]
+        df = df.dropna(subset=["_sha"])
+        SHA_META_DICT.update(
+            pd.Series(df["_proj"].values, index=df["_sha"]).to_dict()
+        )
+        return len(SHA_META_DICT)
+    except Exception as exc:
+        print(f"[load_meta_sha_with_project] error: {exc}")
+        return 0
+
+
 def load_prompt_data_for_api() -> int:
     """
     Build PROMPT_DATA (bug_id → record) from the already-loaded PROMPT_CONTENT.
@@ -961,8 +1008,10 @@ def load_prompt_data_for_api() -> int:
             proj, sha = parse_bug_id(idx)
             bug_id = f"{proj}@{sha}"
         except ValueError:
-            # Fallback: treat first 40 chars as SHA
-            bug_id = idx[:40] if len(idx) >= 40 else idx
+            # Fallback: use SHA_META_DICT to reconstruct project@sha
+            sha = idx[:40] if len(idx) >= 40 else idx
+            project = SHA_META_DICT.get(sha)
+            bug_id = f"{project}@{sha}" if project else sha
         entry = dict(entry)
         entry["bug_id"] = bug_id
         result[bug_id] = entry
@@ -1215,7 +1264,7 @@ def write_patch(req: WritePatchRequest):
 
 async def _get_defect_record(defect_id: str) -> dict:
     """Shared logic for /reset and /get_defect/{defect_id}."""
-    sha_id   = defect_id[:40]
+    sha_id   = defect_id.partition("@")[2][:40] or defect_id[:40]
     entry    = dict(PROMPT_DATA[defect_id])
     bug_id   = entry.get("bug_id", defect_id)
     extra: Dict[str, Any] = {}

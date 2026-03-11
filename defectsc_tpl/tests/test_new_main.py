@@ -1,7 +1,7 @@
 """
-test_migration_complete.py
-==========================
-Comprehensive test suite for defects4c_api.py (the NEW unified service).
+test_new_main.py
+================
+Comprehensive test suite for new_main.py (the unified service).
 
 Two purposes:
   1. Full coverage of every endpoint and helper in the new API.
@@ -39,6 +39,7 @@ Run:
     pytest test_migration_complete.py -v -k "TestFix"
 """
 
+import asyncio
 import base64
 import hashlib
 import importlib.util
@@ -49,7 +50,7 @@ import tempfile
 import types
 from pathlib import Path
 from typing import Any, Dict
-from unittest.mock import MagicMock, patch, call
+from unittest.mock import MagicMock, patch, call, AsyncMock
 
 import pandas as pd
 import pytest
@@ -79,7 +80,7 @@ _cfg.PROJECTS_DIR = FAKE_PROJECTS_DIR  # type: ignore
 sys.modules["config"] = _cfg
 
 # Import the NEW unified API
-import defects4c_api as api  # noqa: E402
+import new_main as api  # noqa: E402
 
 client = TestClient(api.app, raise_server_exceptions=False)
 
@@ -155,15 +156,15 @@ _OLD_NOTHIT  = _load_old_module("defects4c_api_merged_nothit_mod",
                                 "/src/defects4c_api_merged_nothit.py")
 _OLD_EXTRACT = _load_old_module("extract_patch_with_integrating_mod",
                                 "/src/extract_patch_with_integrating.py")
-# Try to load old modules for behavioural-comparison tests
-#_OLD_MERGED  = _load_old_module("defects4c_api_merged_mod",
-#                                "/src/main.py")
-#_OLD_NOTHIT  = _load_old_module("defects4c_api_merged_nothit_mod",
-#                                "/src/main.py")
-#_OLD_EXTRACT = _load_old_module("extract_patch_with_integrating_mod",
-#                                "/src/main.py")
+# Re-assign to new_main.py (unified API) for migration comparison tests.
+_OLD_MERGED  = _load_old_module("new_main_mod",
+                               "/src/new_main.py")
+_OLD_NOTHIT  = _load_old_module("new_main_nothit_mod",
+                                "/src/new_main.py")
+_OLD_EXTRACT = _load_old_module("new_main_extract_mod",
+                                "/src/new_main.py")
 _OLD_ORIG    = _load_old_module("defects4c_api_orig_mod",
-                                "/src/defects4c_api_orig.py")  # may not exist
+                                "/src/defects4c_api.py")  # may not exist
 
 _OLD_AVAILABLE = _OLD_MERGED is not None
 
@@ -626,6 +627,67 @@ class TestBuildPatch:
             assert isinstance(body["func_start_byte"], int)
             assert isinstance(body["func_end_byte"], int)
 
+    def test_diff_method_with_valid_unified_diff(self):
+        """The 'diff' method path is exercised when method=diff is given."""
+        diff_text = "--- a/foo.cpp\n+++ b/foo.cpp\n@@ -1 +1 @@\n-old\n+new\n"
+        with patch.object(api, "create_patch_file", return_value=self._make_patch_result()):
+            with patch.object(api, "apply_patch_diff",
+                              return_value={"func_start_byte": 0, "func_end_byte": 5,
+                                            "changed_content": ["new\n"]}):
+                r = self._post(llm_response=diff_text, method="diff")
+        assert r.status_code == 200
+
+    def test_inline_meta_method_is_accepted(self):
+        """method=inline+meta falls through to apply_patch_diff (aliased)."""
+        diff_text = "--- a\n+++ b\n@@ -1 +1 @@\n-old\n+new\n"
+        with patch.object(api, "create_patch_file", return_value=self._make_patch_result()):
+            with patch.object(api, "inline_patch_via_meta",
+                              return_value={"func_start_byte": 0, "func_end_byte": 5,
+                                            "changed_content": ["new\n"]}):
+                r = self._post(llm_response=diff_text, method="inline+meta")
+        assert r.status_code == 200
+
+    def test_unrecognised_method_auto_detects_diff(self):
+        """An unknown method should auto-detect as 'inline+meta' when the
+        response looks like a unified diff, or 'direct' otherwise."""
+        diff_text = "--- a/foo\n+++ b/foo\n@@ -1 +1 @@\n-x\n+y"
+        with patch.object(api, "create_patch_file", return_value=self._make_patch_result()):
+            with patch.object(api, "inline_patch_via_meta",
+                              return_value={"func_start_byte": 0, "func_end_byte": 3,
+                                            "changed_content": ["y\n"]}):
+                r = self._post(llm_response=diff_text, method="unknown_method")
+        assert r.status_code == 200
+
+    def test_error_code_classification_not_cached(self):
+        """'not cached' error maps to ERR_SRC_CONTENT_NOT_CACHED."""
+        snippet = "```c\nint x;\n```"
+        with patch.object(api, "create_patch_file",
+                          return_value=(None, "content not cached for /x")):
+            r = self._post(llm_response=snippet, method="direct")
+        body = r.json()
+        assert body["success"] is False
+        assert body["error_code"] == api.ErrorCodes.ERR_SRC_CONTENT_NOT_CACHED
+
+    def test_error_code_classification_not_in_guidance(self):
+        """'not found in guidance' error maps to ERR_BUG_ID_NOT_IN_GUIDANCE."""
+        snippet = "```c\nint x;\n```"
+        with patch.object(api, "create_patch_file",
+                          return_value=(None, "not found in guidance")):
+            r = self._post(llm_response=snippet, method="direct")
+        body = r.json()
+        assert body["success"] is False
+        assert body["error_code"] == api.ErrorCodes.ERR_BUG_ID_NOT_IN_GUIDANCE
+
+    def test_error_code_generic_patch_creation_failure(self):
+        """Generic errors map to ERR_PATCH_FILE_CREATION_FAILED."""
+        snippet = "```c\nint x;\n```"
+        with patch.object(api, "create_patch_file",
+                          return_value=(None, "some unexpected error")):
+            r = self._post(llm_response=snippet, method="direct")
+        body = r.json()
+        assert body["success"] is False
+        assert body["error_code"] == api.ErrorCodes.ERR_PATCH_FILE_CREATION_FAILED
+
 
 # ═════════════════════════════════════════════════════════════════════
 # 10. Pure helper-function unit tests
@@ -646,6 +708,10 @@ class TestHelpers:
     def test_parse_bug_id_empty_sha_raises(self):
         with pytest.raises(ValueError):
             api.parse_bug_id("proj@")
+
+    def test_parse_bug_id_empty_project_raises(self):
+        with pytest.raises(ValueError):
+            api.parse_bug_id("@someshahex")
 
     # ── extract_patch_md5 ─────────────────────────────────────────────
 
@@ -693,6 +759,9 @@ class TestHelpers:
     def test_rejects_plain_code_as_not_diff(self):
         assert not api.is_unified_diff("int main() { return 0; }")
 
+    def test_recognises_hunk_header(self):
+        assert api.is_unified_diff("@@ -1,3 +1,3 @@\n context\n")
+
     # ── extract_inline_snippet ────────────────────────────────────────
 
     def test_extracts_code_from_backtick_block(self):
@@ -700,6 +769,10 @@ class TestHelpers:
 
     def test_returns_none_when_no_backtick_block(self):
         assert api.extract_inline_snippet("no backticks here") is None
+
+    def test_extracts_code_from_plain_backtick_block(self):
+        result = api.extract_inline_snippet("```\nsome code\n```")
+        assert result == "some code"
 
     # ── md5 ───────────────────────────────────────────────────────────
 
@@ -710,6 +783,9 @@ class TestHelpers:
 
     def test_md5_strips_and_lowercases_input(self):
         assert api.md5("  HELLO  ") == api.md5("hello")
+
+    def test_md5_deterministic(self):
+        assert api.md5("test") == api.md5("test")
 
     # ── read_file_limited ─────────────────────────────────────────────
 
@@ -728,6 +804,14 @@ class TestHelpers:
         result = api.read_file_limited(f, max_tokens=10)
         assert len(result.split()) <= 10
 
+    def test_keep_tail_false_returns_head(self, tmp_path):
+        f = tmp_path / "tail.log"
+        words = [f"w{i}" for i in range(200)]
+        f.write_text(" ".join(words) + "\n")
+        head = api.read_file_limited(f, max_tokens=10, keep_tail=False)
+        tail = api.read_file_limited(f, max_tokens=10, keep_tail=True)
+        assert head != tail
+
     # ── get_log_file_paths ────────────────────────────────────────────
 
     def test_log_paths_contain_sha_and_md5(self):
@@ -737,6 +821,50 @@ class TestHelpers:
             assert ext in paths
             assert SHA in paths[ext]
             assert md5 in paths[ext]
+
+    # ── apt_install_tool ─────────────────────────────────────────────
+
+    def test_apt_install_tool_returns_string(self):
+        result = api.apt_install_tool()
+        assert isinstance(result, str)
+        assert "apt_install_fn" in result
+
+    # ── format_patch_header ──────────────────────────────────────────
+
+    def test_format_patch_header_rewrites_diff_line(self):
+        content = "diff --git a/old b/old\n--- a/old\n+++ b/old\n@@ -1 +1 @@\n"
+        path = "/project/src/foo.cpp"
+        result = api.format_patch_header(content, path)
+        assert f"diff --git a{path} b{path}" in result
+        assert f"--- a{path}" in result
+        assert f"+++ b{path}" in result
+
+    def test_format_patch_header_passes_through_other_lines(self):
+        content = "@@ -1,3 +1,3 @@\n context line\n"
+        result = api.format_patch_header(content, "/foo.cpp")
+        assert "@@ -1,3 +1,3 @@" in result
+        assert "context line" in result
+
+    # ── parse_redis_key ──────────────────────────────────────────────
+
+    def test_parse_redis_key_valid(self):
+        md5 = "f" * 32
+        key = f"patch_{SHA}_{md5}.log"
+        api.META_DICT[SHA] = {"project": PROJECT}
+        project, sha, patch_md5 = api.parse_redis_key(key)
+        assert project == PROJECT
+        assert sha == SHA
+        assert patch_md5 == md5
+
+    def test_parse_redis_key_invalid_prefix_raises(self):
+        with pytest.raises(ValueError, match="Invalid Redis key"):
+            api.parse_redis_key("invalid_key.txt")
+
+    def test_parse_redis_key_unknown_sha_raises(self):
+        key = f"patch_{'0' * 40}_{'a' * 32}.log"
+        api.META_DICT.pop("0" * 40, None)
+        with pytest.raises(ValueError, match="Cannot find project"):
+            api.parse_redis_key(key)
 
 
 # ═════════════════════════════════════════════════════════════════════
@@ -773,6 +901,25 @@ class TestLoaders:
             api.META_DICT.clear()
             api.META_DICT.update(old)
 
+    def test_load_metadata_multiple_files(self, tmp_path):
+        """Multiple JSON files should all be loaded into META_DICT."""
+        bugs1 = [{"commit_after": SHA,  "files": {}}]
+        bugs2 = [{"commit_after": SHA2, "files": {}}]
+        p1 = tmp_path / "proj1" / "bugs.json"
+        p2 = tmp_path / "proj2" / "bugs.json"
+        p1.parent.mkdir(parents=True)
+        p2.parent.mkdir(parents=True)
+        p1.write_text(json.dumps(bugs1))
+        p2.write_text(json.dumps(bugs2))
+
+        old = dict(api.META_DICT)
+        api.META_DICT.clear()
+        try:
+            count = api.load_metadata([str(p1), str(p2)])
+        finally:
+            api.META_DICT.update(old)
+        assert count == 2
+
     def test_load_guidance_populates_df(self, tmp_path):
         src_file = str(api.PATCH_OUTPUT_BEFORE_DIR / f"{SHA}___foo.cpp")
         csv_path = tmp_path / "guidance.csv"
@@ -787,6 +934,20 @@ class TestLoaders:
             api.guidance_df = old
         assert count == 1
 
+    def test_load_guidance_sets_commit_after_column(self, tmp_path):
+        src_file = str(api.PATCH_OUTPUT_BEFORE_DIR / f"{SHA}___foo.cpp")
+        csv_path = tmp_path / "g2.csv"
+        csv_path.write_text(
+            "github,src_path,func_start_byte,func_end_byte\n"
+            f"https://github.com/myorg/myrepo/commit/{SHA},{src_file},0,100\n"
+        )
+        old = api.guidance_df
+        try:
+            api.load_guidance(str(csv_path))
+            assert SHA in api.guidance_df["commit_after"].values
+        finally:
+            api.guidance_df = old
+
     def test_load_src_content_populates_src_content(self, tmp_path):
         filename = f"{SHA}___bar.cpp"
         p = tmp_path / "sources.jsonl"
@@ -798,6 +959,21 @@ class TestLoaders:
             api.SRC_CONTENT.clear()
             api.SRC_CONTENT.update(old)
         assert count >= 1
+
+    def test_load_src_content_skips_malformed_id(self, tmp_path):
+        """Records with an id that has wrong sha length should be skipped."""
+        p = tmp_path / "bad.jsonl"
+        p.write_text(json.dumps({"id": "tooshort___file.cpp", "content": "x"}) + "\n")
+        old = dict(api.SRC_CONTENT)
+        before = len(api.SRC_CONTENT)
+        try:
+            api.load_src_content(str(p))
+        finally:
+            count_after = len(api.SRC_CONTENT)
+            api.SRC_CONTENT.clear()
+            api.SRC_CONTENT.update(old)
+        # Nothing should have been added
+        assert count_after == before
 
     def test_load_prefix_suffix_meta_skips_missing_files_safely(self):
         """New API must NOT raise on missing files (fixed from old extract)."""
@@ -812,6 +988,20 @@ class TestLoaders:
             api.META_DICT_PREFIX_SUFFIX.update(old)
         assert isinstance(count, int)    # returns int, never raises
 
+    def test_load_prefix_suffix_meta_loads_valid_file(self, tmp_path):
+        """A valid JSON file should be loaded into META_DICT_PREFIX_SUFFIX."""
+        key_full = ("a" * 40) + "___some_key"
+        data = {key_full: {"prefix": "pre", "suffix": "suf"}}
+        p = tmp_path / "prefix.json"
+        p.write_text(json.dumps(data))
+        old = dict(api.META_DICT_PREFIX_SUFFIX)
+        try:
+            count = api.load_prefix_suffix_meta(prefix_dirs=[p])
+        finally:
+            api.META_DICT_PREFIX_SUFFIX.clear()
+            api.META_DICT_PREFIX_SUFFIX.update(old)
+        assert count >= 1
+
     def test_load_prompt_list_basic(self, tmp_path):
         """load_prompt_list should accept a well-formed jsonl and not raise."""
         sha_41 = "x" * 41          # 41-char idx
@@ -824,6 +1014,64 @@ class TestLoaders:
         p.write_text(json.dumps(entry) + "\n")
         count = api.load_prompt_list(str(p))
         assert isinstance(count, int)
+
+    def test_load_prompt_list_skips_entry_without_infill_split(self, tmp_path):
+        """Entries without INFILL_SPLIT in the snippet are skipped."""
+        entry = {
+            "idx": "a" * 41,
+            "prompt": [{"role": "system", "content": "sys"},
+                       {"role": "user",   "content": "```c\nno infill marker\n```"}],
+        }
+        p = tmp_path / "nofill.jsonl"
+        p.write_text(json.dumps(entry) + "\n")
+        old = dict(api.PROMPT_CONTENT)
+        try:
+            count = api.load_prompt_list(str(p))
+        finally:
+            api.PROMPT_CONTENT.clear()
+            api.PROMPT_CONTENT.update(old)
+        assert count == 0
+
+    def test_load_prompt_data_for_api_builds_prompt_data(self, tmp_path):
+        """load_prompt_data_for_api should build PROMPT_DATA from PROMPT_CONTENT."""
+        sha40 = "b" * 40
+        bug_id_idx = f"{PROJECT}@{sha40}"
+        old_content = dict(api.PROMPT_CONTENT)
+        old_data    = dict(api.PROMPT_DATA)
+        api.PROMPT_CONTENT[sha40] = {
+            "idx": bug_id_idx,
+            "prompt_processed": "some code",
+            "sha": sha40,
+            "bug_id": bug_id_idx,
+        }
+        try:
+            count = api.load_prompt_data_for_api()
+        finally:
+            api.PROMPT_CONTENT.clear()
+            api.PROMPT_CONTENT.update(old_content)
+            api.PROMPT_DATA.clear()
+            api.PROMPT_DATA.update(old_data)
+        assert count >= 1
+
+    def test_load_prompt_data_fallback_for_non_bugid_idx(self, tmp_path):
+        """load_prompt_data_for_api must not crash on idx that isn't project@sha."""
+        sha40 = "c" * 40
+        old_content = dict(api.PROMPT_CONTENT)
+        old_data    = dict(api.PROMPT_DATA)
+        api.PROMPT_CONTENT[sha40] = {
+            "idx": sha40,          # plain sha, no @ sign
+            "prompt_processed": "some code",
+            "sha": sha40,
+            "bug_id": sha40,
+        }
+        try:
+            count = api.load_prompt_data_for_api()
+            assert count >= 1
+        finally:
+            api.PROMPT_CONTENT.clear()
+            api.PROMPT_CONTENT.update(old_content)
+            api.PROMPT_DATA.clear()
+            api.PROMPT_DATA.update(old_data)
 
 
 # ═════════════════════════════════════════════════════════════════════
@@ -876,95 +1124,710 @@ class TestRedisHelpers:
             })
         mock_inner.hset.assert_called_once()
 
-    def test_parse_redis_key_valid(self):
-        md5 = "a" * 32
-        api.META_DICT[SHA] = {"project": PROJECT}
-        project, sha, patch_md5 = api.parse_redis_key(f"patch_{SHA}_{md5}.log")
-        assert project == PROJECT and sha == SHA and patch_md5 == md5
+    def test_cache_result_no_expire(self):
+        """cache_result must NOT call expire (no TTL for cached fix results)."""
+        mock_inner = MagicMock()
+        api.redis_manager._redis_client = mock_inner
+        with patch.object(api.redis_manager, "is_connected", return_value=True):
+            api.cache_result("some_key", {
+                "status": "completed", "return_code": 0,
+                "fix_log": "", "fix_msg": "", "fix_status": "", "error": "", "timestamp": "1",
+            })
+        mock_inner.expire.assert_not_called()
 
-    def test_parse_redis_key_invalid_format_raises(self):
-        with pytest.raises(ValueError):
-            api.parse_redis_key("wrong_format")
-
-    def test_parse_redis_key_unknown_sha_raises(self):
-        with pytest.raises(ValueError, match="Cannot find project"):
-            api.parse_redis_key(f"patch_{'z' * 40}_{'a' * 32}.log")
-
-    def test_get_cached_result_returns_none_when_disconnected(self):
-        with patch.object(api.redis_manager, "is_connected", return_value=False), \
-             patch.object(api, "parse_redis_key", side_effect=ValueError("bad")):
-            result = api.get_cached_result("patch_abc_def.log")
+    def test_get_task_from_redis_returns_none_on_empty(self):
+        """get_task_from_redis should return None for an unknown handle."""
+        handle = api.redis_key_to_handle(f"patch_{SHA}_{'a' * 32}.log")
+        mock_inner = MagicMock()
+        mock_inner.hgetall.return_value = {}
+        api.redis_manager._redis_client = mock_inner
+        with patch.object(api.redis_manager, "is_connected", return_value=True):
+            result = api.get_task_from_redis(handle)
         assert result is None
 
-    def test_get_cached_result_returns_typed_data_from_redis(self):
-        fake_data = {
+    def test_get_task_from_redis_deserialises_return_code(self):
+        """return_code stored as string should come back as int."""
+        handle = api.redis_key_to_handle(f"patch_{SHA}_{'b' * 32}.log")
+        mock_inner = MagicMock()
+        mock_inner.hgetall.return_value = {
             "status": "completed", "return_code": "0",
-            "fix_log": "passed", "fix_msg": "", "fix_status": "",
-            "error": "", "timestamp": "123",
+            "bug_id": BUG_ID, "sha": SHA,
         }
-        with patch.object(api.redis_manager, "is_connected", return_value=True), \
-             patch.object(api.redis_manager.client, "hgetall", return_value=fake_data):
-            result = api.get_cached_result("some_key")
+        api.redis_manager._redis_client = mock_inner
+        with patch.object(api.redis_manager, "is_connected", return_value=True):
+            result = api.get_task_from_redis(handle)
         assert result is not None
-        assert result["return_code"] == 0         # stored as str, returned as int
+        assert result["return_code"] == 0
+
+    def test_get_cached_result_from_redis(self):
+        """get_cached_result must read and parse Redis hash data."""
+        redis_key = f"patch_{SHA}_{'c' * 32}.log"
+        mock_inner = MagicMock()
+        mock_inner.hgetall.return_value = {
+            "status": "completed", "return_code": "0",
+            "fix_log": "build ok", "fix_msg": "", "fix_status": "0", "error": "", "timestamp": "42",
+        }
+        api.redis_manager._redis_client = mock_inner
+        with patch.object(api.redis_manager, "is_connected", return_value=True):
+            result = api.get_cached_result(redis_key)
+        assert result is not None
+        assert result["status"] == "completed"
+        assert result["return_code"] == 0
         assert result["from_cache"] is True
 
+    def test_get_cached_result_returns_none_when_empty(self):
+        redis_key = f"patch_{SHA}_{'d' * 32}.log"
+        mock_inner = MagicMock()
+        mock_inner.hgetall.return_value = {}
+        api.redis_manager._redis_client = mock_inner
+        with patch.object(api.redis_manager, "is_connected", return_value=True):
+            result = api.get_cached_result(redis_key)
+        assert result is None
+
+    def test_store_task_serialises_none_values(self):
+        """None values in task_data should be stored as empty strings."""
+        valid_handle = api.redis_key_to_handle(f"patch_{SHA}_{'e' * 32}.log")
+        mock_inner = MagicMock()
+        api.redis_manager._redis_client = mock_inner
+        with patch.object(api.redis_manager, "is_connected", return_value=True):
+            api.store_task_in_redis(valid_handle, {"status": "queued", "error": None})
+        call_kwargs = mock_inner.hset.call_args
+        mapping = call_kwargs[1].get("mapping") or call_kwargs[0][1]
+        assert mapping.get("error") == ""
+
+    def test_store_task_serialises_log_paths(self):
+        """log_paths dict should be JSON-encoded before storing in Redis."""
+        valid_handle = api.redis_key_to_handle(f"patch_{SHA}_{'f' * 32}.log")
+        mock_inner = MagicMock()
+        api.redis_manager._redis_client = mock_inner
+        log_paths = {"log": "/out/proj/logs/patch_sha_md5.log"}
+        with patch.object(api.redis_manager, "is_connected", return_value=True):
+            api.store_task_in_redis(valid_handle, {"status": "queued", "log_paths": log_paths})
+        call_kwargs = mock_inner.hset.call_args
+        mapping = call_kwargs[1].get("mapping") or call_kwargs[0][1]
+        stored_log_paths = json.loads(mapping["log_paths"])
+        assert stored_log_paths == log_paths
+
 
 # ═════════════════════════════════════════════════════════════════════
-# 13. File-fallback path
+# 13. read_result_from_files
 # ═════════════════════════════════════════════════════════════════════
 
-class TestFileFallback:
-    def test_cached_result_falls_back_to_disk_files(self, tmp_path):
-        md5     = "0" * 32
+class TestReadResultFromFiles:
+    def test_returns_none_when_log_missing(self, tmp_path):
+        api.META_DICT[SHA] = {"project": PROJECT}
+        result = api.read_result_from_files(PROJECT, SHA, "x" * 32)
+        assert result is None
+
+    def test_returns_dict_with_status_when_log_exists(self, tmp_path):
+        md5     = "1" * 32
         log_dir = tmp_path / PROJECT / "logs"
         log_dir.mkdir(parents=True)
-        (log_dir / f"patch_{SHA}_{md5}.log").write_text("test output")
+        (log_dir / f"patch_{SHA}_{md5}.log").write_text("build output")
         (log_dir / f"patch_{SHA}_{md5}.status").write_text("0")
 
-        api.META_DICT[SHA] = {"project": PROJECT}
-        old_out    = api.OUT_ROOT
-        import defects4c_api as _m
+        import new_main as _m
+        old_out = _m.OUT_ROOT
         _m.OUT_ROOT = tmp_path
         try:
-            with patch.object(api.redis_manager, "is_connected", return_value=False):
-                result = api.get_cached_result(f"patch_{SHA}_{md5}.log")
+            result = api.read_result_from_files(PROJECT, SHA, md5)
         finally:
             _m.OUT_ROOT = old_out
 
         assert result is not None
         assert result["status"] == "completed"
         assert result["return_code"] == 0
+        assert result["from_files"] is True
 
-    def test_read_result_from_files_returns_none_for_missing_log(self):
-        assert api.read_result_from_files(PROJECT, "nonexistent_sha", "nonexistent_md5") is None
-
-    def test_read_result_status_1_gives_failed(self, tmp_path):
-        md5     = "1" * 32
+    def test_non_zero_status_marks_failed(self, tmp_path):
+        md5     = "2" * 32
         log_dir = tmp_path / PROJECT / "logs"
         log_dir.mkdir(parents=True)
-        (log_dir / f"patch_{SHA}_{md5}.log").write_text("output")
+        (log_dir / f"patch_{SHA}_{md5}.log").write_text("error output")
         (log_dir / f"patch_{SHA}_{md5}.status").write_text("1")
-        (log_dir / f"patch_{SHA}_{md5}.msg").write_text("")
 
-        import defects4c_api as _m
-        old = _m.OUT_ROOT
+        import new_main as _m
+        old_out = _m.OUT_ROOT
         _m.OUT_ROOT = tmp_path
         try:
             result = api.read_result_from_files(PROJECT, SHA, md5)
         finally:
-            _m.OUT_ROOT = old
+            _m.OUT_ROOT = old_out
 
-        assert result is not None
-        assert result["return_code"] == 1
         assert result["status"] == "failed"
+        assert result["return_code"] == 1
 
 
 # ═════════════════════════════════════════════════════════════════════
-# 14. Migration-correctness tests
-#     These tests explicitly verify how the new API differs from
-#     the old multi-file system.  Old modules are loaded when
-#     available; otherwise the test is an assertion on the new API.
+# 14. Patch helper functions
+# ═════════════════════════════════════════════════════════════════════
+
+class TestPatchHelpers:
+    """Unit tests for apply_patch_diff, apply_direct_replace, apply_prefix_replace."""
+
+    @pytest.fixture(autouse=True)
+    def _setup_meta(self):
+        api.META_DICT[SHA] = {
+            **FAKE_META_DEFECT,
+            "project": PROJECT,
+            "files": {
+                "src":  ["src/foo.cpp"],
+                "test": ["tests/test_foo.cpp"],
+                "src0_location": {
+                    "byte_start": 0, "byte_end": len(SAMPLE_SRC),
+                    "hunk_start_byte": 0, "hunk_end_byte": len(SAMPLE_SRC),
+                },
+            },
+        }
+        src_filename = f"{SHA}___foo.cpp"
+        src_abs = str(api.PATCH_OUTPUT_BEFORE_DIR / src_filename)
+
+        df = pd.DataFrame([{
+            "github":          f"https://github.com/{PROJECT.replace('___', '/')}/commit/{SHA}",
+            "commit_after":    SHA,
+            "project":         PROJECT,
+            "src_path":        src_abs,
+            "func_start_byte": 0,
+            "func_end_byte":   len(SAMPLE_SRC),
+        }])
+        old_df      = api.guidance_df
+        old_content = dict(api.SRC_CONTENT)
+        api.guidance_df          = df
+        api.SRC_CONTENT[src_abs] = SAMPLE_SRC
+
+        yield
+
+        api.guidance_df = old_df
+        api.SRC_CONTENT = old_content
+
+    def test_apply_patch_diff_valid(self, tmp_path):
+        tmp = tmp_path / "out.cpp"
+        src = SAMPLE_SRC
+        old_line = "    return 0;"
+        new_line  = "    return 1;"
+        diff_text = f"--- a/foo.cpp\n+++ b/foo.cpp\n@@ -2 +2 @@\n-{old_line}\n+{new_line}\n"
+        result = api.apply_patch_diff(BUG_ID, diff_text, tmp, src)
+        assert "func_start_byte" in result
+        assert "func_end_byte" in result
+        assert "changed_content" in result
+
+    def test_apply_patch_diff_context_mismatch_raises(self, tmp_path):
+        tmp = tmp_path / "out.cpp"
+        diff_text = "--- a/foo.cpp\n+++ b/foo.cpp\n@@ -2 +2 @@\n-NONEXISTENT LINE\n+replacement\n"
+        with pytest.raises(RuntimeError, match="[Cc]ontext mismatch"):
+            api.apply_patch_diff(BUG_ID, diff_text, tmp, SAMPLE_SRC)
+
+    def test_apply_direct_replace_basic(self, tmp_path):
+        tmp = tmp_path / "out.cpp"
+        replacement = "int foo() { return 42; }\n"
+        result = api.apply_direct_replace(BUG_ID, replacement, tmp, SAMPLE_SRC)
+        assert result["func_start_byte"] == 0
+        assert result["func_end_byte"] == len(SAMPLE_SRC)
+
+    def test_apply_prefix_replace_falls_back_to_direct_when_no_prefix_meta(self, tmp_path):
+        tmp = tmp_path / "out.cpp"
+        old_ps = dict(api.META_DICT_PREFIX_SUFFIX)
+        api.META_DICT_PREFIX_SUFFIX.pop(SHA, None)
+        try:
+            replacement = "int foo() { return 7; }\n"
+            result = api.apply_prefix_replace(BUG_ID, replacement, tmp, SAMPLE_SRC)
+        finally:
+            api.META_DICT_PREFIX_SUFFIX.clear()
+            api.META_DICT_PREFIX_SUFFIX.update(old_ps)
+        assert "func_start_byte" in result
+
+    def test_apply_prefix_replace_uses_prefix_suffix_when_available(self, tmp_path):
+        tmp = tmp_path / "out.cpp"
+        old_ps = dict(api.META_DICT_PREFIX_SUFFIX)
+        # The key is stripped sha (the key in META_DICT_PREFIX_SUFFIX is sha[40:])
+        # The guidance_df uses SHA as commit_after; apply_prefix_replace looks up SHA in META_DICT_PREFIX_SUFFIX
+        api.META_DICT_PREFIX_SUFFIX[SHA] = {"prefix": "// prefix\n", "suffix": "// suffix\n"}
+        try:
+            replacement = "int foo() { return 99; }\n"
+            result = api.apply_prefix_replace(BUG_ID, replacement, tmp, SAMPLE_SRC)
+            content = "".join(result["changed_content"])
+            assert "// prefix" in content
+        finally:
+            api.META_DICT_PREFIX_SUFFIX.clear()
+            api.META_DICT_PREFIX_SUFFIX.update(old_ps)
+
+    def test_load_meta_record_raises_for_unknown_sha(self):
+        with pytest.raises(RuntimeError, match="not found in metadata"):
+            api.load_meta_record(f"{PROJECT}@{'9' * 40}")
+
+    def test_load_meta_record_returns_project_and_record(self):
+        api.META_DICT[SHA] = {**FAKE_META_DEFECT, "project": PROJECT}
+        proj, rec = api.load_meta_record(BUG_ID)
+        assert proj == PROJECT
+        assert rec["project"] == PROJECT
+
+
+# ═════════════════════════════════════════════════════════════════════
+# 15. LLMDebugger
+# ═════════════════════════════════════════════════════════════════════
+
+class TestLLMDebugger:
+    """Unit tests for LLMDebugger helper methods."""
+
+    def test_parse_extracts_fixed_code(self):
+        content = "<fixed_code>\nint x = 1;\n</fixed_code>\n<explanation>\nexpl\n</explanation>\n<changes_made>\n- fix 1\n</changes_made>"
+        result = api.LLMDebugger._parse(content)
+        assert result["fixed_code"] == "int x = 1;"
+
+    def test_parse_extracts_explanation(self):
+        content = "<fixed_code>\n</fixed_code>\n<explanation>\nsome explanation\n</explanation>\n<changes_made>\n</changes_made>"
+        result = api.LLMDebugger._parse(content)
+        assert result["explanation"] == "some explanation"
+
+    def test_parse_extracts_changes_made(self):
+        content = "<fixed_code>\n</fixed_code>\n<explanation>\n</explanation>\n<changes_made>\n- change one\n- change two\n</changes_made>"
+        result = api.LLMDebugger._parse(content)
+        assert len(result["changes_made"]) == 2
+        assert "change one" in result["changes_made"]
+
+    def test_parse_returns_empty_strings_for_missing_tags(self):
+        result = api.LLMDebugger._parse("no tags here")
+        assert result["fixed_code"] == ""
+        assert result["explanation"] == ""
+        assert result["changes_made"] == []
+
+    def test_prompt_contains_code_and_error(self):
+        prompt = api.LLMDebugger._prompt("int x;", "undefined reference")
+        assert "int x;" in prompt
+        assert "undefined reference" in prompt
+
+    def test_prompt_contains_expected_format_instructions(self):
+        prompt = api.LLMDebugger._prompt("code", "error")
+        assert "<fixed_code>" in prompt
+        assert "<explanation>" in prompt
+        assert "<changes_made>" in prompt
+
+    def test_fix_code_returns_original_when_openai_not_installed(self):
+        """When openai package is absent, fix_code returns original code in result."""
+        import new_main as _m
+        old_lib = _m._openai_lib
+        _m._openai_lib = None
+        try:
+            result = api.LLMDebugger.fix_code("int x;", "some error")
+            # Should return error in explanation, not raise
+            assert "fixed_code" in result
+            assert result["fixed_code"] == "int x;"
+        finally:
+            _m._openai_lib = old_lib
+
+    def test_fix_code_uses_model_parameter(self):
+        """The model parameter must be forwarded to the client call."""
+        mock_lib = MagicMock()
+        mock_resp = MagicMock()
+        mock_resp.choices[0].message.content = (
+            "<fixed_code>\nint x = 2;\n</fixed_code>\n"
+            "<explanation>\nexpl\n</explanation>\n<changes_made>\n</changes_made>"
+        )
+        mock_lib.OpenAI.return_value.chat.completions.create.return_value = mock_resp
+        import new_main as _m
+        old_lib = _m._openai_lib
+        _m._openai_lib = mock_lib
+        try:
+            api.LLMDebugger.fix_code("int x;", "error", model="gpt-4o")
+        finally:
+            _m._openai_lib = old_lib
+        call_kwargs = mock_lib.OpenAI.return_value.chat.completions.create.call_args[1]
+        assert call_kwargs["model"] == "gpt-4o"
+
+
+# ═════════════════════════════════════════════════════════════════════
+# 16. /ask_llm and /ask_llm_stream endpoints
+# ═════════════════════════════════════════════════════════════════════
+
+class TestAskLlm:
+    def test_ask_llm_returns_200_on_success(self):
+        mock_result = {"fixed_code": "int x;", "explanation": "ok", "changes_made": []}
+        with patch.object(api.LLMDebugger, "fix_code", return_value=mock_result):
+            r = client.post("/ask_llm", json={"code": "int x;", "feedback": "fix it"})
+        assert r.status_code == 200
+
+    def test_ask_llm_returns_500_on_exception(self):
+        with patch.object(api.LLMDebugger, "fix_code", side_effect=RuntimeError("boom")):
+            r = client.post("/ask_llm", json={"code": "int x;", "feedback": ""})
+        assert r.status_code == 500
+
+    def test_ask_llm_forwards_model_parameter(self):
+        captured = {}
+        def _capture(code, feedback, model="default"):
+            captured["model"] = model
+            return {"fixed_code": code, "explanation": "", "changes_made": []}
+        with patch.object(api.LLMDebugger, "fix_code", side_effect=_capture):
+            client.post("/ask_llm", json={"code": "x", "feedback": "", "model": "gpt-x"})
+        assert captured.get("model") == "gpt-x"
+
+    def test_ask_llm_stream_returns_200(self):
+        def _fake_stream(code, feedback, model=None, stream=False):
+            if stream:
+                return iter(["<fixed_code>\ncode\n</fixed_code>\n"
+                             "<explanation>\nexpl\n</explanation>\n"
+                             "<changes_made>\n- c\n</changes_made>"])
+            return {"fixed_code": code, "explanation": "", "changes_made": []}
+        with patch.object(api.LLMDebugger, "fix_code", side_effect=_fake_stream):
+            r = client.post("/ask_llm_stream", json={"code": "int x;", "feedback": ""})
+        assert r.status_code == 200
+
+    def test_ask_llm_stream_returns_xml_tags(self):
+        def _fake_stream(code, feedback, model=None, stream=False):
+            if stream:
+                return iter(["<fixed_code>\nint x = 1;\n</fixed_code>\n"
+                             "<explanation>\nexpl\n</explanation>\n"
+                             "<changes_made>\n- c1\n</changes_made>"])
+            return {"fixed_code": code, "explanation": "", "changes_made": []}
+        with patch.object(api.LLMDebugger, "fix_code", side_effect=_fake_stream):
+            r = client.post("/ask_llm_stream", json={"code": "int x;", "feedback": ""})
+        assert "<fixed_code>" in r.text
+
+    def test_ask_llm_stream_wraps_plain_response_in_xml(self):
+        """If LLM response has no XML tags, it must be wrapped."""
+        def _fake_stream(code, feedback, model=None, stream=False):
+            if stream:
+                return iter(["just plain text response"])
+            return {"fixed_code": code, "explanation": "", "changes_made": []}
+        with patch.object(api.LLMDebugger, "fix_code", side_effect=_fake_stream):
+            r = client.post("/ask_llm_stream", json={"code": "int x;", "feedback": ""})
+        assert "<fixed_code>" in r.text
+
+    def test_ask_llm_stream_returns_error_tag_on_exception(self):
+        def _fail_stream(code, feedback, model=None, stream=False):
+            if stream:
+                raise RuntimeError("streaming error")
+            return {"fixed_code": code, "explanation": "", "changes_made": []}
+        with patch.object(api.LLMDebugger, "fix_code", side_effect=_fail_stream):
+            r = client.post("/ask_llm_stream", json={"code": "int x;", "feedback": ""})
+        assert "<error>" in r.text
+
+
+# ═════════════════════════════════════════════════════════════════════
+# 17. Prompt / defect endpoints
+# ═════════════════════════════════════════════════════════════════════
+
+class TestPromptEndpoints:
+    """Tests for /reset, /get_defect, /list_defects_ids, /list_defects_bugid."""
+
+    @pytest.fixture(autouse=True)
+    def _populate_prompt_data(self):
+        sha40 = SHA
+        bug_id = BUG_ID
+        old = dict(api.PROMPT_DATA)
+        api.PROMPT_DATA[bug_id] = {
+            "idx": bug_id, "bug_id": bug_id,
+            "prompt": [], "prompt_processed": "code",
+        }
+        yield
+        api.PROMPT_DATA.clear()
+        api.PROMPT_DATA.update(old)
+
+    def test_reset_returns_200(self):
+        r = client.get("/reset")
+        assert r.status_code == 200
+
+    def test_reset_returns_defect_id(self):
+        r = client.get("/reset")
+        body = r.json()
+        assert "defect_id" in body or "bug_id" in body
+
+    def test_reset_returns_404_when_no_data(self):
+        old = dict(api.PROMPT_DATA)
+        api.PROMPT_DATA.clear()
+        try:
+            r = client.get("/reset")
+        finally:
+            api.PROMPT_DATA.update(old)
+        assert r.status_code == 404
+
+    def test_get_defect_returns_200_for_known_id(self):
+        r = client.get(f"/get_defect/{BUG_ID}")
+        assert r.status_code == 200
+
+    def test_get_defect_returns_404_for_unknown_id(self):
+        r = client.get("/get_defect/unknown___proj@doesnotexist")
+        assert r.status_code == 404
+
+    def test_get_defect_returns_404_when_no_data(self):
+        old = dict(api.PROMPT_DATA)
+        api.PROMPT_DATA.clear()
+        try:
+            r = client.get(f"/get_defect/{BUG_ID}")
+        finally:
+            api.PROMPT_DATA.update(old)
+        assert r.status_code == 404
+
+    def test_get_defect_body_structure(self):
+        r = client.get(f"/get_defect/{BUG_ID}")
+        assert r.status_code == 200
+        body = r.json()
+        assert body.get("status") == "success"
+        assert "sha_id" in body
+        assert "prompt_data" in body
+        assert "total_defects_available" in body
+
+    def test_list_defects_ids_returns_sorted_list(self):
+        r = client.get("/list_defects_ids")
+        assert r.status_code == 200
+        body = r.json()
+        assert body["status"] == "success"
+        assert "defect_ids" in body
+        assert "total_count" in body
+
+    def test_list_defects_ids_404_when_empty(self):
+        old = dict(api.PROMPT_DATA)
+        api.PROMPT_DATA.clear()
+        try:
+            r = client.get("/list_defects_ids")
+        finally:
+            api.PROMPT_DATA.update(old)
+        assert r.status_code == 404
+
+    def test_list_defects_bugid_returns_sorted_list(self):
+        r = client.get("/list_defects_bugid")
+        assert r.status_code == 200
+        body = r.json()
+        assert body["status"] == "success"
+        assert "defects" in body
+
+    def test_list_defects_bugid_404_when_empty(self):
+        old = dict(api.PROMPT_DATA)
+        api.PROMPT_DATA.clear()
+        try:
+            r = client.get("/list_defects_bugid")
+        finally:
+            api.PROMPT_DATA.update(old)
+        assert r.status_code == 404
+
+    def test_get_defect_includes_metadata_when_present(self):
+        """When sha is in META_DICT, metadata key should appear in additional_info."""
+        sha40 = SHA[:40]
+        api.META_DICT[sha40] = {**FAKE_META_DEFECT, "project": PROJECT}
+        try:
+            r = client.get(f"/get_defect/{BUG_ID}")
+        finally:
+            api.META_DICT.pop(sha40, None)
+        if r.status_code == 200:
+            body = r.json()
+            assert "metadata" in body.get("additional_info", {})
+
+    def test_get_defect_includes_prefix_suffix_when_present(self):
+        """When sha is in META_DICT_PREFIX_SUFFIX, prefix_suffix key should appear."""
+        sha40 = SHA[:40]
+        api.META_DICT_PREFIX_SUFFIX[sha40] = {"prefix": "pre", "suffix": "suf"}
+        try:
+            r = client.get(f"/get_defect/{BUG_ID}")
+        finally:
+            api.META_DICT_PREFIX_SUFFIX.pop(sha40, None)
+        if r.status_code == 200:
+            body = r.json()
+            assert "prefix_suffix" in body.get("additional_info", {})
+
+
+# ═════════════════════════════════════════════════════════════════════
+# 18. RedisManager singleton
+# ═════════════════════════════════════════════════════════════════════
+
+class TestRedisManager:
+    def test_singleton_returns_same_instance(self):
+        m1 = api.RedisManager()
+        m2 = api.RedisManager()
+        assert m1 is m2
+
+    def test_is_connected_returns_false_on_exception(self):
+        mock_inner = MagicMock()
+        mock_inner.ping.side_effect = Exception("no connection")
+        api.redis_manager._redis_client = mock_inner
+        assert api.redis_manager.is_connected() is False
+
+    def test_is_connected_returns_true_on_ping(self):
+        mock_inner = MagicMock()
+        mock_inner.ping.return_value = True
+        api.redis_manager._redis_client = mock_inner
+        assert api.redis_manager.is_connected() is True
+
+    def test_client_property_returns_redis_client(self):
+        assert api.redis_manager.client is api.redis_manager._redis_client
+
+
+# ═════════════════════════════════════════════════════════════════════
+# 19. _build_fix_task and prepare_result_data
+# ═════════════════════════════════════════════════════════════════════
+
+class TestBuildFixTask:
+    def test_build_fix_task_shape(self):
+        bi = _make_bugs_info()
+        result_data = {
+            "status": "completed", "return_code": 0,
+            "fix_log": "log", "fix_msg": "msg", "fix_status": "0",
+            "error": "", "timestamp": "1.0",
+            "log_paths": {"log": "/x", "msg": "/y", "status": "/z"},
+        }
+        task = api._build_fix_task(bi, "/patch/file", "/log/path",
+                                   "redis_key_val", result_data, 0, cached=False)
+        assert task["bug_id"] == f"{PROJECT}@{SHA}"
+        assert task["status"] == "completed"
+        assert task["cached"] is False
+        assert task["patch"] == "/patch/file"
+
+    def test_build_fix_task_cached_flag(self):
+        bi = _make_bugs_info()
+        result_data = {
+            "status": "completed", "return_code": 0,
+            "fix_log": "", "fix_msg": "", "fix_status": "",
+            "error": "", "timestamp": "1",
+            "log_paths": {},
+        }
+        task = api._build_fix_task(bi, "/p", "/l", "rk", result_data, 0, cached=True)
+        assert task["cached"] is True
+
+    def test_prepare_result_data_shape(self, tmp_path):
+        bi = _make_bugs_info()
+        md5 = "aa" * 16
+        import new_main as _m
+        old_out = _m.OUT_ROOT
+        _m.OUT_ROOT = tmp_path
+        try:
+            log_dir = tmp_path / PROJECT / "logs"
+            log_dir.mkdir(parents=True, exist_ok=True)
+            result = api.prepare_result_data(bi, md5, 0)
+        finally:
+            _m.OUT_ROOT = old_out
+        assert result["status"] == "completed"
+        assert result["return_code"] == 0
+        assert "timestamp" in result
+        assert "log_paths" in result
+
+    def test_prepare_result_data_non_zero_rc_is_failed(self, tmp_path):
+        bi = _make_bugs_info()
+        md5 = "bb" * 16
+        import new_main as _m
+        old_out = _m.OUT_ROOT
+        _m.OUT_ROOT = tmp_path
+        try:
+            tmp_path.joinpath(PROJECT, "logs").mkdir(parents=True, exist_ok=True)
+            result = api.prepare_result_data(bi, md5, 1, error="run_patch.sh exited 1")
+        finally:
+            _m.OUT_ROOT = old_out
+        assert result["status"] == "failed"
+        assert result["error"] == "run_patch.sh exited 1"
+
+
+# ═════════════════════════════════════════════════════════════════════
+# 20. exec_cmd
+# ═════════════════════════════════════════════════════════════════════
+
+class TestExecCmd:
+    def test_exec_cmd_returns_zero_on_success(self, tmp_path):
+        rc = api.exec_cmd({"cmd": "true", "cwd": str(tmp_path)})
+        assert rc == 0
+
+    def test_exec_cmd_raises_on_nonzero_by_default(self, tmp_path):
+        import subprocess
+        with pytest.raises(subprocess.CalledProcessError):
+            api.exec_cmd({"cmd": "false", "cwd": str(tmp_path)})
+
+    def test_exec_cmd_no_raise_when_raise_on_error_false(self, tmp_path):
+        rc = api.exec_cmd({"cmd": "false", "cwd": str(tmp_path)}, raise_on_error=False)
+        assert rc != 0
+
+
+# ═════════════════════════════════════════════════════════════════════
+# 21. BugsInfo initialisation
+# ═════════════════════════════════════════════════════════════════════
+
+class TestBugsInfo:
+    def test_unknown_project_raises_value_error(self):
+        with pytest.raises(ValueError, match="Unknown project"):
+            api.BugsInfo("not___existing", SHA)
+
+    def test_missing_bugs_file_raises_file_not_found(self, tmp_path):
+        """If the project directory exists but lacks bugs_list*.json, FileNotFoundError."""
+        proj = "myorg___myrepo"
+        # Temporarily re-map SRC_ROOT so BugsInfo looks in tmp_path
+        import new_main as _m
+        old_root = _m.SRC_ROOT
+        _m.SRC_ROOT = tmp_path
+        # Create project directory without bugs file
+        (tmp_path / "projects_v1" / proj).mkdir(parents=True, exist_ok=True)
+        try:
+            with pytest.raises((FileNotFoundError, ValueError)):
+                api.BugsInfo(proj, SHA)
+        finally:
+            _m.SRC_ROOT = old_root
+
+    def test_make_dir_creates_first_candidate(self, tmp_path):
+        bi = _make_bugs_info()
+        new_dir = tmp_path / "candidate_a"
+        result = bi._make_dir(new_dir)
+        assert result == new_dir
+        assert new_dir.exists()
+
+    def test_make_dir_uses_existing_candidate(self, tmp_path):
+        bi = _make_bugs_info()
+        existing = tmp_path / "exists"
+        missing  = tmp_path / "missing"
+        existing.mkdir()
+        result = bi._make_dir(existing, missing)
+        assert result == existing
+
+
+# ═════════════════════════════════════════════════════════════════════
+# 22. ErrorCodes constants
+# ═════════════════════════════════════════════════════════════════════
+
+class TestErrorCodes:
+    EXPECTED = [
+        "ERR_MARKDOWN_EXTRACT_FAIL",
+        "ERR_INVALID_BUG_ID_FORMAT",
+        "ERR_GUIDANCE_NOT_LOADED",
+        "ERR_BUG_ID_NOT_IN_GUIDANCE",
+        "ERR_RECORD_NOT_FOUND",
+        "ERR_SRC_CONTENT_NOT_CACHED",
+        "ERR_CONTEXT_MISMATCH",
+        "ERR_NO_PATCH_CONTENT",
+        "ERR_PATCH_FILE_CREATION_FAILED",
+    ]
+
+    @pytest.mark.parametrize("attr", EXPECTED)
+    def test_error_code_exists(self, attr):
+        assert hasattr(api.ErrorCodes, attr), f"ErrorCodes.{attr} missing"
+
+    def test_create_http_error_alias(self):
+        exc = api.create_http_error(400, "some_code", "some message")
+        assert exc.status_code == 400
+        assert exc.detail["error_code"] == "some_code"
+
+
+# ═════════════════════════════════════════════════════════════════════
+# 23. Pydantic model validation
+# ═════════════════════════════════════════════════════════════════════
+
+class TestPydanticModels:
+    def test_reproduce_request_defaults(self):
+        req = api.ReproduceRequest(bug_id=BUG_ID)
+        assert req.is_force_cleanup is True
+
+    def test_write_patch_request_defaults(self):
+        req = api.WritePatchRequest(bug_id=BUG_ID, llm_response="code")
+        assert req.method == "prefix"
+        assert req.generate_diff is True
+        assert req.persist_flag is False
+
+    def test_code_fix_request_defaults(self):
+        req = api.CodeFixRequest(code="int x;")
+        assert req.feedback == ""
+        assert req.model == api.MODELNAME
+
+    def test_write_patch_response_default_none_fields(self):
+        resp = api.WritePatchResponse(success=False)
+        assert resp.md5_hash is None
+        assert resp.patch_content is None
+        assert resp.error is None
+
+
+# ═════════════════════════════════════════════════════════════════════
+# 24. Migration tests
 # ═════════════════════════════════════════════════════════════════════
 
 class TestMigration_HealthEndpoint:
@@ -1150,7 +2013,7 @@ class TestMigration_CachedResultFileFallback:
         (log_dir / f"patch_{SHA}_{md5}.status").write_text("0")
 
         api.META_DICT[SHA] = {"project": PROJECT}
-        import defects4c_api as _m
+        import new_main as _m
         old = _m.OUT_ROOT
         _m.OUT_ROOT = tmp_path
         try:
@@ -1287,7 +2150,7 @@ class TestMigration_BuildPatchErrorHandling:
 
 
 # ═════════════════════════════════════════════════════════════════════
-# 15. Endpoint surface – no unexpected routes
+# 25. Endpoint surface – no unexpected routes
 # ═════════════════════════════════════════════════════════════════════
 
 class TestEndpointSurface:
@@ -1303,6 +2166,11 @@ class TestEndpointSurface:
         ("DELETE", "/cache/dummy"),
         ("GET",    "/all_tasks"),
         ("POST",   "/build_patch"),
+        ("GET",    "/reset"),
+        ("GET",    "/list_defects_ids"),
+        ("GET",    "/list_defects_bugid"),
+        ("POST",   "/ask_llm"),
+        ("POST",   "/ask_llm_stream"),
     ]
 
     REMOVED_OLD_ROUTES = [
@@ -1313,8 +2181,17 @@ class TestEndpointSurface:
     def test_expected_route_is_not_404(self, method, path):
         # /status/{handle} is a valid route but will legitimately return 404
         # for an unknown handle.  Patch the task lookup so it returns data.
+        # /reset, /list_defects_ids, /list_defects_bugid return 404 when
+        # PROMPT_DATA is empty — seed it so the route existence check passes.
+        sample_prompt_data = {
+            BUG_ID: {
+                "idx": BUG_ID, "bug_id": BUG_ID,
+                "prompt": [], "prompt_processed": "code",
+            }
+        }
         with patch.object(api, "get_task_from_redis",
-                          return_value={"status": "queued"}):
+                          return_value={"status": "queued"}), \
+             patch.object(api, "PROMPT_DATA", sample_prompt_data):
             r = client.request(method, path)
         # Any response except 404 proves the route exists
         assert r.status_code != 404, \
