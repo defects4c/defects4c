@@ -138,7 +138,7 @@ python http_tutorial.py
 
 ## API usage
 
-More API examples and detailed usage refer to [`usage.md`](usage.md).
+More API examples and detailed usage refer to [`usage.md`](assets/http_api_usage.md).
 
 ## Notes
 
