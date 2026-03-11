@@ -6,9 +6,9 @@ import random
 from openai import OpenAI
 
 # Setup
-DEFECTS4C_BASE_URL = "https://defects4c.wj2ai.com"
+DEFECTS4C_BASE_URL = "http://127.0.0.1:11111"
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=OPENAI_API_KEY)
+client = OpenAI(api_key=OPENAI_API_KEY, base_url =  os.getenv("OPENAI_BASE_URL","http://157.10.162.82:443/v1/") )
 
 def main():
     # Step 0: Get list of defects and randomly select one

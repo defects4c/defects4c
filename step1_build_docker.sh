@@ -12,6 +12,7 @@ docker image build -t base/defect4c .
 docker run  -d   --name my_defects4c \
        --ipc=host \
 	--cap-add SYS_PTRACE \
+	-p 11111:80 \
          -v "`pwd`/defectsc_tpl:/src" \
          -v "`pwd`/out_tmp_dirs:/out" \
          -v "`pwd`/patche_dirs:/patches" \
