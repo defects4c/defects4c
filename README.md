@@ -1,7 +1,7 @@
 # Defects4C
 ## Defects4C: Benchmarking Large Language Model Repair Capability with C/C++ Bugs 👋
 
-![Project Illustration](project_manner.svg)
+![Project Illustration](assets/project_manner.svg)
 
 ### ⚠️ Online platform update
 
