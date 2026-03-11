@@ -138,7 +138,7 @@ python http_tutorial.py
 
 ## API usage
 
-More API examples and detailed usage should be moved to [`usage.md`](usage.md).
+More API examples and detailed usage refer to [`usage.md`](usage.md).
 
 ## Notes
 
@@ -146,3 +146,17 @@ More API examples and detailed usage should be moved to [`usage.md`](usage.md).
 * Make sure the repositories are cloned and the warmup step has finished before running `http_tutorial.py`.
 
 
+
+## Citation
+
+
+```bibtex
+@INPROCEEDINGS{11334503,
+  author={Wang, Jian and Xie, Xiaofei and Hu, Qiang and Liu, Shangqing and Yu, Jiongchi and Kong, Jiaolong and Li, Yi},
+  booktitle={2025 40th IEEE/ACM International Conference on Automated Software Engineering (ASE)},
+  title={Defects4C: Benchmarking Large Language Model Repair Capability with C/C++ Bugs},
+  year={2025},
+  pages={254-265},
+  doi={10.1109/ASE63991.2025.00029}
+}
+````
