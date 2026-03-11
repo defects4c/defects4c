@@ -1,8 +1,15 @@
+# Defects4C
 ## Defects4C: Benchmarking Large Language Model Repair Capability with C/C++ Bugs 👋
 
 ![Project Illustration](project_manner.svg)
 
-### ⚠️⚠️⚠️ We are updating the [online platform](https://defects4c.github.io/python_sandbox.html). You do not need to install and deploy docker-container locally—just call the API(see [http_tutorial.py](https://github.com/defects4c/defects4c/blob/master/http_tutorial.py)) to test your LLM results. So far, it supports pass@1 for each defect. If you prefer pass@k>1, you will have to deploy locally as our computation budget is limited. ⚠️⚠️⚠️
+### ⚠️ Online platform update
+
+We are updating the [online platform](https://defects4c.github.io/python_sandbox.html).
+
+You do **not** need to install or deploy the Docker container locally if you only want to try the benchmark. You can directly call the API using [`http_tutorial.py`](https://github.com/defects4c/defects4c/blob/master/http_tutorial.py) to test your LLM results.
+
+At the moment, the online platform supports **pass@1** evaluation for each defect. If you want to evaluate **pass@k > 1**, you will need to deploy the system locally, since our online computation budget is limited.
 
 <video width="640" height="360" controls>
   <source src="assets/videos/record-video.webm" type="video/webm">
@@ -11,703 +18,131 @@
 
 ![preview](assets/videos/record-video.gif)
 
+Most existing Automated Program Repair (APR) research focuses on Java programs, mainly through Defects4J. Although C/C++ vulnerabilities are widespread and important, research on automated repair for C/C++ remains limited.
 
-Most existing Automated Program Repair (APR) research focuses on Java programs, primarily through Defects4J. Despite the significant prevalence of C/C++ vulnerabilities, extensive research on the automated repair of such vulnerabilities is lacking.
+To help fill this gap, we introduce **Defects4C**, a high-quality executable benchmark for C/C++ defects. It contains **248** buggy functions and **102** vulnerable functions, together with test cases for reproduction.
 
-To fill this critical gap, we introduce Defects4C, a high-quality executable benchmark for C/C++ defects. It consists of **248** buggy functions and **102** vulnerable functions, paired with test cases for reproduction.
+## Evaluation Scenarios
 
+To assess the effectiveness of state-of-the-art APR techniques on C/C++ faults, we conduct a comprehensive empirical study on Defects4C using 24 state-of-the-art LLMs in two settings:
 
+- single-round repair
+- conversation-based repair
 
+## Local deployment
 
-## Scenario
+This section shows how to prepare the Docker environment and run the benchmark locally.
 
-To assess the effectiveness of existing state-of-the-art APR techniques in repairing C/C++ faults, we conduct a comprehensive empirical study using 24 state-of-the-art LLMs with Defects4C in two different scenarios:
+## What this setup does
 
-  - Single-round repair
-  - Conversation-based repair for evaluation. 
+This setup will:
 
+- build the Docker image
+- start a container
+- clone the benchmark repositories into `/out`
+- run a warmup step
+- run the tutorial script
 
-# FastAPI Services Documentation
+## Before you start
 
-## API Overview
+Make sure you have enough disk space before cloning the repositories.
 
-### Bug Helper Service API (`http://localhost:8000`)
-
-*assume the the host of API is localhost as paper undering Anonymous Peer Review, we will public real API host soon when review done.*
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/projects` | Retrieve all available projects |
-| `POST` | `/reproduce` | Initiate bug reproduction |
-| `POST` | `/fix_with_patch(deperated /fix)` | Apply patch and test fix |
-| `GET` | `/status/{handle}` | Get task status and results |
-| `GET` | `/cache/status` | Check Redis cache status |
-| `DELETE` | `/cache/{redis_key}` | Clear specific cache entry |
-| `GET` | `/all_tasks` | Retrieve all active tasks |
-
-### Unified Patch Service API (`http://localhost:8000`)
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/health` | Service health check |
-| `POST` | `/extract_anchor_patch(deperated /build_patch)` | Generate and apply patches |
-
----
+- about **20 minutes** for cloning
+- about **80 GB** of disk space
 
 <details>
-<summary><h2>📋 Overview</h2></summary>
+<summary><strong>Docker setup</strong></summary>
 
-This document covers two complementary FastAPI services designed for comprehensive software bug workflows:
-
-1. **Bug Helper Service** - Bug reproduction and fixing service with Redis caching
-2. **Unified Patch Service** - Advanced patch generation and application service
-
-Both services provide REST APIs for managing complete software bug workflows, from initial reproduction through patch generation and application.
-
-</details>
-
----
-
-<details>
-<summary><h2>🔧 Bug Helper Service API</h2></summary>
-
-The Bug Helper Service is a FastAPI-based service for reproducing and fixing software bugs with Redis-based caching support for improved performance and reliability.
-
-**Base URL:** `http://localhost:8000`  
-**Version:** 1.0.0
-
-### Core Endpoints
-
-<details>
-<summary><h3>GET /projects</h3></summary>
-
-```python
-def get_projects():
-    """
-    Retrieve all available projects for bug reproduction.
-    
-    Returns:
-        dict: Dictionary containing list of available project names
-    
-    Raises:
-        HTTPException: 500 if projects cannot be loaded
-    """
-```
-
-**Description:**
-Retrieves a list of all available projects that can be used for bug reproduction and fixing. This endpoint requires no authentication and provides the foundation for other operations by listing valid project names.
-
-**Input Parameters:**
-- None required
-
-**Output Format:**
-- Type: `dict`
-- Structure: `{"projects": List[str]}`
-
-**Example:**
+## Step 1: Build the Docker image
 
 ```bash
-# Request
-GET /projects
-```
+docker image build -t base/defect4c .
+````
 
-```json
-{
-  "projects": [
-    "libxml2",
-    "openssl", 
-    "curl",
-    "nginx",
-    "apache"
-  ]
-}
-```
-
-</details>
-
-<details>
-<summary><h3>POST /reproduce</h3></summary>
-
-```python
-def reproduce_bug(bug_id: str, is_force_cleanup: bool = True):
-    """
-    Initiate bug reproduction for a specific bug ID.
-    
-    Args:
-        bug_id (str): Bug identifier in format "project@commit_sha"
-        is_force_cleanup (bool, optional): Force cleanup before reproduction. Defaults to True.
-    
-    Returns:
-        dict: Dictionary containing task handle for status tracking
-        
-    Raises:
-        HTTPException: 400 if bug_id format is invalid
-        HTTPException: 404 if project not found
-        HTTPException: 500 if reproduction fails to start
-    """
-```
-
-**Description:**
-Initiates bug reproduction for a specific bug ID. This endpoint queues a background task to reproduce the bug environment and run tests. The bug reproduction process includes environment setup, dependency installation, and test execution.
-
-**Input Parameters:**
-- `bug_id` (str, required): Bug identifier following "project@commit_sha" format
-- `is_force_cleanup` (bool, optional): Whether to force cleanup before reproduction (default: true)
-
-**Output Format:**
-- Type: `dict`
-- Structure: `{"handle": str}`
-
-**Example:**
+## Step 2: Run the container
 
 ```bash
-# Request
-POST /reproduce
-Content-Type: application/json
+docker run -d \
+  --name my_defects4c \
+  --ipc=host \
+  --cap-add SYS_PTRACE \
+  -p 11111:80 \
+  -v "`pwd`/defectsc_tpl:/src" \
+  -v "`pwd`/out_tmp_dirs:/out" \
+  -v "`pwd`/patche_dirs:/patches" \
+  -v "`pwd`/LLM_Defects4C:/src2" \
+  base/defect4c:latest
 ```
 
-```json
-{
-  "bug_id": "libxml2@a1b2c3d4e5f6789012345678901234567890abcd",
-  "is_force_cleanup": true
-}
-```
+Port `11111` on the host is mapped to port `80` in the container. You can change this mapping as needed and update `http_tutorial.py` accordingly.
 
-```json
-{
-  "handle": "abc123def456789012345678901234567890uvwx"
-}
-```
+## Step 3: Download the mini repositories
 
-</details>
-
-<details>
-<summary><h3>POST /fix_with_patch or /fix</h3></summary>
-
-```python
-def fix_bug(bug_id: str, patch_path: str):
-    """
-    Apply a patch to fix a bug and test the fix.
-    
-    Args:
-        bug_id (str): Bug identifier in format "project@commit_sha"
-        patch_path (str): File system path to the patch file
-    
-    Returns:
-        dict: Dictionary containing task handle and Redis key for status tracking
-        
-    Raises:
-        HTTPException: 400 if bug_id format is invalid or patch_path doesn't exist
-        HTTPException: 500 if patch application fails
-    """
-```
-
-**Description:**
-Applies a patch to fix a bug and tests the fix. This endpoint uses Redis caching to avoid redundant processing of the same patch. Results are cached based on the combination of bug_id and patch_path, making subsequent requests with identical parameters return immediately.
-
-**Input Parameters:**
-- `bug_id` (str, required): Bug identifier in "project@commit_sha" format
-- `patch_path` (str, required): File system path to the patch file
-
-**Output Format:**
-- Type: `dict`
-- Structure: `{"handle": str, "redis_key": str}`
-
-**Example:**
+This downloads the benchmark repositories, except LLVM. The downloaded data will take about **80 GB** under `out_tmp_dirs`.
 
 ```bash
-# Request
-POST /fix
-Content-Type: application/json
+docker exec my_defects4c bash -lc 'cd /src && bash bulk_git_clone_v2.sh'
 ```
 
-```json
-{
-  "bug_id": "openssl@f1e2d3c4b5a6789012345678901234567890cdef",
-  "patch_path": "/patches/openssl_security_fix_20241215.patch"
-}
-```
+## Step 4: Run warmup
 
-```json
-{
-  "handle": "cGF0Y2hfZjFlMmQzYzRiNWE2XzEyMzQ1Njc4LmxvZw==",
-  "redis_key": "patch_f1e2d3c4b5a6_12345678.log"
-}
-```
+This step takes about **20 minutes**.
 
-</details>
-
-<details>
-<summary><h3>GET /status/{handle}</h3></summary>
-
-```python
-def get_task_status(handle: str):
-    """
-    Retrieve current status and results of a task.
-    
-    Args:
-        handle (str): Task handle from /reproduce or /fix response
-    
-    Returns:
-        dict: Task status information varying by operation type
-        
-    Raises:
-        HTTPException: 404 if handle not found
-        HTTPException: 500 if status retrieval fails
-    """
-```
-
-**Description:**
-Retrieves the current status and results of a task identified by its handle. Works for both reproduce and fix operations. The response format varies depending on the operation type and current status.
-
-**Input Parameters:**
-- `handle` (str, path parameter, required): Task handle from /reproduce or /fix response
-
-**Output Format:**
-- Type: `dict`
-- Structure varies by operation type:
-  - **Reproduce operations:** `{"bug_id": str, "sha": str, "status": str, "log_file": str, "result": dict}`
-  - **Fix operations:** `{"bug_id": str, "status": str, "return_code": int, "fix_log": str, "fix_msg": str, "fix_status": str, "cached": bool}`
-
-**Example:**
+It runs `cmake` or `configure` so the projects are ready for reproduction.
 
 ```bash
-# Request
-GET /status/cGF0Y2hfZjFlMmQzYzRiNWE2XzEyMzQ1Njc4LmxvZw==
+docker exec my_defects4c bash -lc 'cd /src && bash run_warmup.sh 8'
 ```
 
-```json
-{
-  "bug_id": "openssl@f1e2d3c4b5a6789012345678901234567890cdef",
-  "sha": "f1e2d3c4b5a6789012345678901234567890cdef",
-  "status": "completed",
-  "return_code": 0,
-  "fix_log": "Building project...\nApplying patch...\nRunning tests...\nAll tests passed.",
-  "fix_msg": "Patch applied successfully",
-  "fix_status": "All tests passed",
-  "cached": false,
-  "patch": "/patches/openssl_security_fix_20241215.patch",
-  "redis_key": "patch_f1e2d3c4b5a6_12345678.log"
-}
-```
-
-</details>
-
-### Management Endpoints
-
-<details>
-<summary><h3>GET /cache/status</h3></summary>
-
-```python
-def get_cache_status():
-    """
-    Get Redis cache connection status and information.
-    
-    Returns:
-        dict: Cache status information including connection state and Redis info
-        
-    Raises:
-        HTTPException: 500 if cache status check fails
-    """
-```
-
-**Description:**
-Provides information about the Redis cache connection and status. Useful for monitoring and debugging cache-related issues. Returns connection state and Redis server information when available.
-
-**Input Parameters:**
-- None required
-
-**Output Format:**
-- Type: `dict`
-- Structure: `{"redis_connected": bool, "redis_info": dict|null}`
-
-**Example:**
+### Optional: Enter the container
 
 ```bash
-# Request
-GET /cache/status
-```
-
-```json
-{
-  "redis_connected": true,
-  "redis_info": {
-    "redis_version": "6.2.6",
-    "used_memory": "2097152",
-    "connected_clients": "3",
-    "uptime_in_seconds": "7200",
-    "total_commands_processed": "156"
-  }
-}
+docker exec -it my_defects4c bash
 ```
 
 </details>
 
-<details>
-<summary><h3>DELETE /cache/{redis_key}</h3></summary>
+## Tutorial
 
-```python
-def clear_cache_entry(redis_key: str):
-    """
-    Remove a specific cache entry from Redis.
-    
-    Args:
-        redis_key (str): Redis key to delete (from /fix response)
-    
-    Returns:
-        dict: Deletion status and key information
-        
-    Raises:
-        HTTPException: 404 if Redis key not found
-        HTTPException: 500 if Redis not connected or deletion fails
-    """
-```
+After the container is running, the repositories are cloned, and warmup is finished, choose one model provider and run `http_tutorial.py`.
 
-**Description:**
-Removes a specific cache entry from Redis. This forces the next request with the same parameters to recalculate the result. Use with caution as this will trigger full recomputation on subsequent requests.
+By default, Defects4C uses our remote verification server. After Docker warmup is complete, update the endpoint in `http_tutorial.py` from `DEFECTS4C_BASE_URL = "https://defects4c.wj2ai.com"` to `DEFECTS4C_BASE_URL = "http://127.0.0.1:11111"` to use your local container.
 
-**Input Parameters:**
-- `redis_key` (str, path parameter, required): Redis key to delete (obtained from /fix response)
 
-**Output Format:**
-- Type: `dict`
-- Structure: `{"deleted": bool, "key": str}`
-
-**Example:**
+### OpenAI
 
 ```bash
-# Request
-DELETE /cache/patch_f1e2d3c4b5a6_12345678.log
+OPENAI_MODEL=gpt-4o-mini \
+OPENAI_API_KEY="sk-xxx" \
+OPENAI_BASE_URL="https://api.openai.com/v1/" \
+python http_tutorial.py
 ```
 
-```json
-{
-  "deleted": true,
-  "key": "patch_f1e2d3c4b5a6_12345678.log"
-}
-```
-
-</details>
-
-<details>
-<summary><h3>GET /all_tasks</h3></summary>
-
-```python
-def get_all_tasks():
-    """
-    Retrieve all active tasks from memory and Redis.
-    
-    Returns:
-        dict: All active tasks keyed by handle
-        
-    Raises:
-        HTTPException: 500 if task retrieval fails
-    """
-```
-
-**Description:**
-Retrieves all active tasks from both in-memory storage (reproduce operations) and Redis (fix operations). Useful for monitoring and debugging. Each task object contains the same fields as returned by `/status/{handle}`.
-
-**Input Parameters:**
-- None required
-
-**Output Format:**
-- Type: `dict`
-- Structure: `{handle: task_object, ...}`
-
-**Example:**
+### DeepSeek
 
 ```bash
-# Request
-GET /all_tasks
+OPENAI_MODEL=deepseek-chat \
+OPENAI_API_KEY="sk-xxx" \
+OPENAI_BASE_URL="https://api.deepseek.com" \
+python http_tutorial.py
 ```
 
-```json
-{
-  "abc123def456": {
-    "bug_id": "libxml2@a1b2c3d4e5f6789012345678901234567890abcd",
-    "sha": "a1b2c3d4e5f6789012345678901234567890abcd",
-    "status": "completed",
-    "log_file": "/logs/a1b2c3d4e5f6_reproduce_abc123def456.log",
-    "result": {
-      "log_file": "/logs/a1b2c3d4e5f6_reproduce_abc123def456.log",
-      "return_code": 0
-    }
-  },
-  "xyz789uvw012": {
-    "bug_id": "openssl@f1e2d3c4b5a6789012345678901234567890cdef",
-    "status": "running",
-    "patch": "/patches/openssl_security_fix_20241215.patch",
-    "cached": false
-  }
-}
-```
-
-</details>
-
-</details>
-
----
-
-<details>
-<summary><h2>🛠️ Unified Patch Service API</h2></summary>
-
-The Unified Patch Service provides advanced patch generation and application capabilities with support for multiple patch formats, strategies, and intelligent code extraction from LLM responses.
-
-**Base URL:** `http://localhost:8000`  
-**Version:** 1.0.0
-
-### Core Endpoints
-
-<details>
-<summary><h3>GET /health</h3></summary>
-
-```python
-def health_check():
-    """
-    Health check endpoint for service monitoring.
-    
-    Returns:
-        dict: Service health status and version information
-    """
-```
-
-**Description:**
-Health check endpoint to verify service availability and provide basic service information. Returns service status for monitoring and load balancing purposes.
-
-**Input Parameters:**
-- None required
-
-**Output Format:**
-- Type: `dict`
-- Structure: `{"status": str, "service": str, "version": str}`
-
-**Example:**
+### Local OpenAI-compatible server
 
 ```bash
-# Request
-GET /health
+OPENAI_MODEL="Qwen/Qwen3-235B-A22B" \
+OPENAI_API_KEY="sk-xxx" \
+OPENAI_BASE_URL="http://127.0.0.1:8888/v1/" \
+python http_tutorial.py
 ```
 
-```json
-{
-  "status": "healthy",
-  "service": "Patch Service",
-  "version": "1.0.0"
-}
-```
+## API usage
 
-</details>
+More API examples and detailed usage should be moved to [`usage.md`](usage.md).
 
-<details>
-<summary><h3>POST /extract_anchor_patch</h3></summary>
+## Notes
 
-```python
-def write_patch(bug_id: str, llm_response: str, method: str = "prefix", generate_diff: bool = True, persist_flag: bool = False):
-    """
-    Generate and apply patches using various strategies.
-    
-    Args:
-        bug_id (str): Bug identifier in format "project@commit_sha"
-        llm_response (str): LLM-generated patch content (inline code or unified diff)
-        method (str, optional): Patch application method. Defaults to "prefix".
-        generate_diff (bool, optional): Whether to generate diff files. Defaults to True.
-        persist_flag (bool, optional): Whether to save files persistently. Defaults to False.
-    
-    Returns:
-        WritePatchResponse: Comprehensive patch generation results
-        
-    Raises:
-        HTTPException: 400 for various validation and processing errors
-    """
-```
+* Make sure the container is running before starting the tutorial.
+* Make sure the repositories are cloned and the warmup step has finished before running `http_tutorial.py`.
 
-**Description:**
-Core endpoint for processing LLM responses and generating patches. Supports multiple patch application methods including direct replacement, unified diff application, and prefix-based patching. The service automatically detects the input format and selects appropriate processing strategies. This endpoint extracts code from markdown responses, applies the patch using the specified method, and generates both the patched file and a git diff.
 
-**Input Parameters:**
-
-| Field | Type | Required | Default | Description |
-|-------|------|----------|---------|-------------|
-| `bug_id` | `string` | ✅ Yes | - | Bug identifier in format "project@sha" |
-| `llm_response` | `string` | ✅ Yes | - | LLM response containing code or diff |
-| `method` | `string` | ❌ No | `"prefix"` | Patch application method |
-| `generate_diff` | `boolean` | ❌ No | `true` | Whether to generate git diff patch file |
-| `persist_flag` | `boolean` | ❌ No | `false` | Save files persistently vs temporary files |
-
-**Patch Methods:**
-- **`diff`**: Apply unified diff format patches
-- **`inline`**: Extract code from markdown and apply directly
-- **`inline+meta`**: Apply unified diff with metadata context
-- **`direct`**: Direct replacement of function body
-- **`prefix`**: Prefix-based replacement with context
-
-**Output Format:**
-- Type: `WritePatchResponse`
-- Structure: Complex object with patch results, file paths, and metadata
-
-**Response Fields:**
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `success` | `boolean` | Whether patch operation succeeded |
-| `md5_hash` | `string` | MD5 hash of patch content |
-| `patch_content` | `string` | Generated git diff content |
-| `bug_id` | `string` | Original bug identifier |
-| `sha` | `string` | Git commit SHA |
-| `fix_p` | `string` | Path to generated fix file |
-| `fix_p_diff` | `string` | Path to generated patch file |
-| `func_start_byte` | `integer` | Start byte position of modified function |
-| `func_end_byte` | `integer` | End byte position of modified function |
-| `content` | `string` | Raw patch content applied |
-| `error` | `string` | Error message (if success=false) |
-| `error_code` | `string` | Structured error code (if success=false) |
-
-**Example:**
-
-```bash
-# Request
-POST /extract_anchor_patch
-Content-Type: application/json
-```
-
-```json
-{
-  "bug_id": "libxml2@a1b2c3d4e5f6789012345678901234567890abcd",
-  "llm_response": "```cpp\nint validateInput(const char* input) {\n    if (!input || strlen(input) == 0) {\n        return 0;\n    }\n    \n    // Additional validation logic\n    for (size_t i = 0; i < strlen(input); i++) {\n        if (!isalnum(input[i]) && input[i] != '_') {\n            return 0;\n        }\n    }\n    \n    return 1;\n}\n```",
-  "method": "direct",
-  "generate_diff": true,
-  "persist_flag": false
-}
-```
-
-**Success Response:**
-```json
-{
-  "success": true,
-  "md5_hash": "5d41402abc4b2a76b9719d911017c592",
-  "patch_content": "diff --git a/src/validation.cpp b/src/validation.cpp\nindex 1234567..abcdefg 100644\n--- a/src/validation.cpp\n+++ b/src/validation.cpp\n@@ -15,8 +15,18 @@ int validateInput(const char* input) {\n-    return input != NULL;\n+    if (!input || strlen(input) == 0) {\n+        return 0;\n+    }\n+    \n+    // Additional validation logic\n+    for (size_t i = 0; i < strlen(input); i++) {\n+        if (!isalnum(input[i]) && input[i] != '_') {\n+            return 0;\n+        }\n+    }\n+    \n+    return 1;\n }",
-  "bug_id": "libxml2@a1b2c3d4e5f6789012345678901234567890abcd",
-  "sha": "a1b2c3d4e5f6789012345678901234567890abcd",
-  "fix_p": "/tmp/patches/tmp_xyz123.cpp",
-  "fix_p_diff": "/tmp/patches/tmp_xyz123.patch",
-  "func_start_byte": 450,
-  "func_end_byte": 485,
-  "content": "int validateInput(const char* input) {\n    if (!input || strlen(input) == 0) {\n        return 0;\n    }\n    \n    // Additional validation logic\n    for (size_t i = 0; i < strlen(input); i++) {\n        if (!isalnum(input[i]) && input[i] != '_') {\n            return 0;\n        }\n    }\n    \n    return 1;\n}\n"
-}
-```
-
-**Error Response:**
-```json
-{
-  "success": false,
-  "error": "Bug ID libxml2@invalid not found in guidance data",
-  "error_code": "err_bug_id_not_in_guidance",
-  "md5_hash": null,
-  "patch_content": null,
-  "bug_id": null,
-  "sha": null,
-  "fix_p": null,
-  "fix_p_diff": null,
-  "func_start_byte": null,
-  "func_end_byte": null,
-  "content": null
-}
-```
-
-</details>
-
-</details>
-
----
-
-<details>
-<summary><h2>⚠️ Error Handling & Codes</h2></summary>
-
-Both services implement comprehensive error handling with structured error responses for better debugging and integration.
-
-### Bug Helper Service Error Codes
-
-- **400**: Invalid input parameters
-  - Invalid bug_id format
-  - Missing or invalid patch_path
-- **404**: Resource not found
-  - Handle not found
-  - Redis key not found
-  - Project not found
-- **500**: Internal server errors
-  - Redis connection issues
-  - Process execution failures
-  - Task management errors
-
-### Unified Patch Service Error Codes
-
-| Error Code | Description |
-|------------|-------------|
-| `err_extract_code_fail` | Failed to extract code from markdown |
-| `err_invalid_bug_id_format` | Bug ID format is invalid (should be "project@sha") |
-| `err_guidance_not_loaded` | Guidance data not loaded at startup |
-| `err_bug_id_not_in_guidance` | Bug ID not found in guidance database |
-| `err_record_not_found` | Metadata record not found |
-| `err_src_content_not_cached` | Source file content not available in cache |
-| `err_context_mismatch_byte_range` | Patch context doesn't match source file |
-| `err_no_patch_content_identified` | Unable to identify patch content |
-| `err_patch_file_creation_failed` | Failed to create patch file |
-
-### Error Response Format
-
-**Bug Helper Service:**
-```json
-{
-  "detail": "Error message describing the issue"
-}
-```
-
-**Unified Patch Service:**
-```json
-{
-  "detail": {
-    "error_code": "err_invalid_bug_id_format",
-    "message": "bug_id must be 'project@sha', got: invalid_format"
-  }
-}
-```
-
-</details>
-
----
-
-<details>
-<summary><h2>⚙️ Configuration & Environment</h2></summary>
-
-### Bug Helper Service Configuration
-
-Environment variables and settings:
-- Redis connection parameters
-- Task timeout settings
-- Logging configuration
-- Project directory paths
-
-### Unified Patch Service Configuration
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `SRC_DIR` | `/src` | Source directory for input data |
-| `SRC_OUT` | `/out` | Output directory for results |
-| `META_DIR` | `/src/projects` | Metadata directory |
-| `PATCH_OUTPUT_DIR` | `/patches/` | Persistent patch output directory |
-| `PATCH_OUTPUT_BEFORE_DIR` | `/tmp/patches_before` | Temporary patch directory |
-
-### Data Loading (Patch Service)
-
-The service loads several data sources at startup:
-
-1. **Metadata**: Bug information from JSON files in `/src/projects/**`
-2. **Guidance**: CSV file with function locations and metadata
-3. **Source Content**: Source file contents from JSONL format
-4. **Prompt Content**: LLM prompt templates with infill markers
-
-</details>
-
----
-
-<details>
