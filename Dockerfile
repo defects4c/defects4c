@@ -101,7 +101,7 @@ RUN mkdir /var/run/sshd && echo "export VISIBLE=now" >> /etc/profile
 #============================================================
 # Port exposing and ssh running
 #============================================================
-EXPOSE 22 6379
+EXPOSE 22 80 6379
 
 
 RUN    git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /work/depot_tools.git && ln -s /work/depot_tools.git /work/depot_tools
@@ -166,12 +166,11 @@ RUN git clone -q --depth 1 -b release-1.12.1 https://github.com/google/googletes
     rm -rf /tmp/googletest && ldconfig
 
 # ── Python / uv ──
-RUN mkdir -p /src && \
-    if [ ! -d /src/.venv ]; then \
-      pip3 install -q uv && \
-      cd /src && uv venv --allow-existing; \
-    fi && \
-    . /src/.venv/bin/activate && \
+ENV DEFECTS4C_VENV=/opt/defects4c-venv
+RUN mkdir -p /src "$(dirname "${DEFECTS4C_VENV}")" && \
+    pip3 install -q uv && \
+    uv venv "${DEFECTS4C_VENV}" --allow-existing && \
+    . "${DEFECTS4C_VENV}/bin/activate" && \
     uv pip install \
       numpy cmake_format jinja2 pandas openai rich fastapi uvicorn jmespath \
       pytest pytest-asyncio pytest-tornasync pytest-trio pytest-twisted \
@@ -285,10 +284,14 @@ if [ "${KEYS}" -gt 0 ] && [ ! -f "${BACKUP}" ]; then
     echo "[entrypoint] Backup snapshot saved to ${BACKUP}"
 fi
 
-# ── 3. sshd (foreground — keeps the container alive) ─────────────────
-exec /usr/sbin/sshd -D
+# ── 3. sshd + API ────────────────────────────────────────────────────
+/usr/sbin/sshd
+echo "[entrypoint] sshd started"
+
+cd /src
+echo "[entrypoint] Starting web API"
+exec /usr/bin/env bash /src/run_web.sh
 EOF
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-
